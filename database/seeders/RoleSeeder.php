@@ -17,60 +17,60 @@ class RoleSeeder extends Seeder
         $role_admin = Role::create(['name' => 'admin']);
         $role_editor = Role::create(['name' => 'editor']);
 
-        $permission_create_role = Permission::ceate(['name' => 'create roles']);
-        $permission_read_role = Permission::ceate(['name' => 'read roles']);
-        $permission_update_role = Permission::ceate(['name' => 'update roles']);
-        $permission_delete_role = Permission::ceate(['name' => 'delete roles']);
+        $permission_create_role = Permission::create(['name' => 'create roles']);
+        $permission_read_role = Permission::create(['name' => 'read roles']);
+        $permission_update_role = Permission::create(['name' => 'update roles']);
+        $permission_delete_role = Permission::create(['name' => 'delete roles']);
 
-        $permission_create_academic_area = Permission::ceate(['name' => 'create academic areas']);
-        $permission_read_academic_area = Permission::ceate(['name' => 'read academic areas']);
-        $permission_update_academic_area = Permission::ceate(['name' => 'update academic areas']);
-        $permission_delete_academic_area = Permission::ceate(['name' => 'delete academic areas']);
+        $permission_create_academic_area = Permission::create(['name' => 'create academic areas']);
+        $permission_read_academic_area = Permission::create(['name' => 'read academic areas']);
+        $permission_update_academic_area = Permission::create(['name' => 'update academic areas']);
+        $permission_delete_academic_area = Permission::create(['name' => 'delete academic areas']);
 
-        $permission_create_brand = Permission::ceate(['name' => 'create brands']);
-        $permission_read_brand = Permission::ceate(['name' => 'read brands']);
-        $permission_update_brand = Permission::ceate(['name' => 'update brands']);
-        $permission_delete_brand = Permission::ceate(['name' => 'delete brands']);
+        $permission_create_brand = Permission::create(['name' => 'create brands']);
+        $permission_read_brand = Permission::create(['name' => 'read brands']);
+        $permission_update_brand = Permission::create(['name' => 'update brands']);
+        $permission_delete_brand = Permission::create(['name' => 'delete brands']);
 
-        $permission_create_dependency = Permission::ceate(['name' => 'create dependencies']);
-        $permission_read_dependency = Permission::ceate(['name' => 'read dependencies']);
-        $permission_update_dependency = Permission::ceate(['name' => 'update dependencies']);
-        $permission_delete_dependency = Permission::ceate(['name' => 'delete dependencies']);
+        $permission_create_dependency = Permission::create(['name' => 'create dependencies']);
+        $permission_read_dependency = Permission::create(['name' => 'read dependencies']);
+        $permission_update_dependency = Permission::create(['name' => 'update dependencies']);
+        $permission_delete_dependency = Permission::create(['name' => 'delete dependencies']);
 
-        $permission_create_failure = Permission::ceate(['name' => 'create failures']);
-        $permission_read_failure = Permission::ceate(['name' => 'read failures']);
-        $permission_update_failure = Permission::ceate(['name' => 'update failures']);
-        $permission_delete_failure = Permission::ceate(['name' => 'delete failures']);
+        $permission_create_failure = Permission::create(['name' => 'create failures']);
+        $permission_read_failure = Permission::create(['name' => 'read failures']);
+        $permission_update_failure = Permission::create(['name' => 'update failures']);
+        $permission_delete_failure = Permission::create(['name' => 'delete failures']);
 
-        $permission_create_object = Permission::ceate(['name' => 'create objects']);
-        $permission_read_object = Permission::ceate(['name' => 'read objects']);
-        $permission_update_object = Permission::ceate(['name' => 'update objects']);
-        $permission_delete_object = Permission::ceate(['name' => 'delete objects']);
+        $permission_create_object = Permission::create(['name' => 'create objects']);
+        $permission_read_object = Permission::create(['name' => 'read objects']);
+        $permission_update_object = Permission::create(['name' => 'update objects']);
+        $permission_delete_object = Permission::create(['name' => 'delete objects']);
 
-        $permission_create_person = Permission::ceate(['name' => 'create persons']);
-        $permission_read_person = Permission::ceate(['name' => 'read persons']);
-        $permission_update_person = Permission::ceate(['name' => 'update persons']);
-        $permission_delete_person = Permission::ceate(['name' => 'delete persons']);
+        $permission_create_person = Permission::create(['name' => 'create persons']);
+        $permission_read_person = Permission::create(['name' => 'read persons']);
+        $permission_update_person = Permission::create(['name' => 'update persons']);
+        $permission_delete_person = Permission::create(['name' => 'delete persons']);
 
-        $permission_create_user = Permission::ceate(['name' => 'create users']);
-        $permission_read_user = Permission::ceate(['name' => 'read users']);
-        $permission_update_user = Permission::ceate(['name' => 'update users']);
-        $permission_delete_user = Permission::ceate(['name' => 'delete users']);
+        $permission_create_user = Permission::create(['name' => 'create users']);
+        $permission_read_user = Permission::create(['name' => 'read users']);
+        $permission_update_user = Permission::create(['name' => 'update users']);
+        $permission_delete_user = Permission::create(['name' => 'delete users']);
 
-        $permission_create_order_device = Permission::ceate(['name' => 'create order devices']);
-        $permission_read_order_device = Permission::ceate(['name' => 'read order devices']);
-        $permission_update_order_device = Permission::ceate(['name' => 'update order devices']);
-        $permission_delete_order_device = Permission::ceate(['name' => 'delete order devices']);
+        $permission_create_order_device = Permission::create(['name' => 'create order devices']);
+        $permission_read_order_device = Permission::create(['name' => 'read order devices']);
+        $permission_update_order_device = Permission::create(['name' => 'update order devices']);
+        $permission_delete_order_device = Permission::create(['name' => 'delete order devices']);
 
-        $permission_create_order = Permission::ceate(['name' => 'create orders']);
-        $permission_read_order = Permission::ceate(['name' => 'read orders']);
-        $permission_update_order = Permission::ceate(['name' => 'update orders']);
-        $permission_delete_order = Permission::ceate(['name' => 'delete orders']);
+        $permission_create_order = Permission::create(['name' => 'create orders']);
+        $permission_read_order = Permission::create(['name' => 'read orders']);
+        $permission_update_order = Permission::create(['name' => 'update orders']);
+        $permission_delete_order = Permission::create(['name' => 'delete orders']);
 
-        $permission_create_computer = Permission::ceate(['name' => 'create computers']);
-        $permission_read_computer = Permission::ceate(['name' => 'read computers']);
-        $permission_update_computer = Permission::ceate(['name' => 'update computers']);
-        $permission_delete_computer = Permission::ceate(['name' => 'delete computers']);
+        $permission_create_computer = Permission::create(['name' => 'create computers']);
+        $permission_read_computer = Permission::create(['name' => 'read computers']);
+        $permission_update_computer = Permission::create(['name' => 'update computers']);
+        $permission_delete_computer = Permission::create(['name' => 'delete computers']);
 
         $permissions_admin = [
             $permission_create_role,
