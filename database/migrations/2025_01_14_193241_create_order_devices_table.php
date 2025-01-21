@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_devices', function (Blueprint $table) {
-            $table->bigIncrements('order_device_id');
+            $table->id();
             $table->string('model', 30);
             $table->text('client_observations')->max(500);
             $table->text('diagnostic')->max(500);
@@ -32,7 +32,7 @@ return new class extends Migration
 
             // Claves foráneas
             $table->foreign('cg_brand_id')
-                  ->references('cg_brand_id')
+                  ->references('id')
                   ->on('cg_brands')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
@@ -44,19 +44,19 @@ return new class extends Migration
                   ->onUpdate('cascade');
 
             $table->foreign('cg_kind_object_id')
-                  ->references('cg_kind_object_id')
+                  ->references('id')
                   ->on('cg_kind_objects')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
 
             $table->foreign('cg_kind_failure_id')
-                  ->references('cg_kind_failure_id')
+                  ->references('id')
                   ->on('cg_kind_failures')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
 
             $table->foreign('ceca_repairs')
-                  ->references('user_id')
+                  ->references('id')
                   ->on('users')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');

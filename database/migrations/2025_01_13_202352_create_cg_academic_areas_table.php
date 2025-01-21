@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cg_academic_areas', function (Blueprint $table) {
-            $table->bigIncrements('cg_academic_area_id');
+            $table->id();
             $table->string('area_name', 80);
             $table->unsignedBigInteger('cg_dependency_id');
             $table->timestamps();
 
-            $table->foreign(['cg_dependency_id'], 'cg_academic_areas')->references(['cg_dependency_id'])->on('cg_dependencies')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('cg_dependency_id')->references('id')->on('cg_dependencies')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
