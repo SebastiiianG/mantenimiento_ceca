@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('computers', function (Blueprint $table) {
-            $table->bigIncrements('computer_id');
+            $table->id();
             $table->string('password', 25);
             $table->unsignedBigInteger('order_device_id');
             $table->timestamps();
 
-            $table->foreign('order_device_id')->references('order_device_id')->on('order_devices')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('order_device_id')->references('id')->on('order_devices')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 

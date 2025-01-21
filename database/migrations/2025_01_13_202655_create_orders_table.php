@@ -32,25 +32,25 @@ return new class extends Migration
 
             // Llaves foráneas
             $table->foreign('kperson_delivery')
-                  ->references('cg_kind_person_id')
+                  ->references('id')
                   ->on('cg_kind_people')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
             $table->foreign('cg_academic_area_id')
-                  ->references('cg_academic_area_id')
+                  ->references('id')
                   ->on('cg_academic_areas')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
             $table->foreign('ceca_receives')
-                  ->references('user_id')
+                  ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
             $table->foreign('ceca_deliveries')
-                  ->references('user_id')
+                  ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');

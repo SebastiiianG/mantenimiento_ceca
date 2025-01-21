@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cg_kind_objects', function (Blueprint $table) {
-            $table->bigIncrements('cg_kind_object_id');
+            $table->id();
             $table->string('object', 30);
             $table->timestamps();
         });
