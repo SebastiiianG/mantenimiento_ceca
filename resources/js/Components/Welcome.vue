@@ -33,14 +33,3 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
         </button>
     </div>
 </template>
-
-<style>
-button{
-    background-color: green;
-    color: white;
-    padding: 20px;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-</style>

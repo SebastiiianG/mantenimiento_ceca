@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -12,6 +14,8 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::paginate(5);
+        return inertia('User/Index',['users' => $users]);
     }
 
     /**
