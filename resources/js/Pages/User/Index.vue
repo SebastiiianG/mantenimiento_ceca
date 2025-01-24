@@ -77,12 +77,12 @@ const deleteUser = id => {
                                 <Link class="text-sm/6 text-gray-900" :href="route('users.edit', user.id)">Edit</Link>
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <Link @click="deleteCategory(user.id)" class="text-sm/6 text-gray-900"
+                                <Link @click="deleteUser(user.id)" class="text-sm/6 text-gray-900"
                                 >Delete</Link>
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                                 <p class="text-sm/6 text-gray-900">
-                                    <Link :href="route('users.edit', user.id)"> Update
+                                    <Link :href="route('users.update', user.id)"> Update
                                     </Link>
                                 </p>
                             </div>

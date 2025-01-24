@@ -30,8 +30,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::resource('/cgKindPeople', CgKindPersonController::class);
     Route::resource('/users', UserController::class);
     Route::resource('/orders', OrderController::class);
-    Route::resource('/orderDevice', OrderDeviceController::class);
-    Route::resource('/role', RoleController::class);
+    Route::resource('/orderDevices', OrderDeviceController::class);
+    Route::resource('/roles', RoleController::class);
     Route::resource('/UCommunity', UCommunityController::class);
 
 
