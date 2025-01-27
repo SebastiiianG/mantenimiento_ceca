@@ -1,10 +1,19 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Container from './Container.vue';
 </script>
 
 <template>
-    <div>
-        <button v-if="$page.props.user.permissions.includes('create roles')">
+    <Container></Container>
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <slot></slot>
+                </div>
+            </div>
+        </div>
+
+        <!-- <button v-if="$page.props.user.permissions.includes('create roles')">
             Gestionar Roles
         </button>
         <button v-if="$page.props.user.permissions.includes('create academic areas')">
@@ -30,6 +39,5 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
         </button>
         <button v-if="$page.props.user.permissions.includes('create users')">
             Gestionar Usuarios
-        </button>
-    </div>
+        </button> -->
 </template>

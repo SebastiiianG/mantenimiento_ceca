@@ -35,16 +35,6 @@ const deleteUser = id => {
             </h1>
         </template>
 
-    <div class="pt-12 pb-6 bg-gray-100 ">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    Bienvenido al tablero del administrador
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="py-2 bg-gray-100 ">
         <!-- contenedor que ocupa toda la pantalla -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
@@ -68,23 +58,19 @@ const deleteUser = id => {
                         <li class="flex justify-between gap-x-6 py-5" v-for="user in users.data">
 
                             <div class="flex min-w-0 gap-x-4">
-
+                                <div class="min-w-0 flex-auto w-10 h-10 mr-4">
+                                    <img src="" alt="Foto del usuario">
+                                </div>
                                 <div class="min-w-0 flex-auto">
                                     <p class="text-sm/6 font-semibold text-gray-900">{{ user.name }}</p>
                                 </div>
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <Link class="text-sm/6 text-gray-900" :href="route('users.edit', user.id)">Edit</Link>
+                                <Link class="text-sm/6 text-gray-900" :href="route('users.create', user.id)">Editar</Link>
                             </div>
                             <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <Link @click="deleteCategory(user.id)" class="text-sm/6 text-gray-900"
-                                >Delete</Link>
-                            </div>
-                            <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                <p class="text-sm/6 text-gray-900">
-                                    <Link :href="route('users.edit', user.id)"> Update
-                                    </Link>
-                                </p>
+                                <Link @click="deleteUser(user.id)" class="text-sm/6 text-gray-900"
+                                >Eliminar</Link>
                             </div>
                         </li>
                     </ul>
