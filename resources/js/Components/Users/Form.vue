@@ -12,6 +12,7 @@ import PrimaryButton from '../PrimaryButton.vue';
 import TextInput from '../TextInput.vue';
 import Checkbox from '../Checkbox.vue';
 import { reactive } from 'vue';
+import RadioButton from '../RadioButton.vue';
 
 defineProps ({
     form: {
@@ -76,10 +77,10 @@ const state = reactive({
                 <InputLabel for="status" value="Estado" />
                     <div class="flex items-center space-x-4 mt-2">
                         <!-- Opcion activo -->
-                        <Checkbox id="active" v-model="state.checked" name="status" value="active" />
+                        <RadioButton id="active" v-model="state.checked" name="status" value="active" />
                         <InputLabel for="active" class="inline-flex items-center text-sm text-gray-800">Activo</InputLabel>
                         <!-- Opcion inactivo -->
-                        <Checkbox id="inactive" v-model="state.checked" name="status" value="inactive" />
+                        <RadioButton id="inactive" v-model="state.checked" name="status" value="inactive" />
                         <InputLabel for="inactive" class="inline-flex items-center text-sm text-gray-800">Inactivo</InputLabel>
                     </div>
             </div>

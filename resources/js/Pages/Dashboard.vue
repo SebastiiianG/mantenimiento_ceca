@@ -18,5 +18,7 @@ import Welcome from '@/Components/Welcome.vue';
                 </div>
             </div>
         </div>
+
+
     </AppLayout>
 </template>
