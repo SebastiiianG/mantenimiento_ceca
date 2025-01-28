@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Http\Requests\UserRequest;
+
 
 class UserController extends Controller
 {
@@ -29,9 +31,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+
+    public function store(UserRequest $request)
     {
-        //
+        //guardar los valores del formulario
+        User::create($request->validated());
+        return redirect()->route('users.index');
     }
 
     /**
@@ -45,9 +50,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $users)
     {
-        //
+        //enviar el objeto usuario para evitar el find id
+        return inertia('User/Edit',['users' => $users]);
     }
 
     /**

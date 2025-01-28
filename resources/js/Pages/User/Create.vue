@@ -10,7 +10,11 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import UserForm from '@/Components/Users/Form.vue';
 
 const form = useForm ({
-    name: ''
+    name: '' ,
+    email: '',
+    password: '',
+    user_number: '',
+    status: ''
 });
 
 </script>
@@ -18,7 +22,7 @@ const form = useForm ({
 <template>
     <AppLayout>
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="font-semibold text-xl text-gray-800 leading-tight" v-if="$page.props.user.permissions.includes('create users')">
                 Crear usuario
             </h1>
         </template>

@@ -35,16 +35,16 @@ const deleteUser = id => {
             </h1>
         </template>
 
-    <div class="py-2 bg-gray-100 ">
+    <div class="py-2 bg-gray-100 mt-10">
         <!-- contenedor que ocupa toda la pantalla -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <!-- contenedor que ocupa una parte de todo la pantalla -->
             <div class="p-6 bg-white border-b border-gray-200">
                 <!-- contenedor que agrega padding sobre los elementos que van dentro de el -->
-                <div class="flex justify-between ">
+                <div class="flex justify-between" v-if="$page.props.user.permissions.includes('create users')">
                     <!-- contenedor con los elementos -->
                     <h1>Usuarios</h1>
-                    <Link class="text-white bg-[#511013] py-2 px-4 rounded" :href="route('users.create')">
+                    <Link class="text-white bg-[#511013] py-2 px-4 rounded" :href="route('users.create')" >
                         Añadir Usuario
 
                     <!-- Para imprimir los datos que tiene las propiedades definidas
@@ -58,9 +58,6 @@ const deleteUser = id => {
                         <li class="flex justify-between gap-x-6 py-5" v-for="user in users.data">
 
                             <div class="flex min-w-0 gap-x-4">
-                                <div class="min-w-0 flex-auto w-10 h-10 mr-4">
-                                    <img src="" alt="Foto del usuario">
-                                </div>
                                 <div class="min-w-0 flex-auto">
                                     <p class="text-sm/6 font-semibold text-gray-900">{{ user.name }}</p>
                                 </div>
