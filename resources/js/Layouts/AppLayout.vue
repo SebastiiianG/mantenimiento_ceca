@@ -47,21 +47,58 @@ const logout = () => {
                             </div>
 
                             <!-- Navigation Links -->
+                            <!--Las rutas se definen en el archivo web.php, de ahí proienen los nombres-->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Tablero
+                                    Inicio
                                 </NavLink>
                             </div>
 
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('create users')">
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read users')">
                                 <NavLink :href="route('users.index')" :active="route().current('users.*')">
                                     Usuarios
                                 </NavLink>
                             </div>
 
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('create orders')">
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read orders')">
                                 <NavLink :href="route('orders.index')" :active="route().current('orders.*')">
                                     Orden
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read academic areas')">
+                                <NavLink :href="route('cgAcademicAreas.index')" :active="route().current('cgAcademicAreas.*')">
+                                    Áreas Académicas
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read dependencies')">
+                                <NavLink :href="route('cgDependencies.index')" :active="route().current('cgDependencies.*')">
+                                   Dependencias
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read dependencies')">
+                                <NavLink :href="route('cgBrands.index')" :active="route().current('cgBrands.*')">
+                                   Marcas
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read persons')">
+                                <NavLink :href="route('cgKindPeople.index')" :active="route().current('cgKindPeople.*')">
+                                    Personas
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read objects')">
+                                <NavLink :href="route('cgKindObjects.index')" :active="route().current('cgKindObjects.*')">
+                                   Dispositivos
+                                </NavLink>
+                            </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read failures')">
+                                <NavLink :href="route('cgKindFailures.index')" :active="route().current('cgKindFailures.*')">
+                                   Fallas
                                 </NavLink>
                             </div>
 
