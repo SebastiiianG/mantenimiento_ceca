@@ -11,7 +11,6 @@ class CgDependencyController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

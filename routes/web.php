@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::resource('/orders', OrderController::class);
     Route::resource('/orderDevices', OrderDeviceController::class);
     Route::resource('/roles', RoleController::class);
+    //Eliminar la ruta de UCommunity después del testeo
     Route::resource('/UCommunity', UCommunityController::class);
 
 
