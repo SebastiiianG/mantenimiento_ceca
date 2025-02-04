@@ -243,7 +243,55 @@ const logout = () => {
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Inicio
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read users')">
+                        <ResponsiveNavLink :href="route('users.index')" :active="route().current('users.*')">
+                            Usuarios
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read orders')">
+                        <ResponsiveNavLink :href="route('orders.index')" :active="route().current('orders.*')">
+                            Orden
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read academic areas')">
+                        <ResponsiveNavLink :href="route('cgAcademicAreas.index')" :active="route().current('cgAcademicAreas.*')">
+                            Áreas Académicas
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read dependencies')">
+                        <ResponsiveNavLink :href="route('cgDependencies.index')" :active="route().current('cgDependencies.*')">
+                            Dependencias
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read brands')">
+                        <ResponsiveNavLink :href="route('cgBrands.index')" :active="route().current('cgBrands.*')">
+                            Marcas
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read persons')">
+                        <ResponsiveNavLink :href="route('cgKindPeople.index')" :active="route().current('cgKindPeople.*')">
+                            Personas
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read objects')">
+                        <ResponsiveNavLink :href="route('cgKindObjects.index')" :active="route().current('cgKindObjects.*')">
+                            Dispositivos
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1" v-if="$page.props.user.permissions.includes('read failures')">
+                        <ResponsiveNavLink :href="route('cgKindFailures.index')" :active="route().current('cgKindFailures.*')">
+                            Fallas
                         </ResponsiveNavLink>
                     </div>
 

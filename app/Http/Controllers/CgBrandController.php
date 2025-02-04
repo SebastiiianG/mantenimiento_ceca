@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CgBrand;
+use Inertia\Response;
 
 class CgBrandController extends Controller
 {
@@ -11,7 +13,8 @@ class CgBrandController extends Controller
      */
     public function index()
     {
-        //
+        $cgBrands = CgBrand::paginate(20);
+        return inertia('CgBrands/Index', ['cgBrands' => $cgBrands]);
     }
 
     /**
@@ -19,7 +22,7 @@ class CgBrandController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('CgBrands/Create');
     }
 
     /**

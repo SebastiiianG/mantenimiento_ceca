@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CgAcademicArea;
+use Inertia\Response;
 
 class CgAcademicAreaController extends Controller
 {
@@ -11,7 +13,8 @@ class CgAcademicAreaController extends Controller
      */
     public function index()
     {
-        //
+        $cgAcademicAreas = CgAcademicArea::paginate(20);
+        return inertia('CgAcademicAreas/Index', ['cgAcademicAreas' => $cgAcademicAreas]);
     }
 
     /**
