@@ -14,7 +14,7 @@ import { Inertia } from '@inertiajs/inertia';
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgBrands: Object,
-    search: String // Agregar 'search' aquí
+    search: String
 });
 
 // Variable reactiva para la búsqueda (inicializa con el valor de Laravel)
