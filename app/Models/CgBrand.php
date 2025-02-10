@@ -9,6 +9,9 @@ class CgBrand extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['brand_name'];
+
+
     public function orderDevices()
 	{
 		return $this->hasMany(OrderDevice::class);

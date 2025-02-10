@@ -17,6 +17,16 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                rojoOscuroUAEH: '#511013',
+                rojoMedioUAEH: '#841816',
+                rojoUAEH: '#B91116',
+                naranjaUAEH: '#E8641C',
+                amarilloUAEH: '#F39200',
+                cremaUAEH: '#EAE3D8',
+                grisOscuroUAEH: '#575756',
+                grisUAEH: '#9D9D9C'
+            },
         },
     },
 
