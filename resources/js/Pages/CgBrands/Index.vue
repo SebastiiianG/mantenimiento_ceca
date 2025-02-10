@@ -46,6 +46,8 @@ const formatPaginationLabel = (label) => {
             <h1 class="font-semibold text-xl text-gray-800 leading-tight sm:pl-4">
                 Catálogo de Marcas
             </h1>
+        </template>
+        
             <div class="bg-cremaUAEH py-10 md:rounded-lg mt-3">
                 <div class="mx-auto max-w-7xl">
                     <div class="px-4 sm:px-6 lg:px-8">
@@ -123,6 +125,6 @@ const formatPaginationLabel = (label) => {
             </div>
                 </div>
             </div>
-        </template>
+
     </AppLayout>
 </template>

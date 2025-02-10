@@ -174,6 +174,12 @@ const navItems = [
             </div>
             <!-- CONTENIDO -->
             <div>
+            <!-- Page Heading -->
+            <header v-if="$slots.header" class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <slot name="header" />
+                </div>
+            </header>
                 <main class="bg-gray-100 w-full min-h-screen p-6">
                     <slot />
                 </main>
