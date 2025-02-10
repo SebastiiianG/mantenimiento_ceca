@@ -65,7 +65,7 @@ const navItems = [
                     Tablero
                 </NavLink>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create orders')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read orders')">
                     <NavLink :href="route('orders.index')" :active="route().current('orders.*')">
                         Gestionar Orden
                     </NavLink>
@@ -74,42 +74,46 @@ const navItems = [
                 <!-- submenu de catalogos -->
                 <h3 class=" mt-2 text-gray-600 text-sm font-medium leading-5">Administracion</h3>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create users')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read users')">
                     <NavLink :href="route('users.index')" :active="route().current('users.*')">
                         Usuarios
                     </NavLink>
                 </div>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create roles')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read roles')">
                     <NavLink :href="route('roles.index')" :active="route().current('roles.*')">
                         Roles
                     </NavLink>
                 </div>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create dependencies')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read dependencies')">
                     <NavLink :href="route('cgDependencies.index')" :active="route().current('cgDependencies.*')">
-                        Dependencias Academicas
+                        Dependencias Académicas
                     </NavLink>
                 </div>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create academic areas')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read academic areas')">
                     <NavLink :href="route('cgAcademicAreas.index')" :active="route().current('cgAcademicAreas.*')">
-                        Areas Academicas
+                        Áreas Académicas
                     </NavLink>
                 </div>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create brands')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read brands')">
                     <NavLink :href="route('cgBrands.index')" :active="route().current('cgBrands.*')">
                         Marcas
                     </NavLink>
                 </div>
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create failures')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read failures')">
                     <NavLink :href="route('cgKindFailures.index')" :active="route().current('cgKindFailures.*')">
                         Tipo de fallas
                     </NavLink>
                 </div>
-
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create persons')">
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read objects')">
+                    <NavLink :href="route('cgKindObjects.index')" :active="route().current('cgKindObjects.*')">
+                        Tipo de Dispositivos
+                    </NavLink>
+                </div>
+                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read persons')">
                     <NavLink :href="route('cgKindPeople.index')" :active="route().current('cgKindPeople.*')">
                         Tipo de personas
                     </NavLink>
