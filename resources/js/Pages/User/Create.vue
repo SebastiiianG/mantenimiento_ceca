@@ -22,7 +22,7 @@ const form = useForm ({
 <template>
     <AppLayout>
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight" v-if="$page.props.user.permissions.includes('create users')">
+            <h1 class="font-semibold text-xl text-white leading-tight" v-if="$page.props.user.permissions.includes('create users')">
                 Crear usuario
             </h1>
         </template>

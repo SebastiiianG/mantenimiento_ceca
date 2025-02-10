@@ -10,7 +10,6 @@ import { router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
-import { Inertia } from '@inertiajs/inertia';
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgBrands: Object,
@@ -28,7 +27,7 @@ watch(searchQuery, (newSearch) => {
 // Función para eliminar una marca
 const deleteCgBrand = (cgBrand) => {
     if (confirm(`¿Estás seguro de que deseas eliminar la marca "${cgBrand.brand_name}"?`)) {
-        Inertia.delete(route('cgBrands.destroy', cgBrand.id));
+        router.delete(route('cgBrands.destroy', cgBrand.id));
     }
 };
 
@@ -41,13 +40,13 @@ const formatPaginationLabel = (label) => {
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout title="Marcas">
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight sm:pl-4">
+            <h1 class="font-semibold text-xl text-white leading-tight sm:pl-4">
                 Catálogo de Marcas
             </h1>
         </template>
-        
+
             <div class="bg-cremaUAEH py-10 md:rounded-lg mt-3">
                 <div class="mx-auto max-w-7xl">
                     <div class="px-4 sm:px-6 lg:px-8">

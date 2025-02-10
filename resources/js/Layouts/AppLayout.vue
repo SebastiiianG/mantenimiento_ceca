@@ -27,19 +27,6 @@ const logout = () => {
     router.post(route('logout'));
 };
 
-//Array para los elementos que conforman el sidebar
-const navItems = [
-    { href: "#", label: "Tablero", children: [], icon: null },
-    { href: "#", label: "Orden", children: [], icon: null },
-    { href: "#", label: "Administracion", children: [], icon: null },
-    { href: "#", label: "Usuarios", children: [], icon: null },
-    { href: "#", label: "Roles", children: [], icon: null },
-    { href: "#", label: "Dependencias Academicas", children: [], icon: null },
-    { href: "#", label: "Marcas", children: [], icon: null },
-    { href: "#", label: "Fallos", children: [], icon: null },
-    { href: "#", label: "Objetos", children: [], icon: null },
-    { href: "#", label: "Personas", children: [], icon: null }, //se necesita este?
-]
 </script>
 
 <template>
@@ -125,8 +112,8 @@ const navItems = [
             <!-- HEADER -->
             <div class="bg-white border-b border-gray-100 py-4 px-6 size-16 w-full">
 
-                    <div class="w-1/6 pl-20">
-                        <Dropdown align="right" width="48">
+                <div class="w-1/6 pl-20">
+                    <Dropdown align="right" width="48">
                         <template #trigger>
                             <button v-if="$page.props.jetstream.managesProfilePhotos"
                                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -151,11 +138,11 @@ const navItems = [
                         <template #content>
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                Manage Account
+                                Manejar Cuenta
                             </div>
 
                             <DropdownLink :href="route('profile.show')">
-                                Profile
+                                Perfil
                             </DropdownLink>
 
                             <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
@@ -167,24 +154,24 @@ const navItems = [
                             <!-- Authentication -->
                             <form @submit.prevent="logout">
                                 <DropdownLink as="button">
-                                    Log Out
+                                    Cerrar Sesion
                                 </DropdownLink>
                             </form>
                         </template>
                     </Dropdown>
-                    </div>
+                </div>
 
 
             </div>
             <!-- CONTENIDO -->
             <div>
-            <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-                <main class="bg-gray-100 w-full min-h-screen p-6">
+                <!-- Page Heading -->
+                <header v-if="$slots.header" class="bg-rojoMedioUAEH shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <slot name="header" />
+                    </div>
+                </header>
+                <main class="bg-cremaUAEH w-full min-h-screen p-6">
                     <slot />
                 </main>
             </div>

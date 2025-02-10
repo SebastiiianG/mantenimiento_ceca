@@ -35,7 +35,7 @@ const deleteUser = id => {
             </h1>
         </template>
 
-    <div class="py-2 bg-gray-100 mt-10">
+    <div class="py-2 bg-cremaUAEH mt-10">
         <!-- contenedor que ocupa toda la pantalla -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <!-- contenedor que ocupa una parte de todo la pantalla -->
