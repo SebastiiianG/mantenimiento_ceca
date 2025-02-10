@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: 'CgBrandsForm'
+        name: 'CgBrandForm'
     }
 </script>
 
