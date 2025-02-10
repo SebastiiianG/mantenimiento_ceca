@@ -109,12 +109,6 @@ const navItems = [
                     </NavLink>
                 </div>
 
-                <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create objects')">
-                    <NavLink :href="route('cgKindObjects.index')" :active="route().current('cgKindObjects.*')">
-                        Tipo de dispositivos
-                    </NavLink>
-                </div>
-
                 <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('create persons')">
                     <NavLink :href="route('cgKindPeople.index')" :active="route().current('cgKindPeople.*')">
                         Tipo de personas
