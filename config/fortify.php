@@ -45,7 +45,9 @@ return [
     |
     */
 
-    'username' => 'email',
+    //Cambia la autenticación por el número de empleado, descomentar si se desea cambiar por el email
+    'username' => 'user_number',
+    //'username' => 'email',
 
     'email' => 'email',
 

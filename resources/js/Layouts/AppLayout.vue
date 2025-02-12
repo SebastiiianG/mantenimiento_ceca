@@ -92,7 +92,7 @@ const logout = () => {
                 </div>
                 <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read failures')">
                     <NavLink :href="route('cgKindFailures.index')" :active="route().current('cgKindFailures.*')">
-                        Tipo de fallas
+                        Tipo de Fallas
                     </NavLink>
                 </div>
                 <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read objects')">
@@ -102,7 +102,7 @@ const logout = () => {
                 </div>
                 <div class="hidden sm:flex" v-if="$page.props.user.permissions.includes('read persons')">
                     <NavLink :href="route('cgKindPeople.index')" :active="route().current('cgKindPeople.*')">
-                        Tipo de personas
+                        Tipo de Personas
                     </NavLink>
                 </div>
             </div>
@@ -138,7 +138,7 @@ const logout = () => {
                         <template #content>
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                Manejar Cuenta
+                                Administrar Cuenta
                             </div>
 
                             <DropdownLink :href="route('profile.show')">
@@ -154,7 +154,7 @@ const logout = () => {
                             <!-- Authentication -->
                             <form @submit.prevent="logout">
                                 <DropdownLink as="button">
-                                    Cerrar Sesion
+                                    Cerrar Sesión
                                 </DropdownLink>
                             </form>
                         </template>

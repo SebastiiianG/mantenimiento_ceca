@@ -31,12 +31,7 @@ const deleteCgBrand = (cgBrand) => {
     }
 };
 
-// Función para formatear los botones de paginación
-const formatPaginationLabel = (label) => {
-    if (label.toLowerCase().includes('previous')) return 'Anterior';
-    if (label.toLowerCase().includes('next')) return 'Siguiente';
-    return label;
-};
+
 </script>
 
 <template>
@@ -116,9 +111,9 @@ const formatPaginationLabel = (label) => {
                             :href="link.url"
                             class="px-3 py-2 border rounded border-amarilloUAEH"
                             :class="{'font-bold': link.active}"
-                            v-html="formatPaginationLabel(link.label)">
+                            v-html="link.label">
                         </Link>
-                        <span v-else class="px-3 py-2 border rounded text-gray-400 border-amarilloUAEH" v-html="formatPaginationLabel(link.label)"></span>
+                        <span v-else class="px-3 py-2 border rounded text-gray-400 border-amarilloUAEH" v-html="link.label"></span>
                     </template>
                 </div>
             </div>

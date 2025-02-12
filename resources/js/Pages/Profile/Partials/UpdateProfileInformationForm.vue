@@ -17,6 +17,7 @@ const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
+    user_number: props.user.user_number,
     photo: null,
 });
 
@@ -78,11 +79,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Información de Perfil
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Actualiza la información de perfil de tu cuenta y la dirección de correo electrónico.
         </template>
 
         <template #form>
@@ -140,6 +141,20 @@ const clearPhotoFileInput = () => {
                     autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!-- Name -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="user_number" value="Número Empleado" />
+                <TextInput
+                    id="user_name"
+                    v-model="form.user_number"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="name"
+                />
+                <InputError :message="form.errors.user_number" class="mt-2" />
             </div>
 
             <!-- Email -->
