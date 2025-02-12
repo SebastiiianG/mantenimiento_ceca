@@ -26,7 +26,7 @@ const form = useForm({
 <template>
     <AppLayout title="Edit Brand">
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="font-semibold text-xl text-white leading-tight">
                 Editar Marca
             </h1>
         </template>
@@ -34,7 +34,7 @@ const form = useForm({
         <div class="py-12">
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 bg-cremaUAEH border-b border-gray-200">
+                    <div class="p-6 bg-whiteUAEH border-b border-gray-200">
                         <CgBrandForm :updating = "true" :form="form" @submit = "form.put(route('cgBrands.update', cgBrand.id))" />
                     </div>
                 </div>
