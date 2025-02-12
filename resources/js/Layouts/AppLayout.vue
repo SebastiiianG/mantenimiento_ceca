@@ -275,7 +275,7 @@ const logout = () => {
                             <!-- Authentication -->
                             <form @submit.prevent="logout">
                                 <DropdownLink as="button">
-                                    Cerrar Sesion
+                                    Cerrar Sesión
                                 </DropdownLink>
                             </form>
                         </template>

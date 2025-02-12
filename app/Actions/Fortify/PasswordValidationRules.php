@@ -13,6 +13,8 @@ trait PasswordValidationRules
      */
     protected function passwordRules(): array
     {
-        return ['required', 'string', Password::default(), 'confirmed'];
+        //Define los requisitos de la contraseña, debe ser una cadena de caracteres
+        //con una longitud mínima de 4
+        return ['required', 'string', Password::min(4), 'confirmed'];
     }
 }

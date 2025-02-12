@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: 'CgBrandForm'
+        name: 'CgKindFailureForm'
     }
 </script>
 
@@ -31,18 +31,18 @@ import TextInput from '@/Components/TextInput.vue';
 <template>
     <FormSection @submitted="$emit('submit')">
         <template #title>
-            {{ updating ? 'Editar Marca' : 'Añadir Marca' }}
+            {{ updating ? 'Editar Tipo de Falla' : 'Añadir Tipo de Falla' }}
         </template>
 
         <template #description>
-            {{ updating ? 'Modifica La Información De La Marca' : 'Añade Una Nueva Marca' }}
+            {{ updating ? 'Modifica La Información Del Tipo de Falla' : 'Añade Un Nuevo Tipo De Falla' }}
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-6 shadow-lg">
-                <InputLabel for="brand_name" value="Nombre De La Marca"/>
-                <TextInput id="brand_name" v-model="form.brand_name" type="text" autocomplete="brand_name" class="mt-1 block w-full"/>
-                <InputError :message="$page.props.errors.brand_name" class="mt-2"/>
+            <div class="col-span-6 sm:col-span-6">
+                <InputLabel for="failure" value="Nombre De La Falla"/>
+                <TextInput id="failure" v-model="form.failure" type="text" autocomplete="failure" class="mt-1 block w-full"/>
+                <InputError :message="$page.props.errors.failure" class="mt-2"/>
             </div>
         </template>
 
