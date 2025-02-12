@@ -192,7 +192,7 @@ const logout = () => {
 
                         </span>
                         <span class="hidden md:block">
-                            Tipo de Fallas
+                            Fallas
                         </span>
                     </NavLink>
                 </div>
@@ -207,7 +207,7 @@ const logout = () => {
 
                         </span>
                         <span class="hidden md:block">
-                            Tipo de Dispositivos
+                            Dispositivos
                         </span>
                     </NavLink>
                 </div>
@@ -223,7 +223,7 @@ const logout = () => {
 
                         </span>
                         <span class="hidden md:block">
-                            Tipo de Personas
+                            Personas
                         </span>
                     </NavLink>
                 </div>
@@ -232,9 +232,8 @@ const logout = () => {
         <!-- LAYOUT DERECHO -->
         <div class="w-full">
             <!-- HEADER -->
-            <div class="bg-white border-b border-gray-100 py-4 px-6 size-16 w-full flex ">
-                <!-- TODO: que este alineado a la derecha -->
-                <div class="">
+            <div class="bg-rojoOscuroUAEH border-b border-rojoOscuroUAEH py-4 px-6 size-16 w-full flex items-center justify-between">                <!-- TODO: que este alineado a la derecha -->
+                <div class="flex justify-end ml-auto">
                     <Dropdown align="right" width="48">
                         <template #trigger>
                             <button v-if="$page.props.jetstream.managesProfilePhotos"
@@ -260,7 +259,7 @@ const logout = () => {
                         <template #content>
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                Manejar Cuenta
+                                Administrar Cuenta
                             </div>
 
                             <DropdownLink :href="route('profile.show')">
