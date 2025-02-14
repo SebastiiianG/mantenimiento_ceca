@@ -55,7 +55,7 @@ const deleteCgBrand = (cgBrand) => {
                                 </p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <Link v-if="$page.props.user.permissions.includes('create brands')" class="text-white bg-rojoMedioUAEH py-2 px-4 rounded hover:bg-rojoOscuroUAEH" :href="route('cgBrands.create')">
+                                <Link v-if="$page.props.user.permissions.includes('create brands')" class="inline-flex items-center px-4 py-2 bg-rojoMedioUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-rojoOscuroUAEH focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('cgBrands.create')">
                                     Añadir Marca
                                 </Link>
                             </div>

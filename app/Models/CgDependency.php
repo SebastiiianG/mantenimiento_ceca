@@ -9,6 +9,8 @@ class CgDependency extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['dependency_name'];
+
     public function cgAcademicAreas()
 	{
 		return $this->hasMany(CgAcademicArea::class);

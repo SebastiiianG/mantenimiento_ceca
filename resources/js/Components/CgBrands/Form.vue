@@ -39,10 +39,10 @@ import TextInput from '@/Components/TextInput.vue';
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-6 shadow-lg">
+            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="brand_name" value="Nombre De La Marca"/>
-                <TextInput id="brand_name" v-model="form.brand_name" type="text" autocomplete="brand_name" class="mt-1 block w-full"/>
-                <InputError :message="$page.props.errors.brand_name" class="mt-2"/>
+                <TextInput id="brand_name" v-model="form.brand_name" type="text" autocomplete="brand_name" class="mt-1 block w-full shadow-xl"/>
+                <InputError :message="$page.props.errors.brand_name" class="mt-2 bg-opacity-0"/>
             </div>
         </template>
 
