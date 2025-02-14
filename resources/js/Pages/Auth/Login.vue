@@ -58,7 +58,7 @@ const submit = () => {
                 />
                 <InputError class="mt-2" :message="form.errors.user_number" />
             </div>
-            
+
         <!--
             <div>
                 <InputLabel for="email" value="Número de Empleado" />

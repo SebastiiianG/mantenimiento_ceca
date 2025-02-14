@@ -33,8 +33,8 @@ const form = useForm({
 
         <div class="py-12">
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 bg-whiteUAEH border-b border-gray-200">
+                <div class="bg-cremaUAEH overflow-hidden">
+                    <div class="p-6">
                         <CgBrandForm :updating = "true" :form="form" @submit = "form.put(route('cgBrands.update', cgBrand.id))" />
                     </div>
                 </div>
