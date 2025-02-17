@@ -13,11 +13,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $users = User::paginate(5);
-        return inertia('User/Index',['users' => $users]);
+        $query = User::query();
+        //Aplicar búsqueda solo si se proporciona un valor
+        if ($request->filled('search')){
+            $query->where('name', 'LIKE', '%' .
+            $request->search . '%');
+        }
+
+        $users = $query->orderBy('name','asc')->paginate(10)->withQueryString();
+
+        return inertia('User/Index',[
+            'users' => $users,
+            'search' => $request->search
+        ]);
     }
 
     /**
@@ -50,25 +60,26 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $users)
+    public function edit(User $user)
     {
-        //enviar el objeto usuario para evitar el find id
-        return inertia('User/Edit',['users' => $users]);
+        return inertia('User/Edit',['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->update ($request->validated());
+        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index');
     }
 }
