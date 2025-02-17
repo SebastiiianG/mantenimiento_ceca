@@ -83,7 +83,13 @@ const deleteUser = (user) => {
                             <thead class="bg-rojoMedioUAEH">
                                 <tr>
                                     <th class="py-3 px-6 text-center text-sm font-semibold text-white">
-                                        Usuario
+                                        Nombre
+                                    </th>
+                                    <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                        Num. Empleado
+                                    </th>
+                                    <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                        Estado
                                     </th>
                                     <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                         Acciones
@@ -94,6 +100,14 @@ const deleteUser = (user) => {
                                 <tr v-for="user in users.data " :key="user.id">
                                     <td class="py-4 px-6 text-center text-gray-900">
                                         {{ user.name }}
+                                    </td>
+                                    <td class="py-4 px-6 text-center text-gray-900">
+                                        {{ user.user_number }}
+                                    </td>
+                                    <td class="py-4 px-6 text-center text-gray-900">
+
+                                        <p v-if="user.status===1">Activo</p>
+                                        <p v-else>Inactivo</p>
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <Link :href="route('users.edit', user.id)"

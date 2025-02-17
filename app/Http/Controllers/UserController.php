@@ -18,13 +18,14 @@ class UserController extends Controller
         $query = User::query();
         //Aplicar búsqueda solo si se proporciona un valor
         if ($request->filled('search')){
-            $query->where('name', 'LIKE', '%' .
-            $request->search . '%');
+            $query->where('name', 'LIKE', '%' . $request->search . '%')
+            ->orWhere('user_number', 'LIKE', '%' . $request->search . '%');
+
         }
 
         $users = $query->orderBy('name','asc')->paginate(10)->withQueryString();
 
-        return inertia('User/Index',[
+        return inertia('Users/Index',[
             'users' => $users,
             'search' => $request->search
         ]);
@@ -35,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return inertia('User/Create');
+        return inertia('Users/Create');
     }
 
     /**
@@ -61,8 +62,8 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
-    {
-        return inertia('User/Edit',['user' => $user]);
+    { /* user */
+        return inertia('Users/Edit',['users' => $user]);
     }
 
     /**

@@ -1,36 +1,52 @@
 <script setup>
 import { computed } from 'vue';
 
-const emit = defineEmits(['update:checked']);
+/**
+ * Emite 'update:modelValue' al cambiar la selección
+ */
+const emit = defineEmits(['update:modelValue']);
 
+/**
+ * Define props para soportar v-model con 'modelValue'
+ */
 const props = defineProps({
-    checked: {
-        type: [Array, Boolean],
-        default: false,
+    modelValue: {
+        type: [String, Number, Boolean],
+        default: null,
     },
     value: {
-        type: String,
+        type: [String, Number, Boolean],
         default: null,
+    },
+    name: {
+        type: String,
+        default: '',
+    },
+    id: {
+        type: String,
+        default: '',
     },
 });
 
-const proxyChecked = computed({
+/**
+ * Computed que hace de proxy entre modelValue y el input
+ */
+const proxyValue = computed({
     get() {
-        return props.checked;
+        return props.modelValue;
     },
-
     set(val) {
-        emit('update:checked', val);
+        emit('update:modelValue', val);
     },
 });
 </script>
 
-
 <template>
-    <input
-        v-model="proxyChecked"
-        type="radio"
-        :value="value"
-        class="border-gray-300 text-[#841816] shadow-sm focus:ring-[#841816]"
-    >
+    <!--
+    'type="radio"'
+    ':value="value"' => valor que representa este radio
+    'v-model="proxyValue"' => enlaza con modelValue en el padre
+    -->
+    <input :id="id" :name="name" type="radio" v-model="proxyValue" :value="value"
+        class="border-gray-300 text-naranjaUAEH shadow-sm focus:ring-naranjaUAEH">
 </template>
