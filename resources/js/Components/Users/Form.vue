@@ -1,4 +1,5 @@
 <script>
+import DropdownLink from '../DropdownLink.vue';
     export default {
         name: 'UserForm'
     }
@@ -11,36 +12,41 @@ import InputLabel from '../InputLabel.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 import TextInput from '../TextInput.vue';
 import Checkbox from '../Checkbox.vue';
-import { reactive } from 'vue';
 import RadioButton from '../RadioButton.vue';
+import Dropdown from '../Dropdown.vue';
+import DropdownLink from '../DropdownLink.vue';
 
-defineProps ({
+defineProps({
     form: {
         type: Object,
-        required: true
+        required: true,
+        default: () => ({
+            name: '',
+            email: '',
+            password: '',
+            user_number: '',
+            status: 1,
+        })
     },
     updating: {
         type: Boolean,
-        required: false,
-        default: false
+        default: false,
+        required: false
     }
+});
 
-})
 /* Comunicacion vertical ascendente */
 defineEmits(['submit'])
-
-/* Estado inicial para la seleccion de estado */
-const state = reactive({
-    status: 1
-    })
 
 </script>
 
 <template>
     <!-- Cuando se envia este formulario emite un 'submit' que se espera en Create.vue, el submitted viene desde el formSection que se usa para comunicarse con este -->
-    <FormSection @submitted="$emit('submit', { ...form, status: state.status })">
+
+    <FormSection @submitted="$emit('submit', form)">
         <template #title>
             <!-- ternaria para colocar un titulo en caso que se ocupe le formulario para actualizar o crear  -->
+
             {{ updating ? 'Editar Usuario' : 'Crear nuevo usuario' }}
         </template>
 
@@ -61,15 +67,24 @@ const state = reactive({
                 <InputError :message="$page.props.errors.email" class="mt-2" />
             </div>
 
-            <div class="col-span-8 sm:col-span-8">
+            <div v-if="!updating" class="col-span-8 sm:col-span-8">
                 <InputLabel for="password" value="Contraseña" />
-                <TextInput id="password" type="password" v-model="form.password" autocomplete="password" class="mt-1 w-full" required  />
+                <TextInput
+                    id="password"
+                    type="password"
+                    v-model="form.password"
+                    autocomplete="password"
+                    class="mt-1 w-full"
+                    required
+                />
                 <InputError :message="$page.props.errors.password" class="mt-2" />
             </div>
 
+
+
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="user_number" value="Numero de empleado" />
-                <TextInput id="user_number" type="text" v-model="form.user_number" autocomplete="user_number" class="mt-1 w-full" required  />
+                <TextInput id="user_number" type="number" v-model="form.user_number" autocomplete="user_number" class="mt-1 w-full" required  />
                 <InputError :message="$page.props.errors.user_number" class="mt-2" />
             </div>
 
@@ -77,10 +92,10 @@ const state = reactive({
                 <InputLabel for="status" value="Estado" />
                     <div class="flex items-center space-x-4 mt-2">
                         <!-- Opcion activo -->
-                        <RadioButton  id="active" v-model="state.status" name="status" :value=1 />
+                        <RadioButton  id="active" v-model="form.status" name="status" :value=1 />
                         <InputLabel for="active" class="inline-flex items-center text-sm text-gray-800">Activo</InputLabel>
                         <!-- Opcion inactivo -->
-                        <RadioButton id="inactive" v-model="state.status" name="status" :value=0 />
+                        <RadioButton id="inactive" v-model="form.status" name="status" :value=0 />
                         <InputLabel for="inactive" class="inline-flex items-center text-sm text-gray-800">Inactivo</InputLabel>
                     </div>
             </div>
