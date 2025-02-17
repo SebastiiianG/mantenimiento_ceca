@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::resource('/cgAcademicAreas', CgAcademicAreaController::class);
     Route::resource('/cgBrands', CgBrandController::class);
     Route::resource('/cgKindFailures', CgKindFailureController::class);
-    Route::resource('cgKindObjects', CgKindObjectController::class);
+    Route::resource('/cgKindObjects', CgKindObjectController::class);
     Route::resource('/cgKindPeople', CgKindPersonController::class);
     Route::resource('/users', UserController::class);
     Route::resource('/orders', OrderController::class);

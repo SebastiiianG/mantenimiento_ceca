@@ -21,7 +21,7 @@ const form = useForm({
     email: props.user.email,
     password: props.user.password,
     user_number: props.user.user_number,
-    state: props.user.state
+    state: props.user.status
 })
 
 </script>

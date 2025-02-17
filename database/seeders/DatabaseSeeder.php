@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             //AcademicAreaSeeder::class,
             BrandSeeder::class,
+            DependencySeeder::class,
         ]);
 
     }

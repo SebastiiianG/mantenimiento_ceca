@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cg_dependencies', function (Blueprint $table) {
             $table->id();
-            $table->string('dependency_name', 80);
+            $table->string('dependency_name', 150);
             $table->timestamps();
         });
     }
