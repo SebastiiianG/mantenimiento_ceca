@@ -92,7 +92,8 @@ const logout = () => {
 
                 <!-- submenu de catalogos -->
                 <h3 class="hidden md:block md:mt-2 md:text-gray-600 md:text-sm md:font-medium md:leading-5">
-                    Administracion</h3>
+                    Administración
+                </h3>
 
                 <div v-if="$page.props.user.permissions.includes('read users')">
 

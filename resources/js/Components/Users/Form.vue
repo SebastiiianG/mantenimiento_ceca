@@ -41,35 +41,35 @@ const state = reactive({
     <FormSection @submitted="$emit('submit', { ...form, status: state.status })">
         <template #title>
             <!-- ternaria para colocar un titulo en caso que se ocupe le formulario para actualizar o crear  -->
-            {{ updating ? 'Actualizar usuario' : 'Crear nuevo usuario' }}
+            {{ updating ? 'Editar Usuario' : 'Crear nuevo usuario' }}
         </template>
 
         <template #description>
-            {{ updating ? 'Actualizando el usuario seleccionado' : 'Rellene los datos para crear un usuario' }}
+            {{ updating ? 'Modifica la informacion del usuario seleccionado' : 'Rellene los datos para crear un usuario' }}
         </template>
 
         <template #form>
-            <div class="col-span-8 sm:col-span-8">
+            <div class="col-span-8 sm:col-span-8 shadow-lg">
                 <InputLabel for="name" value="Nombre completo" />
-                <TextInput id="name" type="text" v-model="form.name" class="mt-1 w-full" required autofocus />
+                <TextInput id="name" type="text" v-model="form.name" autocomplete="name" class="mt-1 w-full" required autofocus />
                 <InputError :message="$page.props.errors.name" class="mt-2" />
             </div>
 
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="email" value="Correo electrónico" />
-                <TextInput id="email" type="email" v-model="form.email" class="mt-1 w-full" required />
+                <TextInput id="email" type="email" v-model="form.email" autocomplete="email" class="mt-1 w-full" required />
                 <InputError :message="$page.props.errors.email" class="mt-2" />
             </div>
 
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="password" value="Contraseña" />
-                <TextInput id="password" type="password" v-model="form.password" class="mt-1 w-full" required  />
+                <TextInput id="password" type="password" v-model="form.password" autocomplete="password" class="mt-1 w-full" required  />
                 <InputError :message="$page.props.errors.password" class="mt-2" />
             </div>
 
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="user_number" value="Numero de empleado" />
-                <TextInput id="user_number" type="text" v-model="form.user_number" class="mt-1 w-full" required  />
+                <TextInput id="user_number" type="text" v-model="form.user_number" autocomplete="user_number" class="mt-1 w-full" required  />
                 <InputError :message="$page.props.errors.user_number" class="mt-2" />
             </div>
 
@@ -90,9 +90,6 @@ const state = reactive({
             <PrimaryButton>
                 {{ updating ? 'Actualizar ' : 'Crear' }}
             </PrimaryButton>
-
         </template>
-
     </FormSection>
-
 </template>
