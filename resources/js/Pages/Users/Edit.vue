@@ -10,18 +10,18 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import UserForm from '@/Components/Users/Form.vue';
 
 const props = defineProps({
-    user: {
+    users: {
         type: Object,
         required: true
     }
 });
 
 const form = useForm({
-    name: props.user.name,
-    email: props.user.email,
-    password: props.user.password,
-    user_number: props.user.user_number,
-    state: props.user.state
+    name: props.users.name,
+    email: props.users.email,
+    password: props.users.password,
+    user_number: props.users.user_number,
+    status: props.users.status
 })
 
 </script>
@@ -37,9 +37,9 @@ const form = useForm({
 
         <div class="py-12">
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 bg-whiteUAEH border-b border-gray-200">
-                        <UserForm :updating = "true" :form="form" @submit = "form.put(route('users.update', props.user.id))" />
+                <div class="overflow-hidden sm:rounded-lg">
+                    <div class="p-6 bg-cremaUAEH border-b border-gray-200">
+                        <UserForm :updating = "true" :form="form" @submit= "form.put(route('users.update', users.id))"/>
                     </div>
                 </div>
             </div>
