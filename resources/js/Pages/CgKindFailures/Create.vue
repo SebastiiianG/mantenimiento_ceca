@@ -15,10 +15,10 @@ const form = useForm({
 </script>
 
 <template>
-    <AppLayout title="Create ">
+    <AppLayout title="Create Failure">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight" v-if="$page.props.user.permissions.includes('create failures')">
-                Añadir tipo de Falla
+                Añadir Tipo de Falla
             </h1>
         </template>
 

@@ -9,6 +9,8 @@ class CgKindPerson extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['kind_person'];
+
     public function orderDevices(){
         return $this->hasMany(OrderDevice::class);
     }

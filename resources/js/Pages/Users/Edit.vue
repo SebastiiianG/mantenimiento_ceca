@@ -17,11 +17,11 @@ const props = defineProps({
 });
 
 const form = useForm({
-    name: props.users.name,
-    email: props.users.email,
-    password: props.users.password,
-    user_number: props.users.user_number,
-    status: props.users.status
+    name: props.user.name,
+    email: props.user.email,
+    password: props.user.password,
+    user_number: props.user.user_number,
+    state: props.user.status
 })
 
 </script>
