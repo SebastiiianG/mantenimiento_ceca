@@ -75,13 +75,13 @@ const deleteCgDependency = (cgDependency) => {
 
                 <!-- Tabla -->
                 <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
+                    <table class="min-w-full table-fixed divide-y divide-gray-300">
                         <thead class="bg-rojoMedioUAEH">
                             <tr>
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Dependencia
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-6 text-center text-sm font-semibold text-white" colspan="2">
                                     Acciones
                                 </th>
                             </tr>
@@ -91,10 +91,17 @@ const deleteCgDependency = (cgDependency) => {
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ cgDependency.dependency_name }}
                                 </td>
-                                <td class="py-4 px-6 text-center">
-                                    <Link :href="route('cgDependencies.edit', cgDependency.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update dependencies')">
-                                        Editar</Link>
-                                    <button @click="deleteCgDependency(cgDependency)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete dependencies')">
+                                <td class="py-4 px-6 text-center w-24">
+                                    <Link :href="route('cgDependencies.edit', cgDependency.id)"
+                                        class="text-naranjaUAEH hover:underline"
+                                        v-if="$page.props.user.permissions.includes('update dependencies')">
+                                        Editar
+                                    </Link>
+                                </td>
+                                <td class="py-4 px-6 text-center w-24">
+                                    <button @click="deleteCgDependency(cgDependency)"
+                                        class="text-rojoUAEH hover:underline"
+                                        v-if="$page.props.user.permissions.includes('delete dependencies')">
                                         Eliminar
                                     </button>
                                 </td>
