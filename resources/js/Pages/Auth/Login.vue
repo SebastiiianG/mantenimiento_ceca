@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Garza from '@/Components/Garza.vue';
 
 defineProps({
     canResetPassword: Boolean,
@@ -35,7 +36,7 @@ const submit = () => {
 
     <AuthenticationCard>
         <template #logo>
-            <AuthenticationCardLogo />
+            <Garza/>
         </template>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
