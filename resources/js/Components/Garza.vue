@@ -1,6 +1,5 @@
 <template>
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="100%" viewBox="0 0 1117 1555" enable-background="new 0 0 1117 1555" xml:space="preserve">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" max-width="300px" width="50%" height="auto" viewBox="0 0 1117 1555" xml:space="preserve">
         <path fill="#000000" opacity="1.000000" stroke="none"
             d="
         M566.254028,1293.373535
