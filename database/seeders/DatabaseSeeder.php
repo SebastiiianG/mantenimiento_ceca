@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Faker\Provider\ar_EG\Person;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use PHPUnit\Framework\TestStatus\Failure;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +24,9 @@ class DatabaseSeeder extends Seeder
             //AcademicAreaSeeder::class,
             BrandSeeder::class,
             DependencySeeder::class,
+            ObjectSeeder::class,
+            PersonSeeder::class,
+            FailureSeeder::class,
         ]);
 
     }

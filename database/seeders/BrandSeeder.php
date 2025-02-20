@@ -13,69 +13,102 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
-        CgBrand::create([
-            'brand_name' => 'Apple'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Samsung'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Epson'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Dell'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'HP'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Lenovo'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Sony'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Canon'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'ASUS'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Acer'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Microsoft'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'JBL'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'LG'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'MSI'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'AMD'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Intel'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'NVidia'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Kingston'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Cisco'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Logitech'
-        ]);
-        CgBrand::create([
-            'brand_name' => 'Razer'
-        ]);
+        $brands = [
+            '3Com',
+            'Acer',
+            'Acteck',
+            'ADATA',
+            'Akita',
+            'Alaska',
+            'Alienware',
+            'Alton',
+            'American Power Conversion',
+            'AOpen',
+            'APC',
+            'Apolo',
+            'Apple',
+            'Artec',
+            'Asaji',
+            'ASUS',
+            'AT&T',
+            'Avaya',
+            'AVC',
+            'BenQ',
+            'Belkin',
+            'Best Power',
+            'Bestec',
+            'Blue Code',
+            'Bose',
+            'Boxlight',
+            'Brother',
+            'BTC',
+            'Callcomp',
+            'Canon',
+            'Celmi',
+            'Centra',
+            'Cisco',
+            'CNB',
+            'Coin',
+            'Compaq',
+            'Creative',
+            'Daewoo',
+            'Data Shield',
+            'Dell',
+            'Delta',
+            'Digital',
+            'DSP',
+            'Ecoin',
+            'ECS',
+            'Edge Systems',
+            'EEE',
+            'E-Geforce',
+            'EMachines',
+            'Epson',
+            'Eti Palca',
+            'Evotec',
+            'Fabrireal',
+            'Forza Power Technologies',
+            'Gateway',
+            'Genérico',
+            'Genesis',
+            'Genicom',
+            'Genius',
+            'Gigabyte',
+            'Gigaware',
+            'Green',
+            'HGST',
+            'Hipro',
+            'Hitachi',
+            'HP',
+            'HS',
+            'IBM',
+            'IEMEX',
+            'Intel',
+            'ISB',
+            'JBL',
+            'Kingston',
+            'Koblenz',
+            'Kodak',
+            'Lenovo',
+            'LG',
+            'Microsoft',
+            'NVIDIA GeForce',
+            'Panasonic',
+            'Philips',
+            'Pioneer',
+            'Polaroid',
+            'Samsung',
+            'Steren',
+            'Toshiba',
+            'TP-Link',
+            'Xerox',
+        ];
+
+        foreach ($brands as $brand) {
+            CgBrand::create([
+                'brand_name' => $brand,
+            ]);
+        }
 
     }
 }

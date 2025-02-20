@@ -38,7 +38,7 @@ class CgDependencyRequest extends FormRequest
         return [
             //Devuelve un mensaje personalizado
             'failure.unique' => __('La dependencia universitaria ya existe'),
-            'failure.max' => __('El nombre de la dependencia no puede superar los 80 caracteres.')
+            'failure.max' => __('El nombre de la dependencia no puede superar los 150 caracteres.')
 
 
         ];
