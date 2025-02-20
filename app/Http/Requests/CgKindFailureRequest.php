@@ -26,7 +26,7 @@ class CgKindFailureRequest extends FormRequest
             'failure' => [
                 'required',
                 'string',
-                'max:40',
+                'max:80',
                 Rule::unique(table: 'cg_kind_failures', column: 'failure')->ignore(id: request('cgKindFailure'), idColumn: 'id'),
             ],
 
@@ -38,7 +38,7 @@ class CgKindFailureRequest extends FormRequest
         return [
             //Devuelve un mensaje personalizado
             'failure.unique' => __('El tipo de falla ya existe'),
-            'failure.max' => __('El nombre de la falla no puede superar los 40 caracteres.')
+            'failure.max' => __('El nombre de la falla no puede superar los 80 caracteres.')
 
         ];
     }

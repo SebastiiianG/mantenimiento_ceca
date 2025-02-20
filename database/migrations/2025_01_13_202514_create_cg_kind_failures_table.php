@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cg_kind_failures', function (Blueprint $table) {
             $table->id();
-            $table->string('failure', 40);
+            $table->string('failure', 80);
             $table->timestamps();
         });
     }
