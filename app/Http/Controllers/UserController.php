@@ -16,12 +16,26 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $query = User::query();
-        //Aplicar búsqueda solo si se proporciona un valor
-        if ($request->filled('search')){
-            $query->where('name', 'LIKE', '%' . $request->search . '%')
-            ->orWhere('user_number', 'LIKE', '%' . $request->search . '%');
+        // Aplicar búsqueda solo si se proporciona un valor
+        if ($request->filled('search')) {
+            $search = strtolower($request->search); // Convertimos la búsqueda a minúsculas para evitar problemas de mayúsculas/minúsculas.
 
+            $query->where(function ($q) use ($search) {
+                // Filtra los usuarios cuyo nombre o número de empleado coincidan con la búsqueda
+                $q->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('user_number', 'LIKE', '%' . $search . '%');
+
+                // Si el usuario busca "Activo", filtramos solo los usuarios con status = 1
+                if ($search === 'activo') {
+                    $q->orWhere('status', 1);
+                }
+                // Si el usuario busca "Inactivo", filtramos solo los usuarios con status = 0
+                elseif ($search === 'inactivo') {
+                    $q->orWhere('status', 0);
+                }
+            });
         }
+
 
         $users = $query->orderBy('status', 'desc') // Primero los usuarios activos (1), luego los inactivos (0)
                ->orderBy('name', 'asc') // Luego ordena por nombre
