@@ -27,7 +27,7 @@ class CgKindPersonRequest extends FormRequest
                 'required', // El campo es obligatorio
                 'string', // Debe ser una cadena de texto
                 'max:30', // No puede tener más de 30 caracteres
-                Rule::unique(table: 'cg_kind_people', column: 'object') // Debe ser único en la tabla cg_kind_people
+                Rule::unique(table: 'cg_kind_people', column: 'kind_person') // Debe ser único en la tabla cg_kind_people
                     ->ignore(id: request('cgKindPerson'), idColumn: 'id'), // Ignora el ID actual en caso de edición
             ],
         ];
