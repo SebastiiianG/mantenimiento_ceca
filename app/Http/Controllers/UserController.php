@@ -23,7 +23,10 @@ class UserController extends Controller
 
         }
 
-        $users = $query->orderBy('name','asc')->paginate(10)->withQueryString();
+        $users = $query->orderBy('status', 'desc') // Primero los usuarios activos (1), luego los inactivos (0)
+               ->orderBy('name', 'asc') // Luego ordena por nombre
+               ->paginate(10)
+               ->withQueryString();
 
         return inertia('Users/Index',[
             'users' => $users,
