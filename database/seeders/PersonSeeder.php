@@ -15,9 +15,9 @@ class PersonSeeder extends Seeder
     {
         $people = [
             'Alumno',
-            'Docente',
+            'Académico',
             'Administrativo',
-            'Visitante',
+            'Externo',
             'Proveedor',
             'Otro',
         ];

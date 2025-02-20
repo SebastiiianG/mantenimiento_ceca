@@ -9,7 +9,11 @@ class CgAcademicArea extends Model
 {
     use HasFactory;
 
-    protected $guarded = [ ];
+    protected $fillable = [
+        'academic_area',
+        'cg_dependency_id'
+    ];
+
 
     public function cgDependency()
     {
