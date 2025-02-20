@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
                 'max:100',
                 Rule::unique('users')->ignore($this->user), // Evita error en actualización
             ],
-            'password' => $this->isMethod('post') ? 'required|string|min:8' : 'sometimes|nullable|string|min:8',
+            'password' => $this->isMethod('post') ? 'required|string|min:4' : 'sometimes|nullable|string|min:4',
             'user_number' => [
                 'required',
                 'integer',
@@ -51,10 +51,10 @@ class UserRequest extends FormRequest
             'email.email' => 'El correo electrónico debe ser válido.',
             'email.unique' => 'Este correo electrónico ya está registrado.',
             'password.required' => 'El campo contraseña es obligatorio.',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.min' => 'La contraseña debe tener al menos 4 caracteres.',
             'user_number.required' => 'El número de empleado es obligatorio.',
-            'user_number.integer' => 'El número de empleado debe ser un número.',
-            'user_number.unique' => 'Este número de empleado ya está registrado.',
+            'user_number.integer' => 'El número de empleado debe ser completamente numérico.',
+            'user_number.unique' => 'El número de empleado ya está registrado.',
         ];
     }
 }

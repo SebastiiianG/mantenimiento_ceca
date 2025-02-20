@@ -79,9 +79,6 @@ class CgKindFailureController extends Controller
         return redirect()->route('cgKindFailures.index');
     }
 
-        //
-
-
     /**
      *
      *

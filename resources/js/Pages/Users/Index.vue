@@ -71,7 +71,7 @@ const deleteUser = (user) => {
                             </div>
 
                             <!-- Input de busqueda -->
-                            <input v-model="searchQuery" type="text" autocomplete="off" placeholder="Buscar Usuario"
+                            <input v-model="searchQuery" type="text" autocomplete="off" placeholder="Buscar usuario"
                                 id="search"
                                 class="block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-grisUAEH placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amarilloUAEH sm:text-sm sm:leading-6" />
                         </div>
@@ -107,7 +107,7 @@ const deleteUser = (user) => {
                                     <td class="py-4 px-6 text-center text-gray-900">
 
                                         <p v-if="user.status===1">Activo</p>
-                                        <p v-else>Inactivo</p>
+                                        <p v-if="user.status==0">Inactivo</p>
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <Link :href="route('users.edit', user.id)"
