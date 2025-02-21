@@ -13,7 +13,11 @@ const props = defineProps({
     users: {
         type: Object,
         required: true
-    }
+    },
+    role: {
+        type: Object, //rol actual del usuario
+        required: true
+    },
 });
 
 const form = useForm({
@@ -21,7 +25,8 @@ const form = useForm({
     email: props.users.email,
     password: props.users.password,
     user_number: props.users.user_number,
-    status: props.users.status
+    status: props.users.status,
+    role: props.role[0] , //rol actual del usuario
 })
 
 </script>
@@ -39,7 +44,7 @@ const form = useForm({
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
                 <div class="overflow-hidden sm:rounded-lg">
                     <div class="p-6 bg-cremaUAEH border-b border-gray-200">
-                        <UserForm :updating = "true" :form="form" @submit= "form.put(route('users.update', users.id))"/>
+                        <UserForm :updating = "true" :form="form" :role="role" @submit= "form.put(route('users.update', users.id))"/>
                     </div>
                 </div>
             </div>

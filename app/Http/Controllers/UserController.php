@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Inertia\Inertia;
 use App\Http\Requests\UserRequest;
 
@@ -45,8 +46,15 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        //guardar los valores del formulario
-        User::create($request->validated());
+        //guardar los valores validados del formulario
+        $user = User::create($request->validated());
+
+        //asignar el rol al usuario
+        $user->assignRole($request->role);
+
+        //mandar msj de confirmacion
+        console.log('Usuario creado');
+
         return redirect()->route('users.index');
     }
 
@@ -62,8 +70,10 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
-    { /* user */
-        return inertia('Users/Edit',['users' => $user]);
+    {
+        $role = $user->getRoleNames(); // Obtiene los roles asignados al usuario (devuelve una colección)
+        // Obtiene todos los roles disponibles en la BD
+        return inertia('Users/Edit',['users' => $user , 'role' => $role]);
     }
 
     /**
@@ -71,7 +81,14 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        //Actualizar usuario con los datos validados
         $user->update ($request->validated());
+        //asignar el rol al usuario
+        $user->syncRoles($request->role);
+
+        //crear una sesion flash
+        //session()->flash('success','Usuario actualizado exitosamente');
+
         return redirect()->route('users.index');
     }
 
