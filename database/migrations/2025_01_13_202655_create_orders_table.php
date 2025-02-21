@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date_generation');
             $table->dateTime('date_reception')->nullable();
             $table->dateTime('delivery_date')->nullable();
-            $table->string('status', 15);
+            $table->string('status', 20);
             $table->string('client_deliveries', 50);
             $table->string('client_receives', 50)->nullable();
             $table->string('phone_number', 10)->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('mail', 50)->nullable();
             $table->unsignedBigInteger('kperson_delivery');
             $table->unsignedBigInteger('cg_academic_area_id');
-            $table->unsignedBigInteger('ceca_receives');
+            $table->unsignedBigInteger('ceca_receives')->nullable();
             $table->unsignedBigInteger('ceca_deliveries')->nullable();
             $table->timestamps();
 

@@ -1,32 +1,33 @@
 <script>
     export default {
-        name: 'CgDependenciesEdit'
+        name: 'CgKindObjectsEdit'
     }
 </script>
 
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import CgDependencyForm from '@/Components/CgDependencies/Form.vue';
+import CgKindObjectForm from '@/Components/CgKindObjects/Form.vue';
 
 
 const props = defineProps({
-    cgDependency: {
+    cgKindObject: {
         type: Object,
         required: true
     }
 });
 
 const form = useForm({
-    dependency_name: props.cgDependency.dependency_name,
+    object: props.cgKindObject.object,
+
 })
 </script>
 
 <template>
-    <AppLayout title="Edit Dependency">
+    <AppLayout title="Edit Object">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight">
-                Editar Dependencia Universitaria
+                Editar Tipo de Dispositivo
             </h1>
         </template>
 
@@ -34,11 +35,10 @@ const form = useForm({
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
                 <div class="bg-cremaUAEH overflow-hidden">
                     <div class="p-6">
-                        <CgDependencyForm :updating = "true" :form="form" @submit = "form.put(route('cgDependencies.update', cgDependency.id))" />
+                        <CgKindObjectForm :updating = "true" :form="form" @submit = "form.put(route('cgKindObjects.update', cgKindObject.id))" />
                     </div>
                 </div>
             </div>
         </div>
-
     </AppLayout>
 </template>

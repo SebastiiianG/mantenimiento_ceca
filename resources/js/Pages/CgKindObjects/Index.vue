@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'CgDependenciesIndex'
+    name: 'CgKindObjectsIndex'
 }
 
 </script>
@@ -12,7 +12,7 @@ import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
 // Recibe los datos desde Laravel
 const props = defineProps({
-    cgDependencies: Object,
+    cgKindObjects: Object,
     search: String
 });
 
@@ -21,13 +21,13 @@ const searchQuery = ref(props.search || '');
 
 // Detectar cambios en la búsqueda y actualizar los resultados en tiempo real
 watch(searchQuery, (newSearch) => {
-    router.get(route('cgDependencies.index'), { search: newSearch }, { preserveState: true, replace: true });
+    router.get(route('cgKindObjects.index'), { search: newSearch }, { preserveState: true, replace: true });
 });
 
-// Función para eliminar una marca
-const deleteCgDependency = (cgDependency) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar la dependencia universitaria "${cgDependency.dependency_name}"?`)) {
-        router.delete(route('cgDependencies.destroy', cgDependency.id));
+// Función para eliminar un dispositivo
+const deleteCgKindObject = (cgKindObject) => {
+    if (confirm(`¿Estás seguro de que deseas eliminar el dispositivo "${cgKindObject.object}"?`)) {
+        router.delete(route('cgKindObjects.destroy', cgKindObject.id));
     }
 };
 
@@ -35,10 +35,10 @@ const deleteCgDependency = (cgDependency) => {
 </script>
 
 <template>
-    <AppLayout title="Dependencias Universitarias">
+    <AppLayout title="Dispositivos">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight sm:pl-4">
-                Dependencias Universitarias
+                Catálogo de Dispositivos
             </h1>
         </template>
 
@@ -48,15 +48,15 @@ const deleteCgDependency = (cgDependency) => {
                        <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
                                 <h1 class="text-xl font-semibold text-gray-900">
-                                    Dependencias
+                                    Dispositivos
                                 </h1>
                                 <p class="mt-2 text-sm text-gray-700">
-                                    Dependencias de la Universidad Autónoma del Estado de Hidalgo.
+                                    Tipos de dispositivos que el centro de mantenimiento puede recibir.
                                 </p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <Link v-if="$page.props.user.permissions.includes('create dependencies')" class="inline-flex items-center px-4 py-2 bg-rojoMedioUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-rojoOscuroUAEH focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('cgDependencies.create')">
-                                    Añadir Dependencia
+                                <Link v-if="$page.props.user.permissions.includes('create objects')" class="inline-flex items-center px-4 py-2 bg-rojoMedioUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-rojoOscuroUAEH focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('cgKindObjects.create')">
+                                    Añadir Dispositivo
                                 </Link>
                             </div>
                        </div>
@@ -67,7 +67,7 @@ const deleteCgDependency = (cgDependency) => {
                                 </div>
 
                                  <!--Input de búsqueda-->
-                                 <input v-model="searchQuery" type="text" autocomplete="off" placeholder="Buscar dependencia" id="search" class="block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-grisUAEH placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amarilloUAEH sm:text-sm sm:leading-6"/>
+                                 <input v-model="searchQuery" type="text" autocomplete="off" placeholder="Buscar dispositivo" id="search" class="block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-grisUAEH placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amarilloUAEH sm:text-sm sm:leading-6"/>
 
                             </div>
                         </div>
@@ -75,33 +75,26 @@ const deleteCgDependency = (cgDependency) => {
 
                 <!-- Tabla -->
                 <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full table-fixed divide-y divide-gray-300">
+                    <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-rojoMedioUAEH">
                             <tr>
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
-                                    Dependencia
+                                    Dispositivo
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white" colspan="2">
+                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Acciones
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr v-for="cgDependency in cgDependencies.data" :key="cgDependency.id">
+                            <tr v-for="cgKindObject in cgKindObjects.data" :key="cgKindObject.id">
                                 <td class="py-4 px-6 text-center text-gray-900">
-                                    {{ cgDependency.dependency_name }}
+                                    {{ cgKindObject.object }}
                                 </td>
-                                <td class="py-4 px-6 text-center w-24">
-                                    <Link :href="route('cgDependencies.edit', cgDependency.id)"
-                                        class="text-naranjaUAEH hover:underline"
-                                        v-if="$page.props.user.permissions.includes('update dependencies')">
-                                        Editar
-                                    </Link>
-                                </td>
-                                <td class="py-4 px-6 text-center w-24">
-                                    <button @click="deleteCgDependency(cgDependency)"
-                                        class="text-rojoUAEH hover:underline"
-                                        v-if="$page.props.user.permissions.includes('delete dependencies')">
+                                <td class="py-4 px-6 text-center">
+                                    <Link :href="route('cgKindObjects.edit', cgKindObject.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update objects')">
+                                        Editar</Link>
+                                    <button @click="deleteCgKindObject(cgKindObject)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete objects')">
                                         Eliminar
                                     </button>
                                 </td>
@@ -112,7 +105,7 @@ const deleteCgDependency = (cgDependency) => {
 
                 <!-- Paginación -->
                 <div class="mt-4 flex justify-center space-x-2">
-                    <template v-for="link in cgDependencies.links" :key="link.label">
+                    <template v-for="link in cgKindObjects.links" :key="link.label">
                         <Link
                             v-if="link.url"
                             :href="link.url"

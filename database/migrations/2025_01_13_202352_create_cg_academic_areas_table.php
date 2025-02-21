@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cg_academic_areas', function (Blueprint $table) {
             $table->id();
-            $table->string('area_name', 80);
+            $table->string('area_name', 150);
             $table->unsignedBigInteger('cg_dependency_id');
             $table->timestamps();
 

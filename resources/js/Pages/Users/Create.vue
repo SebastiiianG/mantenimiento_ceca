@@ -24,7 +24,7 @@ const form = useForm ({
     <AppLayout title="Crear Usuario">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight" v-if="$page.props.user.permissions.includes('create users')">
-                Crear usuario
+                Crear Usuario
             </h1>
         </template>
 

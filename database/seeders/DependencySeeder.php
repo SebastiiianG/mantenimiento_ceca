@@ -1,0 +1,127 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\CgDependency;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DependencySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $dependencies = [
+            'Administración de Ciudad del Conocimiento',
+            'Administración de Edificio Central',
+            'Administración de Torres de Rectoría',
+            'Centro de Educación Continua y a Distancia',
+            'Centro de Innovación para el Desarrollo y la Capacitación en Materiales Educativos',
+            'Centro de Lenguas',
+            'Contraloría General',
+            'Coordinación de Administración y Finanzas',
+            'Defensor Universitario',
+            'Dirección de Administración de Personal',
+            'Dirección de Administración Escolar',
+            'Dirección de Ahorro para el Retiro',
+            'Dirección de Archivo General',
+            'Dirección de Autoaprendizaje de Idiomas',
+            'Dirección de Becas',
+            'Dirección de Bibliotecas y Centros de Información',
+            'Dirección de Bioterio',
+            'Dirección de Centro de Cómputo Académico',
+            'Dirección de Comunicación Social',
+            'Dirección de Control Presupuestal',
+            'Dirección de Desarrollo de Capital Humano para la Investigación',
+            'Dirección de Desarrollo e Innovación',
+            'Dirección de Ediciones y Publicaciones',
+            'Dirección de Educación Media Superior',
+            'Dirección de Educación Superior',
+            'Dirección de Enlace Institucional',
+            'Dirección de Estudios de Pertinencia, Factibilidad y Viabilidad',
+            'Dirección de Estudios Estratégicos y Desarrollo Institucional',
+            'Dirección de Eventos Especiales',
+            'Dirección de Fomento a la Lectura',
+            'Dirección de Gestión de la Calidad',
+            'Dirección de Imagen y Mercadotecnia',
+            'Dirección de Información y Sistemas',
+            'Dirección de Internacionalización',
+            'Dirección de Investigación',
+            'Dirección de la Divulgación de la Ciencia',
+            'Dirección de Laboratorios',
+            'Dirección de Mantenimiento',
+            'Dirección de Promoción Cultural',
+            'Dirección de Promoción Deportiva',
+            'Dirección de Protección Civil',
+            'Dirección de Proyectos y Obras',
+            'Dirección de Recursos Financieros',
+            'Dirección de Recursos Materiales, Adquisiciones, Arrendamientos y Servicios',
+            'Dirección de Relaciones Interinstitucionales',
+            'Dirección de Relaciones Internacionales e Intercambio Académico',
+            'Dirección de Relaciones Públicas',
+            'Dirección de Servicio Social, Prácticas Profesionales y Vinculación Laboral',
+            'Dirección de Servicios Académicos',
+            'Dirección de Superación Académica',
+            'Dirección de Tecnologías Web y Webometría',
+            'Dirección de Tesorería',
+            'Dirección de Transferencia de Tecnología',
+            'Dirección de Tutorías',
+            'Dirección de Vinculación con Egresados',
+            'Dirección General de Comunicación Social',
+            'Dirección General de Evaluación',
+            'Dirección General de Planeación',
+            'Dirección General Jurídica',
+            'División Académica',
+            'División de Extensión de la Cultura',
+            'División de Investigación, Desarrollo e Innovación',
+            'División de Vinculación e Internacionalización',
+            'Escuela Preparatoria Número 1',
+            'Escuela Preparatoria Número 2',
+            'Escuela Preparatoria Número 3',
+            'Escuela Preparatoria Número 4',
+            'Escuela Preparatoria Número 5',
+            'Escuela Preparatoria Número 6',
+            'Escuela Preparatoria Número 7',
+            'Escuela Preparatoria Número 8',
+            'Escuela Superior de Actopan',
+            'Escuela Superior de Apan',
+            'Escuela Superior de Atotonilco de Tula',
+            'Escuela Superior de Ciudad Sahagún',
+            'Escuela Superior de Huejutla',
+            'Escuela Superior de Tepeji del Río',
+            'Escuela Superior de Tizayuca',
+            'Escuela Superior de Tlahuelilpan',
+            'Escuela Superior de Zimapán',
+            'Instituto de Artes (IA)',
+            'Instituto de Ciencias Agropecuarias (ICAp)',
+            'Instituto de Ciencias Básicas e Ingeniería (ICBI)',
+            'Instituto de Ciencias de la Salud (ICSa)',
+            'Instituto de Ciencias Económico Administrativas (ICEA)',
+            'Instituto de Ciencias Sociales y Humanidades (ICSHu)',
+            'Museo Casa Grande',
+            'Parque Científico y Tecnológico',
+            'Patronato',
+            'Radio Universidad Actopan',
+            'Radio Universidad Huejutla',
+            'Radio Universidad Pachuca',
+            'Radio Universidad San Bartolo Tutotepec',
+            'Radio Universidad Tulancingo',
+            'Radio Universidad Zimapán',
+            'Rectoría',
+            'Secretaría General',
+            'Sindicato de Personal Académico UAEH (SPAUAEH)',
+            'Sindicato Único de Trabajadores y Empleados de la Universidad Autónoma del Estado de Hidalgo (SUTEUAEH)',
+            'Sistema Universitario de Medios Autónomos',
+            'Transparencia y Acceso a la Información',
+            'Voluntariado Universitario',
+        ];
+
+        foreach ($dependencies as $dependency) {
+            CgDependency::create([
+                'dependency_name' => $dependency,
+            ]);
+        }
+    }
+}

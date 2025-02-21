@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('computers', function (Blueprint $table) {
             $table->id();
-            $table->string('password', 25);
+            $table->string('password', 40);
             $table->unsignedBigInteger('order_device_id');
             $table->timestamps();
 

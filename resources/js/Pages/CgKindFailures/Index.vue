@@ -35,7 +35,7 @@ const deleteCgKindFailure = (cgKindFailure) => {
 </script>
 
 <template>
-    <AppLayout title="Marcas">
+    <AppLayout title="Fallas">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight sm:pl-4">
                 Catálogo de Fallas

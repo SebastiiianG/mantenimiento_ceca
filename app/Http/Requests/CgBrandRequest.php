@@ -26,7 +26,7 @@ class CgBrandRequest extends FormRequest
             'brand_name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:30',
                 Rule::unique(table: 'cg_brands', column: 'brand_name')->ignore(id: request('cgBrand'), idColumn: 'id'),
             ],
 
@@ -37,7 +37,9 @@ class CgBrandRequest extends FormRequest
     {
         return [
             //Devuelve un mensaje personalizado
-            'brand_name.unique' => __('El nombre de la marca ya existe')
+            'brand_name.unique' => __('El nombre de la marca ya existe'),
+            'brand_name.max' => __('El nombre de la marca no puede superar los 30 caracteres.')
+
         ];
     }
 }
