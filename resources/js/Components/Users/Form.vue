@@ -26,6 +26,7 @@ defineProps({
             password: '',
             user_number: '',
             status: 1,
+            role: '',
         })
     },
     updating: {
@@ -55,6 +56,15 @@ defineEmits(['submit'])
         </template>
 
         <template #form>
+            <div class="col-span-8 sm:col-span-8">
+                <InputLabel for="roles" value="roles" />
+                <select id="roles" v-model="form.role">
+                    <option value="admin">Administrador</option>
+                    <option value="editor">Editor</option>
+                </select>
+
+            </div>
+
             <div class="col-span-8 sm:col-span-8 shadow-lg">
                 <InputLabel for="name" value="Nombre Completo" />
                 <TextInput id="name" type="text" v-model="form.name" autocomplete="name" class="mt-1 w-full" required autofocus />

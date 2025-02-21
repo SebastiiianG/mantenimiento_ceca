@@ -14,13 +14,14 @@ const form = useForm ({
     email: '',
     password: '',
     user_number: '',
-    status: ''
+    status: '',
+    role: ''
 });
 
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout title="Crear Usuario">
         <template #header>
             <h1 class="font-semibold text-xl text-white leading-tight" v-if="$page.props.user.permissions.includes('create users')">
                 Crear Usuario

@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
@@ -105,7 +105,6 @@ const deleteUser = (user) => {
                                         {{ user.user_number }}
                                     </td>
                                     <td class="py-4 px-6 text-center text-gray-900">
-
                                         <p v-if="user.status===1">Activo</p>
                                         <p v-if="user.status==0">Inactivo</p>
                                     </td>

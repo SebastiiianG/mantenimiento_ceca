@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
                 Rule::unique('users')->ignore($this->user), // Evita error en actualización
             ],
             'status' => 'required|boolean',
+            'role' => 'required|string|exists:roles,name' // Asegura que el rol existe en la BD
         ];
     }
 
