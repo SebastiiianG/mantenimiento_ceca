@@ -17,7 +17,7 @@ class CgAcademicArea extends Model
 
     public function cgDependency()
     {
-        return $this->belongsTo(CgDependency::class);
+        return $this->belongsTo(CgDependency::class, 'cg_dependency_id');
     }
 
     public function orders()

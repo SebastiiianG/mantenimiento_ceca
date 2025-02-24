@@ -32,7 +32,7 @@ class CgAcademicAreaRequest extends FormRequest
             'cg_dependency_id' => [
                 'required',
                 'integer',
-                'exists:cg_dependencies,id', // Asegura que la clave foránea existe en la tabla `cg_dependencies`
+                Rule::exists('cg_dependencies', 'id')// Asegura que la clave foránea existe en la tabla `cg_dependencies`
             ],
         ];
     }
