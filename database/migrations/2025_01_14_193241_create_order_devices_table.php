@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('model', 30);
             $table->text('client_observations')->max(500);
-            $table->text('diagnostic')->max(500);
-            $table->text('ceca_observations')->max(500);
+            $table->text('diagnostic')->nullable()->max(500);
+            $table->text('ceca_observations')->nullable()->max(500);
             $table->string('status', 15);
-            $table->boolean('computer')->nullable()->default(false);
+            $table->boolean('computer')->default(false);
+            $table->boolean('assigned')->default(false);
             $table->string('serial_number', 50)->nullable();
 
             // Definir las claves foráneas e índices
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('order_number', 15);
             $table->unsignedBigInteger('cg_kind_failure_id');
             $table->unsignedBigInteger('cg_kind_object_id');
-            $table->unsignedBigInteger('ceca_repairs');
+            $table->unsignedBigInteger('ceca_repairs')->nullable();
 
             $table->timestamps();
 
