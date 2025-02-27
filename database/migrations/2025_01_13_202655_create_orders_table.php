@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('cell_number', 10)->nullable();
             $table->string('mail', 50)->nullable();
             $table->unsignedBigInteger('kperson_delivery');
-            $table->unsignedBigInteger('cg_academic_area_id');
+            $table->unsignedBigInteger('cg_dependency_id');
             $table->unsignedBigInteger('ceca_receives')->nullable();
             $table->unsignedBigInteger('ceca_deliveries')->nullable();
             $table->timestamps();
@@ -37,9 +37,9 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
-            $table->foreign('cg_academic_area_id')
+            $table->foreign('cg_dependency_id')
                   ->references('id')
-                  ->on('cg_academic_areas')
+                  ->on('cg_dependencies')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 

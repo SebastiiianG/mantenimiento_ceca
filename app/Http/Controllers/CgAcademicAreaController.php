@@ -38,7 +38,8 @@ class CgAcademicAreaController extends Controller
      */
     public function create()
     {
-        $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias ordenadas
+        //$cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias ordenadas
+        $cgDependencies = CgDependency::all(); // Obtener todas las dependencias
 
         return inertia('CgAcademicAreas/Create', [
             'cgDependencies' => $cgDependencies // Pasar dependencias al formulario

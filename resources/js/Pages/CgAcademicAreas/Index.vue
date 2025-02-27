@@ -26,7 +26,7 @@ watch(searchQuery, (newSearch) => {
 
 // Función para eliminar una marca
 const deleteCgAcademicArea = (cgAcademicArea) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar el área académica "${cgBrand.area_name}"?`)) {
+    if (confirm(`¿Estás seguro de que deseas eliminar el área académica "${cgAcademicArea.area_name}"?`)) {
         router.delete(route('cgAcademicAreas.destroy', cgAcademicArea.id));
     }
 };
@@ -84,7 +84,7 @@ const deleteCgAcademicArea = (cgAcademicArea) => {
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Dependencia
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-6 text-center text-sm font-semibold text-white" colspan="2">
                                     Acciones
                                 </th>
                             </tr>
@@ -97,13 +97,16 @@ const deleteCgAcademicArea = (cgAcademicArea) => {
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ cgAcademicArea.cg_dependency?.dependency_name ?? 'Sin dependencia' }}
                                 </td>
-                                <td class="py-4 px-6 text-center">
+                                <td class="py-4 px-6 text-center w-5">
                                     <Link :href="route('cgAcademicAreas.edit', cgAcademicArea.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update academic areas')">
                                         Editar</Link>
+                                </td>
+                                <td class="py-4 px-6 text-center w-5">
                                     <button @click="deleteCgAcademicArea(cgAcademicArea)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete academic areas')">
                                         Eliminar
                                     </button>
                                 </td>
+
                             </tr>
                         </tbody>
                     </table>

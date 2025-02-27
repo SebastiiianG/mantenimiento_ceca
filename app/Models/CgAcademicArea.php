@@ -10,18 +10,15 @@ class CgAcademicArea extends Model
     use HasFactory;
 
     protected $fillable = [
-        'academic_area',
+        'area_name',
         'cg_dependency_id'
     ];
+
+    //protected $guarded = [];
 
 
     public function cgDependency()
     {
         return $this->belongsTo(CgDependency::class, 'cg_dependency_id');
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
     }
 }

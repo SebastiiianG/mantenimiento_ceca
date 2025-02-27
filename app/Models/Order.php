@@ -14,9 +14,9 @@ class Order extends Model
 		return $this->belongsTo(CgKindPerson::class);
     }
 
-	public function cgAcademicAreas()
+	public function cgDependencies()
 	{
-		return $this->belongsTo(CgAcademicArea::class);
+		return $this->belongsTo(CgDependency::class);
 	}
 
 	public function users()

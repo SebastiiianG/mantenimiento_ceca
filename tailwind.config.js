@@ -25,7 +25,8 @@ export default {
                 amarilloUAEH: '#F39200',
                 cremaUAEH: '#EAE3D8',
                 grisOscuroUAEH: '#575756',
-                grisUAEH: '#9D9D9C'
+                grisUAEH: '#9D9D9C',
+                blancoDropdown:  '#F0F6Fa',
             },
         },
     },
