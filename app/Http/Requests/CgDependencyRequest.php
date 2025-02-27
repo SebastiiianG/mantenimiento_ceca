@@ -23,7 +23,7 @@ class CgDependencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'failure' => [
+            'dependency_name' => [
                 'required',
                 'string',
                 'max:150',
@@ -37,8 +37,8 @@ class CgDependencyRequest extends FormRequest
     {
         return [
             //Devuelve un mensaje personalizado
-            'failure.unique' => __('La dependencia universitaria ya existe'),
-            'failure.max' => __('El nombre de la dependencia no puede superar los 150 caracteres.')
+            'dependency_name.unique' => __('La dependencia universitaria ya existe'),
+            'dependency_name.max' => __('El nombre de la dependencia no puede superar los 150 caracteres.')
 
 
         ];

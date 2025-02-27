@@ -94,6 +94,7 @@ class DependencySeeder extends Seeder
             'Escuela Superior de Tizayuca',
             'Escuela Superior de Tlahuelilpan',
             'Escuela Superior de Zimapán',
+            'Externo',
             'Instituto de Artes (IA)',
             'Instituto de Ciencias Agropecuarias (ICAp)',
             'Instituto de Ciencias Básicas e Ingeniería (ICBI)',

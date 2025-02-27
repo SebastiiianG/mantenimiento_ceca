@@ -19,6 +19,7 @@ const props = defineProps({
 
 const form = useForm({
     dependency_name: props.cgDependency.dependency_name,
+
 })
 </script>
 
@@ -39,6 +40,5 @@ const form = useForm({
                 </div>
             </div>
         </div>
-
     </AppLayout>
 </template>

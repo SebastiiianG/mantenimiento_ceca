@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CgBrandRequest;
-use App\Http\Requests\CgDependencyRequest;
 use App\Models\CgDependency;
 use Illuminate\Http\Request;
+use App\Http\Requests\CgDependencyRequest;
 
 class CgDependencyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de los objetos.
      */
     public function index(Request $request)
     {
-        $query = CgDependency::query();
+        $query = CgDependency::query(); // Se obtiene una consulta base del modelo CgDependency.
 
-        // Aplicar búsqueda solo si se proporciona un valor
+        // Si el usuario ha ingresado un término de búsqueda, se filtran los resultados
         if ($request->filled('search')) {
             $query->where('dependency_name', 'LIKE', '%' . $request->search . '%');
         }
 
+        // Se ordenan los objetos por nombre y se paginan los resultados (20 por página).
         $cgDependencies = $query->orderBy('dependency_name', 'asc')->paginate(20)->withQueryString();
 
+        // Se retorna la vista de Inertia con los datos paginados y la búsqueda actual.
         return inertia('CgDependencies/Index', [
             'cgDependencies' => $cgDependencies,
-            'search' => $request->search // Para que Vue recuerde la búsqueda actual
+            'search' => $request->search, // Se mantiene el término de búsqueda en el frontend
         ]);
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo objeto.
      */
     public function create()
     {
@@ -39,27 +39,21 @@ class CgDependencyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param App\Http\Requests\CgDependencyRequest
+     * Almacena un nuevo objeto en la base de datos.
+     * @param App\Http\Requests\CgDependencyRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CgDependencyRequest $request)
     {
-        //Model CgDependency
+        // Se valida la información y se crea un nuevo registro en la base de datos.
         CgDependency::create($request->validated());
+
+        // Se redirige al listado de objetos.
         return redirect()->route('cgDependencies.index');
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario de edición para un objeto específico.
      * @param CgDependency $cgDependency
      */
     public function edit(CgDependency $cgDependency)
@@ -68,26 +62,31 @@ class CgDependencyController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @return \App\Http\Requests\CgDependencyRequest
+     * Actualiza la información de un objeto en la base de datos.
+     * @param App\Http\Requests\CgDependencyRequest $request
      * @param CgDependency $cgDependency
      * @return \Illuminate\Http\Response
      */
     public function update(CgDependencyRequest $request, CgDependency $cgDependency)
     {
-        $cgDependency -> update($request->validated());
+        // Se valida y actualiza el objeto en la base de datos.
+        $cgDependency->update($request->validated());
+
+        // Se redirige al listado de objetos.
         return redirect()->route('cgDependencies.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un objeto de la base de datos.
      * @param CgDependency $cgDependency
      * @return \Illuminate\Http\Response
      */
     public function destroy(CgDependency $cgDependency)
     {
+        // Se elimina el objeto de la base de datos.
         $cgDependency->delete();
+
+        // Se redirige al listado de objetos.
         return redirect()->route('cgDependencies.index');
     }
 }

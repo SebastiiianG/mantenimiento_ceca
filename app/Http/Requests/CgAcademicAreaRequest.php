@@ -12,7 +12,11 @@ class CgAcademicAreaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+    protected function failedAuthorization()
+    {
+        throw new \Illuminate\Auth\Access\AuthorizationException('No tienes los permisos necesarios para realizar esta acción.');
     }
 
     /**
@@ -26,7 +30,7 @@ class CgAcademicAreaRequest extends FormRequest
             'area_name' => [
                 'required',
                 'string',
-                'max:80',
+                'max:150',
                 Rule::unique(table: 'cg_academic_areas', column: 'area_name')->ignore(id: request('cgAcademicArea'), idColumn: 'id'),
             ],
             'cg_dependency_id' => [
@@ -40,8 +44,9 @@ class CgAcademicAreaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'area_name.unique' => __('La dependencia universitaria ya existe'),
-            'area_name.max' => __('El nombre de la dependencia no puede superar los 150 caracteres.'),
+            'area_name.unique' => __('El área académica ya existe'),
+            'area_name.max' => __('El nombre del área académica no puede superar los 150 caracteres.'),
+            'area_name.required' => __('El nombre del área académica es obligatorio.'),
             'cg_dependency_id.required' => __('La dependencia es obligatoria.'),
             'cg_dependency_id.integer' => __('El ID de la dependencia debe ser un número válido.'),
             'cg_dependency_id.exists' => __('La dependencia seleccionada no es válida.'),
