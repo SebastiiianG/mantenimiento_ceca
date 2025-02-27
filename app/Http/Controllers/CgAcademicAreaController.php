@@ -15,6 +15,8 @@ class CgAcademicAreaController extends Controller
      */
     public function index(Request $request)
     {
+        /*$query = CgAcademicArea::with('cgDependency') // Cargar la relación con CgDependency
+        ->where('area_name', '!=', 'Sin área académica'); // Ignorar "Sin área académica"*/
         $query = CgAcademicArea::with('cgDependency'); // Cargar la relación con CgDependency
 
         // Aplicar búsqueda solo si se proporciona un valor

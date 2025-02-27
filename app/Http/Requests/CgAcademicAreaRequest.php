@@ -12,7 +12,7 @@ class CgAcademicAreaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return true; //Se cambia este valor hacia true, de lo contrario, causa un error 403 de autorización
     }
     protected function failedAuthorization()
     {

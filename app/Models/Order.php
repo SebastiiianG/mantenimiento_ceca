@@ -22,6 +22,7 @@ class Order extends Model
         'cell_number',
         'mail',
         'kperson_delivery',
+        'cg_academic_area_id',
         'cg_dependency_id',
         'ceca_receives',
         'ceca_deliveries',
@@ -32,7 +33,12 @@ class Order extends Model
 		return $this->belongsTo(CgKindPerson::class);
     }
 
-	public function cgDependencies()
+	public function cgAcademicAreas()
+	{
+		return $this->belongsTo(CgAcademicArea::class);
+	}
+
+    public function cgDependencies()
 	{
 		return $this->belongsTo(CgDependency::class);
 	}
