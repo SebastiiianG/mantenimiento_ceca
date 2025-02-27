@@ -15,10 +15,8 @@ class CgDependency extends Model
 	{
 		return $this->hasMany(CgAcademicArea::class);
 	}
-
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-
 }

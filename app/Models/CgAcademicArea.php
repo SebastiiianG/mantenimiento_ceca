@@ -16,9 +16,12 @@ class CgAcademicArea extends Model
 
     //protected $guarded = [];
 
-
     public function cgDependency()
     {
         return $this->belongsTo(CgDependency::class, 'cg_dependency_id');
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
