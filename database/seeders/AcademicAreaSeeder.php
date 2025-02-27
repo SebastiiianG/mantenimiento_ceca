@@ -42,12 +42,12 @@ class AcademicAreaSeeder extends Seeder
             ['area_name' => 'Área Académica de Comercio Exterior', 'cg_dependency_id' => 85],
             ['area_name' => 'Área Académica de Turismo', 'cg_dependency_id' => 85],
             ['area_name' => 'Área Académica de Mercadotecnia', 'cg_dependency_id' => 85],
-            ['name' => 'Área Académica de Biología (AAB)', 'dependency_id' => 83],
-            ['name' => 'Área Académica de Ciencias de la Tierra y Materiales (AACTyM)', 'dependency_id' => 83],
-            ['name' => 'Área Académica de Computación y Electrónica (AACyE)', 'dependency_id' => 83],
-            ['name' => 'Área Académica de Ingeniería y Arquitectura (AAIyA)', 'dependency_id' => 83],
-            ['name' => 'Área Académica de Matemáticas y Física (AAMyF)', 'dependency_id' => 83],
-            ['name' => 'Área Académica de Química (AAQ)', 'dependency_id' => 83],
+            ['area_name' => 'Área Académica de Biología (AAB)', 'cg_dependency_id' => 83],
+            ['area_name' => 'Área Académica de Ciencias de la Tierra y Materiales (AACTyM)', 'cg_dependency_id' => 83],
+            ['area_name' => 'Área Académica de Computación y Electrónica (AACyE)', 'cg_dependency_id' => 83],
+            ['area_name' => 'Área Académica de Ingeniería y Arquitectura (AAIyA)', 'cg_dependency_id' => 83],
+            ['area_name' => 'Área Académica de Matemáticas y Física (AAMyF)', 'cg_dependency_id' => 83],
+            ['area_name' => 'Área Académica de Química (AAQ)', 'cg_dependency_id' => 83],
         ];
 
         foreach ($academicAreas as $area) {

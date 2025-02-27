@@ -9,6 +9,24 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_number',
+        'date_generation',
+        'date_reception',
+        'delivery_date',
+        'status',
+        'client_deliveries',
+        'client_receives',
+        'phone_number',
+        'ext',
+        'cell_number',
+        'mail',
+        'kperson_delivery',
+        'cg_dependency_id',
+        'ceca_receives',
+        'ceca_deliveries',
+    ];
+
     public function cgKindPeople()
 	{
 		return $this->belongsTo(CgKindPerson::class);
