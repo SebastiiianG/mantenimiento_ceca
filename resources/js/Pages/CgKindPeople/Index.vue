@@ -75,7 +75,7 @@ const deleteCgKindPerson = (cgKindPerson) => {
 
                 <!-- Tabla -->
                 <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
+                    <table class="min-w-full table-fixed divide-y divide-gray-300">
                         <thead class="bg-rojoMedioUAEH">
                             <tr>
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">

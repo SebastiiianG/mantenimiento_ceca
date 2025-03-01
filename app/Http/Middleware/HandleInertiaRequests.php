@@ -38,7 +38,11 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'user.roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
             /*pluck ayuda  obtener solo el dato que nos interesa, es una condición ternaria, de lo contrario, si no se autentica, no devuelve nada*/
-            'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : []
+            'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : [],
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error'),
+                ],
         ]);
     }
 }

@@ -69,10 +69,10 @@ class UserController extends Controller
         //asignar el rol al usuario
         $user->assignRole($request->role);
 
-        //mandar msj de confirmacion
-        console.log('Usuario creado');
+        //crear sesion flash
+        //session()->flash('success', 'Usuario creado con éxito');
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito');
     }
 
     /**
@@ -106,7 +106,7 @@ class UserController extends Controller
         //crear una sesion flash
         //session()->flash('success','Usuario actualizado exitosamente');
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
