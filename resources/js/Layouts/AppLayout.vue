@@ -36,19 +36,19 @@ const logout = () => {
     <!-- PANTALLA COMPLETA -->
     <div class="flex items-start">
         <!-- SIDEBAR-->
-        <div class="w-12 md:w-1/6 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 sticky top-0 items-start">
+        <div class="w-12 md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 pr-4 sticky top-0 items-start  ">
+
             <!-- 01 Contenedor del logo -->
-            <div class="sm:ml-3  md:px-4 md:h-8">
+            <div class="ml-3 md:px-4 md:max-w-full md:max-h-16 flex items-center justify-center">
                 <a href="#" class="hidden md:inline-block">
-                    <ApplicationLogo class="h-8 w-auto" />
+                    <ApplicationLogo class="h-auto w-full  object-contain" />
                 </a>
-                <span class="md:hidden  ml-5 text-gray-800 cursor-pointer">
+                <span class="md:hidden text-gray-800 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
                     </svg>
-
                 </span>
             </div>
             <!-- 02 Contenedor de los elementos del sidebar -->
@@ -130,7 +130,7 @@ const logout = () => {
                     </NavLink>
                 </div>
 
-                <div v-if="$page.props.user.permissions.includes('read dependencies')">
+                <div v-if="$page.props.user.permissions.includes('read dependencies')" >
                     <NavLink class=" md:block md:flex md:flex-row md:gap-2" :href="route('cgDependencies.index')"
                         :active="route().current('cgDependencies.*')">
                         <span>
@@ -142,7 +142,7 @@ const logout = () => {
 
 
                         </span>
-                        <span class="hidden md:block">
+                        <span class="hidden md:block ">
                             Dependencias Académicas
                         </span>
                     </NavLink>

@@ -78,20 +78,22 @@ const deleteCgBrand = (cgBrand) => {
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-rojoMedioUAEH">
                             <tr>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-4 text-center text-sm font-semibold text-white">
                                     Marca
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-4 text-center text-sm font-semibold text-white">
                                     Acciones
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
+                        <tbody class="divide-y divide-gray-200 bg-white ">
                             <tr v-for="cgBrand in cgBrands.data" :key="cgBrand.id">
-                                <td class="py-4 px-6 text-center text-gray-900">
+                                <td class="py-4 px-4 text-center text-gray-900
+                                whitespace-nowrap
+                                overflow-hidden text-ellipsis">
                                     {{ cgBrand.brand_name }}
                                 </td>
-                                <td class="py-4 px-6 text-center">
+                                <td class="py-4 px-4 text-center">
                                     <Link :href="route('cgBrands.edit', cgBrand.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update brands')">
                                         Editar</Link>
                                     <button @click="deleteCgBrand(cgBrand)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete brands')">
