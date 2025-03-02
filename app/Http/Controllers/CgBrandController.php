@@ -54,7 +54,7 @@ class CgBrandController extends Controller
     {
         //Modelo CgBrand
         CgBrand::create($request->validated());
-        return redirect()->route('cgBrands.index');
+        return redirect()->route('cgBrands.index')->with('success', 'Marca creada con éxito');
     }
 
     /**
@@ -83,7 +83,7 @@ class CgBrandController extends Controller
     public function update(CgBrandRequest $request, CgBrand $cgBrand)
     {
         $cgBrand->update($request->validated());
-        return redirect()->route('cgBrands.index');
+        return redirect()->route('cgBrands.index')->with('success', 'Marca actualizada con éxito');
     }
 
         //

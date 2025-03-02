@@ -49,7 +49,7 @@ class CgKindPersonController extends Controller
         CgKindPerson::create($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgKindPeople.index');
+        return redirect()->route('cgKindPeople.index')->with('success', 'Tipo de persona creada con éxito');
     }
 
     /**
@@ -73,7 +73,7 @@ class CgKindPersonController extends Controller
         $cgKindPerson->update($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgKindPeople.index');
+        return redirect()->route('cgKindPeople.index')->with('success', 'Tipo de persona actualizada con éxito');
     }
 
     /**

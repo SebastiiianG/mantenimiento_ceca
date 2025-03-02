@@ -5,11 +5,12 @@ export default {
 
 </script>
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { computed, ref, watch, watchEffect } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
+import Swal from 'sweetalert2';
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgKindObjects: Object,
@@ -24,11 +25,46 @@ watch(searchQuery, (newSearch) => {
     router.get(route('cgKindObjects.index'), { search: newSearch }, { preserveState: true, replace: true });
 });
 
+const page = usePage();
+
+const succesMessage = computed(() => page.props.flash?.success);
+
+watchEffect(() => {
+    if (succesMessage.value) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: succesMessage.value,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#14803c',
+        }).then(() => {
+            page.props.flash.success = null;
+        });
+    }
+});
+
 // Función para eliminar un dispositivo
 const deleteCgKindObject = (cgKindObject) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar el dispositivo "${cgKindObject.object}"?`)) {
-        router.delete(route('cgKindObjects.destroy', cgKindObject.id));
-    }
+    Swal.fire({
+            title: "¿Estas seguro?",
+            text: "Se eliminara el dispositivo  '" + cgKindObject.object + "'",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#14803c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, estoy seguro",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('cgKindObjects.destroy', cgKindObject.id))
+            Swal.fire({
+                title: "Eliminado",
+                text: "El dispositivo ha sido eliminado con éxito",
+                icon: "success",
+                confirmButtonColor: "#14803c",
+            });
+        }
+    });
 };
 
 
