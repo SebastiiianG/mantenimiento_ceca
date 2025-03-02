@@ -5,11 +5,34 @@ export default {
 
 </script>
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { computed, ref, watch, watchEffect } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
+import Swal from 'sweetalert2';
+
+// Se obtiene el objeto `page` que contiene las propiedades y datos de la página.
+const page = usePage();
+
+// Se crea una propiedad computada que obtiene el mensaje de éxito desde `page.props.flash.success`.
+const succesMessage = computed(() => page.props.flash.success);
+
+// Se utiliza `watchEffect` para observar cambios reactivos. Esto se ejecutará cada vez que cambie el valor de `succesMessage`.
+watchEffect(() => {
+    if (succesMessage.value) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: succesMessage.value,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#14803c',
+        }).then(() => {
+            page.props.flash.success = null;
+        });
+    }
+});
+
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgAcademicAreas: Object,
@@ -26,9 +49,27 @@ watch(searchQuery, (newSearch) => {
 
 // Función para eliminar una marca
 const deleteCgAcademicArea = (cgAcademicArea) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar el área académica "${cgAcademicArea.area_name}"?`)) {
-        router.delete(route('cgAcademicAreas.destroy', cgAcademicArea.id));
-    }
+
+    Swal.fire({
+            title: "¿Estas seguro?",
+            text: "Se eliminara el área académica  '" + cgAcademicArea.area_name + "'",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#14803c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, estoy seguro",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('cgAcademicAreas.destroy', cgAcademicArea.id))
+            Swal.fire({
+                title: "Eliminado",
+                text: "El área académica ha sido eliminada con éxito",
+                icon: "success",
+                confirmButtonColor: "#14803c",
+            });
+        }
+    });
 };
 
 

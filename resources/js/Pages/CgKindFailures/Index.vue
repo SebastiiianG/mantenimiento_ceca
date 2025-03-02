@@ -5,11 +5,12 @@ export default {
 
 </script>
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { computed, ref, watch, watchEffect } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
+import Swal from 'sweetalert2';
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgKindFailures: Object,
@@ -24,11 +25,47 @@ watch(searchQuery, (newSearch) => {
     router.get(route('cgKindFailures.index'), { search: newSearch }, { preserveState: true, replace: true });
 });
 
+const page = usePage();
+
+const succesMessage = computed(() => page.props.flash?.success);
+
+// Se utiliza `watchEffect` para observar cambios reactivos. Esto se ejecutará cada vez que cambie el valor de `succesMessage`.
+watchEffect(() => {
+    if (succesMessage.value) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: succesMessage.value,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#14803c',
+        }).then(() => {
+            page.props.flash.success = null;
+        });
+    }
+});
+
 // Función para eliminar una falla
 const deleteCgKindFailure = (cgKindFailure) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar la falla "${cgKindFailure.failure}"?`)) {
-        router.delete(route('cgKindFailures.destroy', cgKindFailure.id));
-    }
+    Swal.fire({
+            title: "¿Estas seguro?",
+            text: "Se eliminara el tipo de falla  '" + cgKindFailure.failure + "'",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#14803c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, estoy seguro",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('cgKindFailures.destroy', cgKindFailure.id))
+            Swal.fire({
+                title: "Eliminado",
+                text: "El tipo de falla ha sido eliminado con éxito",
+                icon: "success",
+                confirmButtonColor: "#14803c",
+            });
+        }
+    });
 };
 
 

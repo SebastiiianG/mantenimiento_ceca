@@ -47,7 +47,7 @@ class CgKindFailureController extends Controller
     {
         //Modelo CgKindFailure
         CgKindFailure::create($request->validated());
-        return redirect()->route('cgKindFailures.index');
+        return redirect()->route('cgKindFailures.index')->with('success', 'El tipo de falla se ha creado correctamente');
     }
 
     /**
@@ -76,7 +76,7 @@ class CgKindFailureController extends Controller
     public function update(CgKindFailureRequest $request, CgKindFailure $cgKindFailure)
     {
         $cgKindFailure->update($request->validated());
-        return redirect()->route('cgKindFailures.index');
+        return redirect()->route('cgKindFailures.index')->with('success', 'El tipo de falla se ha actualizado correctamente');
     }
 
     /**

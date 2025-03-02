@@ -5,11 +5,31 @@ export default {
 
 </script>
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { ref, watch, computed, watchEffect } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
+import Swal from 'sweetalert2';
+
+const page = usePage();
+
+const succesMessage = computed(() => page.props.flash?.success);
+
+watchEffect(() => {
+    if (succesMessage.value) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: succesMessage.value,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#14803c',
+        }).then(() => {
+            page.props.flash.success = null;
+        });
+    }
+});
+
 // Recibe los datos desde Laravel
 const props = defineProps({
     cgDependencies: Object,
@@ -26,9 +46,27 @@ watch(searchQuery, (newSearch) => {
 
 // Función para eliminar una marca
 const deleteCgDependency = (cgDependency) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar la dependencia universitaria "${cgDependency.dependency_name}"?`)) {
-        router.delete(route('cgDependencies.destroy', cgDependency.id));
-    }
+
+    Swal.fire({
+            title: "¿Estas seguro?",
+            text: "Se eliminara la dependencia  '" + cgDependency.dependency_name + "'",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#14803c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, estoy seguro",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(route('cgDependencies.destroy', cgDependency.id))
+            Swal.fire({
+                title: "Eliminado",
+                text: "La dependencia ha sido eliminada con éxito",
+                icon: "success",
+                confirmButtonColor: "#14803c",
+            });
+        }
+    });
 };
 
 

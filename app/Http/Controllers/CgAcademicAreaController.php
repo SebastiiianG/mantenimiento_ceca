@@ -56,7 +56,7 @@ class CgAcademicAreaController extends Controller
     public function store(CgAcademicAreaRequest $request)
     {
         CgAcademicArea::create($request->validated());
-        return redirect()->route('cgAcademicAreas.index');
+        return redirect()->route('cgAcademicAreas.index')->with('success', 'Área académica creada con éxito');
     }
 
     /**
@@ -91,7 +91,7 @@ class CgAcademicAreaController extends Controller
     public function update(CgAcademicAreaRequest $request, CgAcademicArea $cgAcademicArea)
     {
         $cgAcademicArea->update($request->validated());
-        return redirect()->route('cgAcademicAreas.index');
+        return redirect()->route('cgAcademicAreas.index')->with('success', 'Área académica actualizada con éxito');
     }
 
     /**

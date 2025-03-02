@@ -49,7 +49,7 @@ class CgKindObjectController extends Controller
         CgKindObject::create($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgKindObjects.index');
+        return redirect()->route('cgKindObjects.index')->with('success', 'Dispositivo creado con éxito');
     }
 
     /**
@@ -73,7 +73,7 @@ class CgKindObjectController extends Controller
         $cgKindObject->update($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgKindObjects.index');
+        return redirect()->route('cgKindObjects.index')->with('success', 'Dispositivo actualizado con éxito');
     }
 
     /**

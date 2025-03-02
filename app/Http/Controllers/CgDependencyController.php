@@ -49,7 +49,7 @@ class CgDependencyController extends Controller
         CgDependency::create($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgDependencies.index');
+        return redirect()->route('cgDependencies.index')->with('success', 'Dependencia universitaria creada con éxito.');
     }
 
     /**
@@ -58,6 +58,7 @@ class CgDependencyController extends Controller
      */
     public function edit(CgDependency $cgDependency)
     {
+
         return inertia('CgDependencies/Edit', ['cgDependency' => $cgDependency]);
     }
 
@@ -73,7 +74,7 @@ class CgDependencyController extends Controller
         $cgDependency->update($request->validated());
 
         // Se redirige al listado de objetos.
-        return redirect()->route('cgDependencies.index');
+        return redirect()->route('cgDependencies.index')->with('success', 'La dependencia universitaria se ha actualizado con éxito.');
     }
 
     /**
