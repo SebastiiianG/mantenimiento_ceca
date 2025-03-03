@@ -60,24 +60,6 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.user_number" />
             </div>
 
-        <!--
-            <div>
-                <InputLabel for="email" value="Número de Empleado" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="email"
-                    inputmode="email"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-        -->
-
             <div class="mt-4">
                 <InputLabel for="password" value="Contraseña" />
                 <TextInput

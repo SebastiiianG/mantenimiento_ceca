@@ -125,7 +125,7 @@ const deleteCgAcademicArea = (cgAcademicArea) => {
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Dependencia
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white" colspan="2">
+                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Acciones
                                 </th>
                             </tr>
@@ -138,16 +138,13 @@ const deleteCgAcademicArea = (cgAcademicArea) => {
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ cgAcademicArea.cg_dependency?.dependency_name ?? 'Sin dependencia' }}
                                 </td>
-                                <td class="py-4 px-6 text-center w-5">
+                                <td class="py-4 px-6 text-center">
                                     <Link :href="route('cgAcademicAreas.edit', cgAcademicArea.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update academic areas')">
                                         Editar</Link>
-                                </td>
-                                <td class="py-4 px-6 text-center w-5">
                                     <button @click="deleteCgAcademicArea(cgAcademicArea)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete academic areas')">
                                         Eliminar
                                     </button>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
