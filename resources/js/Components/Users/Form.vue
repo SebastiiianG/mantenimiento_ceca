@@ -55,7 +55,7 @@ defineEmits(['submit'])
         <template #form>
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="roles" value="Rol" />
-                <select class="w-2/6 border border-gray-300 py-3 px-4 rounded-lg focus:border-naranjaUAEH outline-none focus:ring-1 focus:ring-naranjaUAEH "
+                <select class="w-full border border-gray-300 py-3 px-4 rounded-lg focus:border-naranjaUAEH outline-none focus:ring-1 focus:ring-naranjaUAEH "
                 id="roles" v-model="form.role">
                     <option class="hover:bg-naranjaUAEH" value="admin">Administrador</option>
                     <option value="editor">Editor</option>

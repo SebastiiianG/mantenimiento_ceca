@@ -7,7 +7,6 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
     title: String,
@@ -15,13 +14,6 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
-const switchToTeam = (team) => {
-    router.put(route('current-team.update'), {
-        team_id: team.id,
-    }, {
-        preserveState: false,
-    });
-};
 
 const logout = () => {
     router.post(route('logout'));
@@ -36,12 +28,12 @@ const logout = () => {
     <!-- PANTALLA COMPLETA -->
     <div class="flex items-start">
         <!-- SIDEBAR-->
-        <div class="w-12 md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 pr-4 sticky top-0 items-start  ">
+        <div class="w-12 md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 sticky top-0 items-start  ">
 
             <!-- 01 Contenedor del logo -->
-            <div class="ml-3 md:px-4 md:max-w-full md:max-h-16 flex items-center justify-center">
-                <a href="#" class="hidden md:inline-block">
-                    <ApplicationLogo class="h-auto w-full  object-contain" />
+            <div class="ml-3 md:px-4 max-w-full md:max-h-20 lg:max-h-36 flex items-center justify-center overflow-hidden ">
+                <a href="#" class="hidden md:inline-block ">
+                    <img src="../Components/icon/cecaLogo.png" alt="" class="object-contain">
                 </a>
                 <span class="md:hidden text-gray-800 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -52,7 +44,7 @@ const logout = () => {
                 </span>
             </div>
             <!-- 02 Contenedor de los elementos del sidebar -->
-            <div class="mb-10 mt-7 ml-1 md:ml-4 flex flex-col gap-4 ">
+            <div class="mb-10 mt-4 ml-1 mr-2 md:ml-2 flex flex-col gap-4 ">
                 <!-- Submenu Principal -->
                 <h3 class="hidden md:block md:mt-2 md:text-gray-600 md:text-sm md:font-medium md:leading-5">Principal
                 </h3>
@@ -66,7 +58,6 @@ const logout = () => {
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                             </svg>
-
                         </span>
                         <p class="hidden md:block">Tablero</p>
                     </NavLink>
@@ -124,7 +115,7 @@ const logout = () => {
                             </svg>
                         </span>
                         <span class="hidden md:block ">
-                            Dependencias Académicas
+                            Dependencias Universitarias
                         </span>
                     </NavLink>
                 </div>

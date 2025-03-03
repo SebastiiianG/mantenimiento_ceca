@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import Welcome from '@/Components/Welcome.vue';
                 </div>
             </div>
         </div>
+        
 
 
     </AppLayout>
