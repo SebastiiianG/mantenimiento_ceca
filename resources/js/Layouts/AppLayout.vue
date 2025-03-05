@@ -76,7 +76,7 @@ const logout = () => {
 
                         </span>
                         <span class="hidden md:block">
-                            Gestionar Orden
+                            Gestionar Órdenes
                         </span>
                     </NavLink>
                 </div>

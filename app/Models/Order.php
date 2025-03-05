@@ -30,23 +30,31 @@ class Order extends Model
 
     public function cgKindPeople()
 	{
-		return $this->belongsTo(CgKindPerson::class);
+		return $this->belongsTo(CgKindPerson::class, 'kperson_delivery');
     }
 
-	public function cgAcademicAreas()
+	public function cgAcademicArea()
 	{
-		return $this->belongsTo(CgAcademicArea::class);
+		return $this->belongsTo(CgAcademicArea::class, 'cg_academic_area_id');
 	}
 
-    public function cgDependencies()
-	{
-		return $this->belongsTo(CgDependency::class);
-	}
+    public function cgDependency()
+    {
+        return $this->belongsTo(CgDependency::class, 'cg_dependency_id');
+    }
 
-	public function users()
-	{
-		return $this->belongsTo(User::class);
-	}
+	// Relación con User (para ceca_receives)
+    public function cecaReceives()
+    {
+        return $this->belongsTo(User::class, 'ceca_receives');
+    }
+
+    // Relación con User (para ceca_deliveries)
+    public function cecaDeliveries()
+    {
+        return $this->belongsTo(User::class, 'ceca_deliveries');
+    }
+
 
 	public function orderDevices()
 	{
