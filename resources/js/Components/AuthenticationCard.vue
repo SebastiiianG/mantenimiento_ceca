@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-cremaUAEH">
-        <div class="bg-white/80 px-6 py-20 rounded-sm shadow-md">
+        <div class="bg-white/80 px-6 py-6 shadow-md rounded-xl">
             <div class="flex gap-x-2 pt-4 justify-center sm:pt-0 h-42 px-2 max-w-sm sm:max-w-md mb-10 ">
                 <div class="flex justify-center w-20 h-auto ">
                     <slot name="logo"></slot>

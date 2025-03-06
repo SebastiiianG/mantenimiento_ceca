@@ -147,12 +147,12 @@ const deleteCgDependency = (cgDependency) => {
                 </div>
 
                 <!-- Paginación -->
-                <div class="mt-4 flex justify-center space-x-2">
+                <div class= "mt-4 flex flex-wrap gap-2 justify-center space-x-2">
                     <template v-for="link in cgDependencies.links" :key="link.label">
                         <Link
                             v-if="link.url"
                             :href="link.url"
-                            class="px-3 py-2 border rounded border-amarilloUAEH"
+                            class="px-3 py-2 border rounded border-amarilloUAEH "
                             :class="{'font-bold': link.active}"
                             v-html="link.label">
                         </Link>

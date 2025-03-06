@@ -140,7 +140,7 @@ const deleteCgKindObject = (cgKindObject) => {
                 </div>
 
                 <!-- Paginación -->
-                <div class="mt-4 flex justify-center space-x-2">
+                <div class="mt-4 flex flex-wrap gap-2 justify-center space-x-2">
                     <template v-for="link in cgKindObjects.links" :key="link.label">
                         <Link
                             v-if="link.url"
