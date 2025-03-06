@@ -79,6 +79,7 @@ const open = ref(false);
                             </svg>
 
                         </span>
+
                         <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Gestionar Orden
                         </span>
