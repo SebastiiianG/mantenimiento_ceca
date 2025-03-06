@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
@@ -19,6 +19,7 @@ const logout = () => {
     router.post(route('logout'));
 };
 
+const open = ref(false);
 </script>
 
 <template>
@@ -26,22 +27,25 @@ const logout = () => {
     <Head :title="title" />
     <Banner />
     <!-- PANTALLA COMPLETA -->
-    <div class="flex items-start">
+    <div class="flex items-start relative"  >
         <!-- SIDEBAR-->
-        <div class="w-12 md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 sticky top-0 items-start  ">
+        <div :class="open ? 'w-48 fixed z-50' : 'w-12'"
+            class="fixed md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 sm:sticky top-0 items-start">
 
             <!-- 01 Contenedor del logo -->
-            <div class="ml-3 md:px-4 max-w-full md:max-h-20 lg:max-h-36 flex items-center justify-center overflow-hidden ">
+            <div
+                class="ml-3 md:px-4 max-w-full md:max-h-20 lg:max-h-36 flex items-center justify-center ">
                 <a href="#" class="hidden md:inline-block ">
                     <img src="../Components/icon/cecaLogo.png" alt="" class="object-contain">
                 </a>
-                <span class="md:hidden text-gray-800 cursor-pointer">
+                <button @click="open = !open" class="md:hidden text-gray-800 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
-                </span>
+
+                </button>
             </div>
             <!-- 02 Contenedor de los elementos del sidebar -->
             <div class="mb-10 mt-4 ml-1 mr-2 md:ml-2 flex flex-col gap-4 ">
@@ -59,7 +63,7 @@ const logout = () => {
                                     d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                             </svg>
                         </span>
-                        <p class="hidden md:block">Tablero</p>
+                        <p  :class="open ? 'block ml-2' : 'hidden'" class="md:block">Tablero</p>
                     </NavLink>
                 </div>
 
@@ -75,8 +79,9 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
-                            Gestionar Órdenes
+
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
+                            Gestionar Orden
                         </span>
                     </NavLink>
                 </div>
@@ -98,13 +103,13 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Usuarios
                         </span>
                     </NavLink>
                 </div>
 
-                <div v-if="$page.props.user.permissions.includes('read dependencies')" >
+                <div v-if="$page.props.user.permissions.includes('read dependencies')">
                     <NavLink class=" md:block md:flex md:flex-row md:gap-2" :href="route('cgDependencies.index')"
                         :active="route().current('cgDependencies.*')">
                         <span>
@@ -114,7 +119,7 @@ const logout = () => {
                                     d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                             </svg>
                         </span>
-                        <span class="hidden md:block ">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Dependencias Universitarias
                         </span>
                     </NavLink>
@@ -131,7 +136,7 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Áreas Académicas
                         </span>
                     </NavLink>
@@ -150,7 +155,7 @@ const logout = () => {
 
 
                         </span>
-                        <span class="hidden md:block">Marcas</span>
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">Marcas</span>
                     </NavLink>
                 </div>
                 <div v-if="$page.props.user.permissions.includes('read failures')">
@@ -164,13 +169,14 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Fallas
                         </span>
                     </NavLink>
                 </div>
-                <div  v-if="$page.props.user.permissions.includes('read objects')">
-                    <NavLink class=" md:block md:flex md:flex-row md:gap-2"  :href="route('cgKindObjects.index')" :active="route().current('cgKindObjects.*')">
+                <div v-if="$page.props.user.permissions.includes('read objects')">
+                    <NavLink class=" md:block md:flex md:flex-row md:gap-2" :href="route('cgKindObjects.index')"
+                        :active="route().current('cgKindObjects.*')">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">
@@ -179,7 +185,7 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Dispositivos
                         </span>
                     </NavLink>
@@ -195,7 +201,7 @@ const logout = () => {
                             </svg>
 
                         </span>
-                        <span class="hidden md:block">
+                        <span  :class="open ? 'block ml-2' : 'hidden'" class="md:block">
                             Personas
                         </span>
                     </NavLink>
@@ -203,9 +209,11 @@ const logout = () => {
             </div>
         </div>
         <!-- LAYOUT DERECHO -->
-        <div class="w-full">
+        <div class="flex-grow min-w-0 overflow-x-hidden ml-12 sm:ml-0 " >
             <!-- HEADER -->
-            <div class="bg-rojoOscuroUAEH border-b border-rojoOscuroUAEH py-4 px-6 size-16 w-full flex items-center justify-between">                <!-- TODO: que este alineado a la derecha -->
+            <div
+                class="bg-rojoOscuroUAEH border-b border-rojoOscuroUAEH py-4 px-6 size-16 w-full flex items-center justify-between">
+                <!-- TODO: que este alineado a la derecha -->
                 <div class="flex justify-end ml-auto">
                     <Dropdown align="right" width="48">
                         <template #trigger>
