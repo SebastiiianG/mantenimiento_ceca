@@ -12,7 +12,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { onMounted } from 'vue';
 
-defineProps({
+const props = defineProps({
     form: {
         type: Object,
         required: true
@@ -44,7 +44,11 @@ defineProps({
     }
 });
 
+const orderNumber = props.newOrderNumber;
 
+    onMounted(() => {
+        console.log('Orden Actual:', orderNumber);
+    });
 
     //La ruta que se sigue después de hacer submit en el form
     defineEmits(['submit']);
@@ -53,7 +57,7 @@ defineProps({
 <template>
     <FullPageForm @submitted="$emit('submit')">
         <template #title>
-            {{ updating ? 'Gestionar Orden De Mantenimiento: ' : 'Crear Orden De Mantenimiento: ' }}
+            {{ updating ? 'Gestionar Orden De Mantenimiento: ' : `Crear Orden De Mantenimiento: ${orderNumber}` }}
         </template>
 
         <template #description>
