@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::resource('/cgKindObjects', CgKindObjectController::class);
     Route::resource('/cgKindPeople', CgKindPersonController::class);
     Route::resource('/users', UserController::class);
+    Route::get('/orders/academic-areas', [OrderController::class, 'getAcademicAreas']);
     Route::resource('/orders', OrderController::class);
     Route::resource('/orderDevices', OrderDeviceController::class);
     Route::resource('/roles', RoleController::class);
