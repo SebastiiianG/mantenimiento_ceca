@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 </script>
 
 <template>
@@ -16,10 +17,11 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <p>Lista de últimas ordenes solicitadas</p>
+                    <OrderDevicesForm></OrderDevicesForm>
                 </div>
             </div>
         </div>
-        
+
 
 
     </AppLayout>
