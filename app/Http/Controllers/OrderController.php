@@ -9,6 +9,8 @@ use \App\Models\CgAcademicArea;
 use \App\Models\CgDependency;
 use \App\Models\CgKindPerson;
 use \App\Models\User;
+use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -45,6 +47,23 @@ class OrderController extends Controller
      */
     public function create()
     {
+        // Recuperamos el último order_number generado
+        $lastOrderNumber = Order::orderByDesc('order_number')->value('order_number');
+
+        if (!$lastOrderNumber) {
+            $lastOrderNumber = 'AM-0'; // O cualquier valor inicial que desees
+        }
+        // Generar el nuevo número de orden
+        $newOrderNumber = $this->generateOrderNumber($lastOrderNumber);
+
+        //Las cuatro líneas de abajo verifican que se esté pasando correctamente la variable
+        // Registrar en el log el último número de orden y el nuevo número de orden generado
+        /*Log::info('Números de orden:', [
+            'last_order_number' => $lastOrderNumber,
+            'new_order_number' => $newOrderNumber
+        ]);
+        dd($newOrderNumber);*/
+
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
@@ -52,6 +71,7 @@ class OrderController extends Controller
 
 
         return inertia('Orders/Create', [
+            'newOrderNumber' => $newOrderNumber,
             'cgDependencies' => $cgDependencies,// Pasar dependencias al formulario
             'cgAcademicAreas' => $cgAcademicAreas, // Obtener áreas académicas ordenadas
             'cgKindPeople' => $cgKindPeople, // Pasar tipo de personas al formulario
@@ -59,6 +79,19 @@ class OrderController extends Controller
         ]);
     }
 
+    private function generateOrderNumber($lastOrderNumber) {
+        // Extraemos la parte numérica después del guion
+        preg_match('/-(\d+)$/', $lastOrderNumber, $matches);
+
+        if ($matches) {
+            // Si hay un número, incrementamos
+            $lastId = intval($matches[1]);
+            return 'AM-' . ($lastId + 1); // Concatenamos el prefijo y el número incrementado
+        } else {
+            // Si no hay número (es el primer número de orden)
+            return 'AM-1';
+        }
+    }
     /**
      * Store a newly created resource in storage.
      * @param App\Http\Requests\OrderRequest

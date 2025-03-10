@@ -1,0 +1,71 @@
+<script>
+    export default {
+        name: 'OrdersCreate'
+    }
+</script>
+
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import OrderForm from '@/Components/Orders/Form.vue';
+
+
+defineProps({
+    cgDependencies: {
+        type: Object,
+        required: true,
+    },
+    cgAcademicAreas: {
+        type: Object,
+        required: true,
+    },
+    cgKindPeople: {
+        type: Object,
+        required: true,
+    },
+    users: {
+        type: Object,
+        required: true,
+    }
+});
+
+const form = useForm({
+    date_generation: '',
+    date_reception: '',
+    delivery_date: '',
+    status: '',
+    client_deliveries: '',
+    client_receives: '',
+    phone_number: '',
+    ext: '',
+    cell_number: '',
+    mail: '',
+    kperson_delivery: '',
+    cg_academic_area_id: '',
+    cg_dependency_id: '',
+    ceca_receives: '',
+    ceca_deliveries: '',
+});
+</script>
+
+<template>
+    <AppLayout title="Create Order">
+        <template #header>
+            <h1 class="font-semibold text-xl text-white leading-tight" v-if="$page.props.user.permissions.includes('create orders')">
+                Añadir Orden De Servicio
+            </h1>
+        </template>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-cremaUAEH overflow-hidden">
+                    <div class="p-6">
+                        <!-- Mostrar el último order_number en el título dentro del formulario -->
+                        <!--orders.store es la ruta para guardar el recursos -->
+                        <OrderForm :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>
