@@ -11,7 +11,7 @@ class CgKindPerson extends Model
 
     protected $fillable = ['kind_person'];
 
-    public function orderDevices(){
-        return $this->hasMany(OrderDevice::class);
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 }

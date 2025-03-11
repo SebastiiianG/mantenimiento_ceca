@@ -34,12 +34,9 @@ defineProps({
 });
 
 const form = useForm({
-    date_generation: '',
     date_reception: '',
-    delivery_date: '',
     status: '',
-    client_deliveries: '',
-    client_receives: '',
+    client_delivered: '',
     phone_number: '',
     ext: '',
     cell_number: '',
@@ -47,8 +44,7 @@ const form = useForm({
     kperson_delivery: '',
     cg_academic_area_id: '',
     cg_dependency_id: '',
-    ceca_receives: '',
-    ceca_deliveries: '',
+    ceca_received: '',
 });
 </script>
 

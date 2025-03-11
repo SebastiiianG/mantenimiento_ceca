@@ -15,12 +15,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number', 15);
-            $table->dateTime('date_generation');
-            $table->dateTime('date_reception')->nullable();
-            $table->dateTime('delivery_date')->nullable();
+            $table->date('date_generation');
+            $table->date('date_reception')->nullable();
+            $table->date('delivery_date')->nullable();
             $table->string('status', 20);
-            $table->string('client_deliveries', 50);
-            $table->string('client_receives', 50)->nullable();
+            $table->string('client_delivered', 50);
+            $table->string('client_received', 50)->nullable();
             $table->string('phone_number', 10)->nullable();
             $table->string('ext', 15)->nullable();
             $table->string('cell_number', 10)->nullable();
@@ -28,8 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('kperson_delivery');
             $table->unsignedBigInteger('cg_dependency_id');
             $table->unsignedBigInteger('cg_academic_area_id')->nullable();
-            $table->unsignedBigInteger('ceca_receives')->nullable();
-            $table->unsignedBigInteger('ceca_deliveries')->nullable();
+            $table->unsignedBigInteger('ceca_received')->nullable();
+            $table->unsignedBigInteger('ceca_delivered')->nullable();
             $table->timestamps();
 
             // Llaves foráneas
@@ -51,13 +51,13 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
-            $table->foreign('ceca_receives')
+            $table->foreign('ceca_received')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
-            $table->foreign('ceca_deliveries')
+            $table->foreign('ceca_delivered')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')

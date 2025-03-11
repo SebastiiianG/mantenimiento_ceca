@@ -28,7 +28,7 @@ class OrderController extends Controller
             $query->where('order_number', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('status', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('date_reception', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('client_deliveries', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('client_delivered', 'LIKE', '%' . $request->search . '%')
                 ->orWhereHas('cgDependency', function ($q) use ($request) {
                       $q->where('dependency_name', 'LIKE', '%' . $request->search . '%');
                   });
@@ -100,9 +100,18 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        Order::create($request->validated());
-        return redirect()->route('orders.index')->with('success', 'Orden creada con éxito');
-    }
+        /*Order::create($request->validated());
+        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');*/
+        // Agregamos la fecha de generación automáticamente
+        $data = $request->validated();
+        $data['date_generation'] = now()->format('Y-m-d');
+
+        // Creamos la orden con la fecha incluida
+        Order::create($data);
+
+        // Redireccionamos con mensaje de éxito
+        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
+        }
 
     /**
      * Display the specified resource.
