@@ -61,7 +61,7 @@ const deleteOrder = (order) => {
             cancelButtonText: "Cancelar",
         }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('order.destroy', order.id))
+            router.delete(route('orders.destroy', order.id))
             Swal.fire({
                 title: "Eliminado",
                 text: "La orden ha sido eliminada con éxito",
@@ -151,13 +151,13 @@ const deleteOrder = (order) => {
                                     {{ order.date_reception }}
                                 </td>
                                 <td class="py-4 px-6 text-center text-gray-900">
-                                    {{ order.client_deliveries }}
+                                    {{ order.client_delivered }}
                                 </td>
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ order.cg_dependency?.dependency_name ?? 'Sin dependencia' }}
                                 </td>
                                 <td class="py-4 px-6 text-center w-5">
-                                    <Link :href="route('orders.edit', order.order_number)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update orders')">
+                                    <Link :href="route('orders.edit', order.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update orders')">
                                         Editar</Link>
 
                                     <button @click="deleteOrder(order)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete orders')">
