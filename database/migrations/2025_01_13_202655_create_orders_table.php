@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->string('order_number', 15)->primary(); // Llave primaria generada por el trigger
+            $table->id();
+            $table->string('order_number', 15);
             $table->dateTime('date_generation');
             $table->dateTime('date_reception')->nullable();
             $table->dateTime('delivery_date')->nullable();
@@ -69,13 +70,13 @@ return new class extends Migration
             BEFORE INSERT ON orders
             FOR EACH ROW
             BEGIN
-                DECLARE last_id INT DEFAULT 0;
+                DECLARE last_order_number INT DEFAULT 0;
 
                 SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX(order_number, "-", -1) AS UNSIGNED)), 0)
-                INTO last_id
+                INTO last_order_number
                 FROM orders;
 
-                SET NEW.order_number = CONCAT("AM-", last_id + 1);
+                SET NEW.order_number = CONCAT("AM-", last_order_number + 1);
             END
         ');
     }

@@ -63,6 +63,7 @@ class OrderController extends Controller
             'new_order_number' => $newOrderNumber
         ]);
         dd($newOrderNumber);*/
+        // Obtener todas las órdenes para mostrarlas en el combo
 
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
