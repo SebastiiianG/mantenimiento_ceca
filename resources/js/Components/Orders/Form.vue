@@ -12,42 +12,36 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { onMounted } from 'vue';
 
-const props = defineProps({
-    form: {
-        type: Object,
-        required: true
-    },
-    updating: {
-        type: Boolean,
-        required: false,
-        default: false
-    },
-    newOrderNumber: {
-        type: String,
-        required: true,
-    },
-    cgDependencies: {
-        type: Object,
-        required: true
-    },
-    cgAcademicAreas: {
-        type: Object,
-        required: true
-    },
-    cgKindPeople: {
-        type: Object,
-        required: true
-    },
-    users: {
-        type: Object,
-        required: true
-    }
-});
-
-const orderNumber = props.newOrderNumber;
-
-    onMounted(() => {
-        console.log('Orden Actual:', orderNumber);
+    defineProps({
+        form: {
+            type: Object,
+            required: true
+        },
+        updating: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        newOrderNumber: {
+            type: String,
+            required: true,
+        },
+        cgDependencies: {
+            type: Object,
+            required: true
+        },
+        cgAcademicAreas: {
+            type: Object,
+            required: true
+        },
+        cgKindPeople: {
+            type: Object,
+            required: true
+        },
+        users: {
+            type: Object,
+            required: true
+        }
     });
 
     //La ruta que se sigue después de hacer submit en el form
@@ -57,7 +51,12 @@ const orderNumber = props.newOrderNumber;
 <template>
     <FullPageForm @submitted="$emit('submit')">
         <template #title>
-            {{ updating ? 'Gestionar Orden De Mantenimiento: ' : `Crear Orden De Mantenimiento: ${orderNumber}` }}
+            <span v-html="
+                updating
+                    ? 'Gestionar Orden De Mantenimiento: '
+                    : `Nueva Orden De Mantenimiento: <span style='color: #6600A1; font-weight: bold;'>${newOrderNumber}</span>`">
+            </span>
+
         </template>
 
         <template #description>
@@ -65,6 +64,15 @@ const orderNumber = props.newOrderNumber;
         </template>
 
         <template #form>
+
+            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+                <InputLabel for="ceca_receives" id="ceca_receives" value="Recibió"/>
+                <select name="ceca_receives" id="ceca_receives" v-model="form.ceca_receives" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
+                    <option v-for="user in users" :value="user.id" class="whitespace-normal break-words">{{ user.name }}
+                    </option>
+                </select>
+                <InputError :message="$page.props.errors.ceca_receives" class="mt-2 bg-opacity-0"/>
+            </div>
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="status" value="Estado"/>

@@ -24,7 +24,7 @@ return new class extends Migration
 
             // Definir las claves foráneas e índices
             $table->unsignedBigInteger('cg_brand_id');
-            $table->string('order_number', 15);
+            $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('cg_kind_failure_id');
             $table->unsignedBigInteger('cg_kind_object_id');
             $table->unsignedBigInteger('ceca_repairs')->nullable();
@@ -38,8 +38,8 @@ return new class extends Migration
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
 
-            $table->foreign('order_number')
-                  ->references('order_number')
+            $table->foreign('order_id')
+                  ->references('id')
                   ->on('orders')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');

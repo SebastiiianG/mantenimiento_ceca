@@ -11,6 +11,10 @@ import OrderForm from '@/Components/Orders/Form.vue';
 
 
 defineProps({
+    newOrderNumber: {
+            type: String,
+            required: true,
+    },
     cgDependencies: {
         type: Object,
         required: true,
@@ -62,7 +66,7 @@ const form = useForm({
                     <div class="p-6">
                         <!-- Mostrar el último order_number en el título dentro del formulario -->
                         <!--orders.store es la ruta para guardar el recursos -->
-                        <OrderForm :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
+                        <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
                     </div>
                 </div>
             </div>

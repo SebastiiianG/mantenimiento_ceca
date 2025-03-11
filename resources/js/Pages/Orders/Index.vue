@@ -61,7 +61,7 @@ const deleteOrder = (order) => {
             cancelButtonText: "Cancelar",
         }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('order.destroy', order.order_number))
+            router.delete(route('order.destroy', order.id))
             Swal.fire({
                 title: "Eliminado",
                 text: "La orden ha sido eliminada con éxito",
@@ -140,7 +140,7 @@ const deleteOrder = (order) => {
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr v-for="order in orders.data" :key="order.order_number">
+                            <tr v-for="order in orders.data" :key="order.id">
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ order.order_number }}
                                 </td>
