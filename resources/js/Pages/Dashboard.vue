@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 </script>
 
 <template>
@@ -19,7 +20,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
                 </div>
             </div>
         </div>
-        
+
 
 
     </AppLayout>

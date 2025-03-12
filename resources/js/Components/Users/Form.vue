@@ -55,7 +55,9 @@ defineEmits(['submit'])
         <template #form>
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="roles" value="Rol" />
+
                 <select class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH"
+
                 id="roles" v-model="form.role">
                     <option class="hover:bg-naranjaUAEH" value="admin">Administrador</option>
                     <option value="editor">Editor</option>
@@ -63,7 +65,7 @@ defineEmits(['submit'])
 
             </div>
 
-            <div class="col-span-8 sm:col-span-8 shadow-lg">
+            <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="name" value="Nombre Completo" />
                 <TextInput id="name" type="text" v-model="form.name" autocomplete="name" class="mt-1 w-full" required autofocus />
                 <InputError :message="$page.props.errors.name" class="mt-2" />
@@ -101,10 +103,10 @@ defineEmits(['submit'])
                     <div class="flex items-center space-x-4 mt-2">
                         <!-- Opcion activo -->
                         <RadioButton  id="active" v-model="form.status" name="status" :value=1 />
-                        <InputLabel for="active" class="inline-flex items-center text-sm text-gray-800">Activo</InputLabel>
+                        <InputLabel for="active" class="inline-flex items-center text-sm text-gray-800" value="Activo" />
                         <!-- Opcion inactivo -->
                         <RadioButton id="inactive" v-model="form.status" name="status" :value=0 />
-                        <InputLabel for="inactive" class="inline-flex items-center text-sm text-gray-800">Inactivo</InputLabel>
+                        <InputLabel for="inactive" class="inline-flex items-center text-sm text-gray-800" value="Inactivo"/>
                     </div>
             </div>
         </template>

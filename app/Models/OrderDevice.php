@@ -9,6 +9,22 @@ class OrderDevice extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'model',
+        'client_observations',
+        'diagnostic',
+        'ceca_observations',
+        'status',
+        'computer',
+        'assigned',
+        'serial_number',
+        'cg_brand_id',
+        'order_id',
+        'cg_kind_failure_id',
+        'cg_kind_object_id',
+        'ceca_repairs',
+    ];
+
     public function cgBrands()
 	{
 		return $this->belongsTo(CgBrand::class);

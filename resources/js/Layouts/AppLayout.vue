@@ -30,7 +30,7 @@ const open = ref(false);
     <div class="flex items-start relative"  >
         <!-- SIDEBAR-->
         <div :class="open ? 'w-48 fixed z-50' : 'w-12'"
-            class="fixed md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 sm:sticky top-0 items-start">
+            class="fixed md:w-1/5 bg-white flex flex-col min-h-screen border-r border-gray-200 py-4 md:sticky top-0 items-start">
 
             <!-- 01 Contenedor del logo -->
             <div
