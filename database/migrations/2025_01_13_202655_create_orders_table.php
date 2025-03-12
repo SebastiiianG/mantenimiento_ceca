@@ -13,13 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->string('order_number', 15)->primary(); // Llave primaria generada por el trigger
-            $table->dateTime('date_generation');
-            $table->dateTime('date_reception')->nullable();
-            $table->dateTime('delivery_date')->nullable();
+            $table->id();
+            $table->string('order_number', 15);
+            $table->date('date_generation');
+            $table->date('date_reception')->nullable();
+            $table->date('delivery_date')->nullable();
             $table->string('status', 20);
-            $table->string('client_deliveries', 50);
-            $table->string('client_receives', 50)->nullable();
+            $table->string('client_delivered', 50);
+            $table->string('client_received', 50)->nullable();
             $table->string('phone_number', 10)->nullable();
             $table->string('ext', 15)->nullable();
             $table->string('cell_number', 10)->nullable();
@@ -27,8 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('kperson_delivery');
             $table->unsignedBigInteger('cg_dependency_id');
             $table->unsignedBigInteger('cg_academic_area_id')->nullable();
-            $table->unsignedBigInteger('ceca_receives')->nullable();
-            $table->unsignedBigInteger('ceca_deliveries')->nullable();
+            $table->unsignedBigInteger('ceca_received')->nullable();
+            $table->unsignedBigInteger('ceca_delivered')->nullable();
             $table->timestamps();
 
             // Llaves foráneas
@@ -50,13 +51,13 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
-            $table->foreign('ceca_receives')
+            $table->foreign('ceca_received')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
 
-            $table->foreign('ceca_deliveries')
+            $table->foreign('ceca_delivered')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
@@ -69,13 +70,13 @@ return new class extends Migration
             BEFORE INSERT ON orders
             FOR EACH ROW
             BEGIN
-                DECLARE last_id INT DEFAULT 0;
+                DECLARE last_order_number INT DEFAULT 0;
 
                 SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX(order_number, "-", -1) AS UNSIGNED)), 0)
-                INTO last_id
+                INTO last_order_number
                 FROM orders;
 
-                SET NEW.order_number = CONCAT("AM-", last_id + 1);
+                SET NEW.order_number = CONCAT("AM-", last_order_number + 1);
             END
         ');
     }

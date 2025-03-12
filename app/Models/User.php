@@ -68,4 +68,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function ordersReceived(){
+        return $this->hasMany(Order::class, 'ceca_received', 'id');
+    }
+
+    public function ordersDelivered(){
+        return $this->hasMany(Order::class, 'ceca_delivered', 'id');
+    }
+
+    public function repairedDevices(){
+        return $this->hasMany(OrderDevice::class, 'ceca_repaired', 'id');
+    }
 }

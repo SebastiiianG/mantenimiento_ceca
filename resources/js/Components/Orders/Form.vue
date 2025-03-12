@@ -12,42 +12,36 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { onMounted } from 'vue';
 
-const props = defineProps({
-    form: {
-        type: Object,
-        required: true
-    },
-    updating: {
-        type: Boolean,
-        required: false,
-        default: false
-    },
-    newOrderNumber: {
-        type: String,
-        required: true,
-    },
-    cgDependencies: {
-        type: Object,
-        required: true
-    },
-    cgAcademicAreas: {
-        type: Object,
-        required: true
-    },
-    cgKindPeople: {
-        type: Object,
-        required: true
-    },
-    users: {
-        type: Object,
-        required: true
-    }
-});
-
-const orderNumber = props.newOrderNumber;
-
-    onMounted(() => {
-        console.log('Orden Actual:', orderNumber);
+    defineProps({
+        form: {
+            type: Object,
+            required: true
+        },
+        updating: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        newOrderNumber: {
+            type: String,
+            required: true,
+        },
+        cgDependencies: {
+            type: Object,
+            required: true
+        },
+        cgAcademicAreas: {
+            type: Object,
+            required: true
+        },
+        cgKindPeople: {
+            type: Object,
+            required: true
+        },
+        users: {
+            type: Object,
+            required: true
+        }
     });
 
     //La ruta que se sigue después de hacer submit en el form
@@ -57,7 +51,12 @@ const orderNumber = props.newOrderNumber;
 <template>
     <FullPageForm @submitted="$emit('submit')">
         <template #title>
-            {{ updating ? 'Gestionar Orden De Mantenimiento: ' : `Crear Orden De Mantenimiento: ${orderNumber}` }}
+            <span v-html="
+                updating
+                    ? 'Gestionar Orden De Mantenimiento: '
+                    : `Nueva Orden De Mantenimiento: <span style='color: #6600A1; font-weight: bold;'>${newOrderNumber}</span>`">
+            </span>
+
         </template>
 
         <template #description>
@@ -77,9 +76,9 @@ const orderNumber = props.newOrderNumber;
             </div>
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="client_deliveries" value="Cliente Que Entrega"/>
-                <TextInput id="client_deliveries" v-model="form.client_deliveries" type="text" autocomplete="client_deliveries" class="mt-1 block w-full shadow-xl"/>
-                <InputError :message="$page.props.errors.client_deliveries" class="mt-2 bg-opacity-0"/>
+                <InputLabel for="client_delivered" value="Cliente Que Entrega"/>
+                <TextInput id="client_delivered" v-model="form.client_delivered" type="text" autocomplete="client_delivered" class="mt-1 block w-full shadow-xl"/>
+                <InputError :message="$page.props.errors.client_delivered" class="mt-2 bg-opacity-0"/>
             </div>
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
@@ -90,7 +89,6 @@ const orderNumber = props.newOrderNumber;
                 </select>
                 <InputError :message="$page.props.errors.kperson_delivery" class="mt-2 bg-opacity-0"/>
             </div>
-
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="date_reception" value="Fecha De Recepción"/>
@@ -124,12 +122,12 @@ const orderNumber = props.newOrderNumber;
 
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="ceca_receives" id="ceca_receives" value="Recibió"/>
-                <select name="ceca_receives" id="ceca_receives" v-model="form.ceca_receives" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
+                <InputLabel for="ceca_received" id="ceca_received" value="Recibió"/>
+                <select name="ceca_received" id="ceca_received" v-model="form.ceca_received" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
                     <option v-for="user in users" :value="user.id" class="whitespace-normal break-words">{{ user.name }}
                     </option>
                 </select>
-                <InputError :message="$page.props.errors.ceca_receives" class="mt-2 bg-opacity-0"/>
+                <InputError :message="$page.props.errors.ceca_received" class="mt-2 bg-opacity-0"/>
             </div>
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
@@ -150,28 +148,30 @@ const orderNumber = props.newOrderNumber;
                 <InputError :message="$page.props.errors.cg_academic_area_id" class="mt-2 bg-opacity-0"/>
             </div>
 
-            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="client_receives" value="Cliente Que Recibe"/>
-                <TextInput id="client_receives" v-model="form.client_deliveries" type="text" autocomplete="client_receives" class="mt-1 block w-full shadow-xl"/>
-                <InputError :message="$page.props.errors.client_receives" class="mt-2 bg-opacity-0"/>
+            <div v-if="updating">
+                <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+                    <InputLabel for="client_received" value="Cliente Que Recibe"/>
+                    <TextInput id="client_received" v-model="form.client_received" type="text" autocomplete="client_received" class="mt-1 block w-full shadow-xl"/>
+                    <InputError :message="$page.props.errors.client_received" class="mt-2 bg-opacity-0"/>
+                </div>
+
+                <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+                    <InputLabel for="delivery_date" value="Fecha De Entrega"/>
+                    <TextInput id="delivery_date" v-model="form.delivery_date" type="date" autocomplete="delivery_date" class="mt-1 block w-full shadow-xl"/>
+                    <InputError :message="$page.props.errors.delivery_date" class="mt-2 bg-opacity-0"/>
+                </div>
+
+                <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+                    <InputLabel for="ceca_delivered" id="ceca_delivered" value="Entregó"/>
+                    <select name="ceca_delivered" id="ceca_delivered" v-model="form.ceca_deliveries" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
+                        <option v-for="user in users" :key="user.id" :value="user.id" class="whitespace-normal break-words">
+                            {{ user.name }}
+                        </option>
+                    </select>
+                    <InputError :message="$page.props.errors.ceca_delivered" class="mt-2 bg-opacity-0"/>
+                </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="delivery_date" value="Fecha De Entrega"/>
-                <TextInput id="delivery_date" v-model="form.delivery_date" type="date" autocomplete="delivery_date" class="mt-1 block w-full shadow-xl"/>
-                <InputError :message="$page.props.errors.delivery_date" class="mt-2 bg-opacity-0"/>
-            </div>
-
-
-            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="ceca_deliveries" id="ceca_deliveries" value="Entregó"/>
-                <select name="ceca_deliveries" id="ceca_deliveries" v-model="form.ceca_deliveries" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
-                    <option v-for="user in users" :value="user.id" class="whitespace-normal break-words">{{ user.name }}
-                    </option>
-                </select>
-                <InputError :message="$page.props.errors.ceca_deliveries" class="mt-2 bg-opacity-0"/>
-
-            </div>
         </template>
 
         <template #actions>

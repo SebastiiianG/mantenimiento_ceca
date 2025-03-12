@@ -15,8 +15,8 @@ class Order extends Model
         'date_reception',
         'delivery_date',
         'status',
-        'client_deliveries',
-        'client_receives',
+        'client_delivered',
+        'client_received',
         'phone_number',
         'ext',
         'cell_number',
@@ -24,8 +24,8 @@ class Order extends Model
         'kperson_delivery',
         'cg_academic_area_id',
         'cg_dependency_id',
-        'ceca_receives',
-        'ceca_deliveries',
+        'ceca_received',
+        'ceca_delivered',
     ];
 
     public function cgKindPeople()
@@ -43,16 +43,16 @@ class Order extends Model
         return $this->belongsTo(CgDependency::class, 'cg_dependency_id');
     }
 
-	// Relación con User (para ceca_receives)
-    public function cecaReceives()
+	// Relación con User (para ceca_received)
+    public function cecaReceived()
     {
-        return $this->belongsTo(User::class, 'ceca_receives');
+        return $this->belongsTo(User::class, 'ceca_received');
     }
 
-    // Relación con User (para ceca_deliveries)
-    public function cecaDeliveries()
+    // Relación con User (para ceca_delivered)
+    public function cecaDelivered()
     {
-        return $this->belongsTo(User::class, 'ceca_deliveries');
+        return $this->belongsTo(User::class, 'ceca_delivered');
     }
 
 

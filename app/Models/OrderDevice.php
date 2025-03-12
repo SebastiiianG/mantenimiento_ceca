@@ -45,7 +45,7 @@ class OrderDevice extends Model
 		return $this->belongsTo(CgKindObject::class);
 	}
 
-	public function users()
+	public function cecaRepairs()
 	{
 		return $this->belongsTo(User::class);
 	}

@@ -11,6 +11,10 @@ import OrderForm from '@/Components/Orders/Form.vue';
 
 
 defineProps({
+    newOrderNumber: {
+            type: String,
+            required: true,
+    },
     cgDependencies: {
         type: Object,
         required: true,
@@ -30,12 +34,9 @@ defineProps({
 });
 
 const form = useForm({
-    date_generation: '',
     date_reception: '',
-    delivery_date: '',
     status: '',
-    client_deliveries: '',
-    client_receives: '',
+    client_delivered: '',
     phone_number: '',
     ext: '',
     cell_number: '',
@@ -43,8 +44,7 @@ const form = useForm({
     kperson_delivery: '',
     cg_academic_area_id: '',
     cg_dependency_id: '',
-    ceca_receives: '',
-    ceca_deliveries: '',
+    ceca_received: '',
 });
 </script>
 
@@ -62,7 +62,7 @@ const form = useForm({
                     <div class="p-6">
                         <!-- Mostrar el último order_number en el título dentro del formulario -->
                         <!--orders.store es la ruta para guardar el recursos -->
-                        <OrderForm :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
+                        <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
                     </div>
                 </div>
             </div>
