@@ -17,7 +17,6 @@ import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <p>Lista de últimas ordenes solicitadas</p>
-                    <OrderDevicesForm></OrderDevicesForm>
                 </div>
             </div>
         </div>

@@ -10,26 +10,30 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import RadioButton from '../RadioButton.vue';
+import { vModelSelect } from 'vue';
+import SelectOption from '../SelectOption.vue';
 
-defineProps({
+/* defineProps({
         form: {
             type: Object,
             required: true
         },
     });
-
+ */
 </script>
 
 <template>
 
     <FormSection @submitted="$emit('submit')">
         <template #form>
-            <div class="col-span-6 sm:col-span-12">
+            <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="status" value="Estado del dispositivo" />
                 <select name="status" id="status"  class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
-                    <option class="hover:bg-naranjaUAEH" value="admin">En proceso</option>
-                    <option value="editor">Completado</option>
+                    <option value="Sin asignar" :style="{ color: 'red' }">Sin asignar</option>
+                    <option value="En proceso"  :style="{ color: 'orange' }">En proceso</option>
+                    <option value="Finalizado"  :style="{ color: 'green' }">Finalizado</option>
                 </select>
+                <InputError :message="$page.props.errors.status" class="mt-2 bg-opacity-0"/>
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="cg_kind_object" value="Tipo de dispositivo "/> <!-- Etiqueta del campo -->
