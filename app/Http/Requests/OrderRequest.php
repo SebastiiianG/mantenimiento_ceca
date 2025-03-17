@@ -28,7 +28,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date_generation' => ['date', 'after_or_equal:today'],
+            'date_generation' => ['date', 'before_or_equal:today'],
             'date_reception' => ['date'],
             'delivery_date' => ['nullable', 'date'],
             'status' => ['required', 'string', 'in:Sin asignar,En proceso,Finalizado'],
