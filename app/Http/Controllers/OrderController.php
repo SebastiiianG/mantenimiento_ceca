@@ -132,7 +132,6 @@ class OrderController extends Controller
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
 
-
         return inertia('Orders/Edit', [
             'order' => $order,
             'cgDependencies' => $cgDependencies,// Pasar dependencias al formulario
