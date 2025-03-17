@@ -29,8 +29,8 @@ class OrderRequest extends FormRequest
     {
         return [
             'date_generation' => ['date', 'after_or_equal:today'],
-            'date_reception' => ['date', 'after_or_equal:today'],
-            'delivery_date' => ['date', 'after_or_equal:today'],
+            'date_reception' => ['date'],
+            'delivery_date' => ['nullable', 'date'],
             'status' => ['required', 'string', 'in:Sin asignar,En proceso,Finalizado'],
             'client_delivered' => ['required', 'string', 'max:50'],
             'client_received' => ['nullable', 'string', 'max:50'],
