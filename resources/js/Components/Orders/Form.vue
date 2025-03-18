@@ -96,18 +96,17 @@ import { onMounted } from 'vue';
                 <InputError :message="$page.props.errors.date_reception" class="mt-2 bg-opacity-0"/>
             </div>
 
-            <div class="grid grid-cols-12 gap-20">
-                <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                    <InputLabel for="phone_number" value="Número De Teléfono"/>
-                    <TextInput id="phone_number" v-model="form.phone_number" type="text" autocomplete="phone_number" class="mt-1 block w-full shadow-xl"/>
-                    <InputError :message="$page.props.errors.phone_number" class="mt-2"/>
-                </div>
-                <div class="col-span-4 sm:col-span-6 bg-transparent bg-opacity-0">
-                    <InputLabel for="ext" value="Extensión"/>
-                    <TextInput id="ext" v-model="form.ext" type="text" autocomplete="ext" class="mt-1 block w-full shadow-xl"/>
-                    <InputError :message="$page.props.errors.ext" class="mt-2"/>
-                </div>
+            <div class="col-span-3 sm:col-span-3 bg-transparent bg-opacity-0">
+                <InputLabel for="phone_number" value="Número De Teléfono"/>
+                <TextInput id="phone_number" v-model="form.phone_number" type="text" autocomplete="phone_number" class="mt-1 block w-full shadow-xl"/>
+                <InputError :message="$page.props.errors.phone_number" class="mt-2"/>
             </div>
+            <div class="col-span-3 sm:col-span-3 bg-transparent bg-opacity-0">
+                <InputLabel for="ext" value="Extensión"/>
+                <TextInput id="ext" v-model="form.ext" type="text" autocomplete="ext" class="mt-1 block w-full shadow-xl"/>
+                <InputError :message="$page.props.errors.ext" class="mt-2"/>
+            </div>
+
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="cell_number" value="Número De Celular"/>
