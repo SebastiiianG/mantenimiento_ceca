@@ -158,10 +158,13 @@ const deleteOrder = (order) => {
                                 </td>
                                 <td class="py-4 px-6 text-center w-5">
                                     <Link :href="route('orders.edit', order.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update orders')">
-                                        Editar</Link>
+                                        Gestionar Orden</Link>
 
                                     <button @click="deleteOrder(order)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete orders')">
                                         Eliminar
+                                    </button>
+                                    <button class="text-rojoMedioUAEH hover:underline mx-2">
+                                        Generar PDF
                                     </button>
                                 </td>
 
