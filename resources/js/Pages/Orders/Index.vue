@@ -72,6 +72,12 @@ const deleteOrder = (order) => {
     });
 };
 
+const formatDate = (dateString) => {
+    if (!dateString || dateString == null) return "Sin fecha";
+    const date = new Date(dateString);
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+};
+
 
 </script>
 
@@ -148,7 +154,7 @@ const deleteOrder = (order) => {
                                     {{ order.status }}
                                 </td>
                                 <td class="py-4 px-6 text-center text-gray-900">
-                                    {{ order.date_reception }}
+                                    {{ formatDate(order.date_reception)}}
                                 </td>
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ order.client_delivered }}

@@ -94,7 +94,7 @@ import TextInput from '@/Components/TextInput.vue';
 
             <div v-if="updating" class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="date_generation" value="Fecha De Generación"/>
-                <TextInput id="date_generation" v-model="form.date_generation" type="date" autocomplete="date_reception" class="mt-1 block w-full shadow-xl"/>
+                <TextInput id="date_generation" v-model="form.date_generation" type="date" autocomplete="date_reception" readonly class="mt-1 block w-full shadow-xl"/>
                 <InputError :message="$page.props.errors.date_generation" class="mt-2 bg-opacity-0"/>
             </div>
 
