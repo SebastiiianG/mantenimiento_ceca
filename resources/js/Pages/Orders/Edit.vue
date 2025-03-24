@@ -8,6 +8,7 @@
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
+import OrderDevicesEdit from '@/Pages/OrderDevices/Edit.vue';
 
 
 const props = defineProps({
@@ -30,7 +31,11 @@ const props = defineProps({
     users: {
         type: Object,
         required: true,
-    }
+    },
+    devices: {
+        type: Object,
+        required: true,
+    },
 });
 
 const form = useForm({
@@ -66,6 +71,12 @@ const form = useForm({
                 <div class="bg-cremaUAEH overflow-hidden">
                     <div class="p-6">
                         <OrderForm :updating = "true" :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit = "form.put(route('orders.update', order.id))" />
+
+                        <!-- Crear un nuevo dispositivo -->
+                        <div v-if="$page.props.user.permissions.includes('read order devices')">
+                            <OrderDevicesEdit  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" :newOrderNumber="newOrderNumber"
+                            :devices="devices"/>
+                        </div>
                     </div>
                 </div>
             </div>

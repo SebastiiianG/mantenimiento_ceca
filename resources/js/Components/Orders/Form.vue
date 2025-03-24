@@ -69,7 +69,7 @@ import TextInput from '@/Components/TextInput.vue';
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="status" value="Estado"/>
-                <select id="status" v-model="form.status" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
+                <select id="statusOrder" v-model="form.status" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option value="Sin asignar" :style="{ color: 'red' }">Sin asignar</option>
                     <option value="En proceso"  :style="{ color: 'orange' }">En proceso</option>
                     <option value="Finalizado"  :style="{ color: 'green' }">Finalizado</option>
