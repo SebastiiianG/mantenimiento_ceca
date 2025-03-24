@@ -9,6 +9,10 @@ use \App\Models\CgAcademicArea;
 use \App\Models\CgDependency;
 use \App\Models\CgKindPerson;
 use \App\Models\User;
+use \App\Models\CgKindObject;
+use \App\Models\CgBrand;
+use \App\Models\CgKindFailure;
+use \App\Models\OrderDevice;
 use Illuminate\Support\Facades\Log;
 
 
@@ -69,14 +73,20 @@ class OrderController extends Controller
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
-
+        //objetos para el formulario por dispositivos
+        $cgKindObjects = CgKindObject::orderBy('object', 'asc')->get();
+        $cgBrands = CgBrand::orderBy('brand_name', 'asc')->get();
+        $cgKindFailures = CgKindFailure::orderBy('failure', 'asc')->get();
 
         return inertia('Orders/Create', [
             'newOrderNumber' => $newOrderNumber,
             'cgDependencies' => $cgDependencies,// Pasar dependencias al formulario
             'cgAcademicAreas' => $cgAcademicAreas, // Obtener áreas académicas ordenadas
             'cgKindPeople' => $cgKindPeople, // Pasar tipo de personas al formulario
-            'users' => $users // Obtener usuarios ordenados
+            'users' => $users, // Obtener usuarios ordenados
+            'cgKindObjects' => $cgKindObjects, // Pasar tipo de objetos al formulario
+            'cgBrands' => $cgBrands, // Pasar marcas al formulario
+            'cgKindFailures' => $cgKindFailures, // Pasar tipo de fall
         ]);
     }
 
@@ -127,17 +137,22 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        dd($order);
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
+
+        // Buscar dispositivos con el order_id específico
+        $devices = OrderDevice::where('order_id', $order)->get();
 
         return inertia('Orders/Edit', [
             'order' => $order,
             'cgDependencies' => $cgDependencies,// Pasar dependencias al formulario
             'cgAcademicAreas' => $cgAcademicAreas, // Obtener áreas académicas ordenadas
             'cgKindPeople' => $cgKindPeople, // Pasar tipo de personas al formulario
-            'users' => $users // Obtener usuarios ordenados
+            'users' => $users, // Obtener usuarios ordenados
+            'devices' => $devices, // Obtener dispositivos con el order_id específico
         ]);
     }
 

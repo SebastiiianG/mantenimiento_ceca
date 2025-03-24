@@ -209,7 +209,7 @@ const open = ref(false);
             </div>
         </div>
         <!-- LAYOUT DERECHO -->
-        <div class="flex-grow min-w-0 overflow-x-hidden ml-12 sm:ml-0 " >
+        <div class="flex-grow min-w-0 overflow-x-hidden ml-12 md:ml-0 " >
             <!-- HEADER -->
             <div
                 class="bg-rojoOscuroUAEH border-b border-rojoOscuroUAEH py-4 px-6 size-16 w-full flex items-center justify-between">

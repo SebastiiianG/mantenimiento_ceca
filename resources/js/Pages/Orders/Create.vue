@@ -8,6 +8,7 @@
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
+import OrderDevicesCreate from '@/Pages/OrderDevices/Create.vue';
 
 
 defineProps({
@@ -28,6 +29,18 @@ defineProps({
         required: true,
     },
     users: {
+        type: Object,
+        required: true,
+    },
+    cgKindObjects: {
+        type: Object,
+        required: true,
+    },
+    cgBrands: {
+        type: Object,
+        required: true,
+    },
+    cgKindFailures : {
         type: Object,
         required: true,
     }
@@ -63,6 +76,12 @@ const form = useForm({
                         <!-- Mostrar el último order_number en el título dentro del formulario -->
                         <!--orders.store es la ruta para guardar el recursos -->
                         <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
+
+                        <!-- Crear un nuevo dispositivo -->
+                        <div v-if="$page.props.user.permissions.includes('create order devices')">
+                            <OrderDevicesCreate  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" :newOrderNumber="newOrderNumber"/>
+                        </div>
+
                     </div>
                 </div>
             </div>
