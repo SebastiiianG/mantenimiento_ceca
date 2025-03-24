@@ -10,6 +10,10 @@ import { router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
+import PDF from '@/Components/PDF.vue';
+import Trash from '@/Components/Trash.vue';
+import Edition from '@/Components/Edition.vue';
+
 import Swal from 'sweetalert2';
 
 // Se obtiene el objeto `page` que contiene las propiedades y datos de la página.
@@ -51,13 +55,13 @@ watch(searchQuery, (newSearch) => {
 const deleteOrder = (order) => {
 
     Swal.fire({
-            title: "¿Estas seguro?",
-            text: "Se eliminara la orden  '" + order.order_number + "'",
+            title: "¿Estás seguro?",
+            text: "Se eliminará la orden  '" + order.order_number + "'",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#14803c",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, estoy seguro",
+            confirmButtonText: "Sí, estoy seguro",
             cancelButtonText: "Cancelar",
         }).then((result) => {
         if (result.isConfirmed) {
@@ -102,7 +106,12 @@ const formatDate = (dateString) => {
                                 </p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <Link v-if="$page.props.user.permissions.includes('create orders')" class="inline-flex items-center px-4 py-2 bg-rojoMedioUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-rojoOscuroUAEH focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('orders.create')">
+                                <Link v-if="$page.props.user.permissions.includes('update orders')" class="inline-flex items-center px-4 py-2 bg-amarilloUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-naranjaUAEH focus:bg-gray-700 active:bg-grisOscuroUAEH focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">
+                                    Editar Notas Del Reporte
+                                </Link>
+                            </div>
+                            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                                <Link v-if="$page.props.user.permissions.includes('create orders')" class="inline-flex items-center px-4 py-2 bg-rojoMedioUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-rojoOscuroUAEH focus:bg-gray-700 active:bg-grisOscuroUAEH focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('orders.create')">
                                     Añadir Orden De Servicio
                                 </Link>
                             </div>
@@ -120,12 +129,13 @@ const formatDate = (dateString) => {
                         </div>
 
 
+
                 <!-- Tabla -->
-                <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <div class="mt-8 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-rojoMedioUAEH">
                             <tr>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-4 text-center text-sm font-semibold text-white">
                                     Número de Orden
                                 </th>
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
@@ -137,17 +147,17 @@ const formatDate = (dateString) => {
                                 <th class="py-3 px-6 text-center text-sm font-semibold text-white">
                                     Cliente
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-4 text-center text-sm font-semibold text-white">
                                     Dependencia
                                 </th>
-                                <th class="py-3 px-6 text-center text-sm font-semibold text-white">
+                                <th class="py-3 px-12 text-center text-sm font-semibold text-white">
                                     Acciones
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="order in orders.data" :key="order.id">
-                                <td class="py-4 px-6 text-center text-gray-900">
+                                <td class="py-4 px-4 text-center text-gray-900">
                                     {{ order.order_number }}
                                 </td>
                                 <td class="py-4 px-6 text-center text-gray-900">
@@ -159,21 +169,26 @@ const formatDate = (dateString) => {
                                 <td class="py-4 px-6 text-center text-gray-900">
                                     {{ order.client_delivered }}
                                 </td>
-                                <td class="py-4 px-6 text-center text-gray-900">
+                                <td class="py-4 px-4 text-center text-gray-900">
                                     {{ order.cg_dependency?.dependency_name ?? 'Sin dependencia' }}
                                 </td>
-                                <td class="py-4 px-6 text-center w-5">
-                                    <Link :href="route('orders.edit', order.id)" class="text-naranjaUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('update orders')">
-                                        Gestionar Orden</Link>
-
-                                    <button @click="deleteOrder(order)" class="text-rojoUAEH hover:underline mx-2" v-if="$page.props.user.permissions.includes('delete orders')">
-                                        Eliminar
-                                    </button>
-                                    <button class="text-rojoMedioUAEH hover:underline mx-2">
-                                        Generar PDF
-                                    </button>
+                                <td class="py-4 px-12 text-center">
+                                    <div class="flex justify-center items-center gap-4">
+                                        <Link :href="route('orders.edit', order.id)"
+                                            class="p-2 rounded-lg transition transform hover:scale-125"
+                                            v-if="$page.props.user.permissions.includes('update orders')">
+                                            <Edition />
+                                        </Link>
+                                        <button @click="deleteOrder(order)"
+                                            class="p-2 rounded-l transition transform hover:scale-125"
+                                            v-if="$page.props.user.permissions.includes('delete orders')">
+                                            <Trash />
+                                        </button>
+                                        <button class="p-2 rounded-lg transition transform hover:scale-125">
+                                            <PDF />
+                                        </button>
+                                    </div>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
