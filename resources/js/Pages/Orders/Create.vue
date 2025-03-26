@@ -59,6 +59,10 @@ const form = useForm({
     cg_dependency_id: '',
     ceca_received: '',
 });
+
+const handleFormSubmit = (formData) => {
+    formData.post(route('orders.store'));
+};
 </script>
 
 <template>
@@ -75,7 +79,8 @@ const form = useForm({
                     <div class="p-6">
                         <!-- Mostrar el último order_number en el título dentro del formulario -->
                         <!--orders.store es la ruta para guardar el recursos -->
-                        <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit="form.post(route('orders.store'))" />
+                        <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users"     @submitted="handleFormSubmit"
+                        />
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('create order devices')">
