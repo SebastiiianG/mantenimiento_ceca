@@ -17,11 +17,11 @@ defineProps({
             required: true,
     },
     cgDependencies: {
-        type: Object,
+        type: Array,
         required: true,
     },
     cgAcademicAreas: {
-        type: Object,
+        type: Array,
         required: true,
     },
     cgKindPeople: {
@@ -55,7 +55,7 @@ const form = useForm({
     cell_number: '',
     mail: '',
     kperson_delivery: '',
-    cg_academic_area_id: '',
+    cg_academic_area_id: 'none',
     cg_dependency_id: '',
     ceca_received: '',
 });

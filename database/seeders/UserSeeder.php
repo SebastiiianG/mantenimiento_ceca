@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         // Creación del usuario "admin"
         $admin = User::create([
-            'name' => 'admin', // Nombre del usuario
+            'name' => 'Fátima Reynoso Oropeza', // Nombre del usuario
             'email' => 'fareynoso207@gmail.com', // Email del usuario
             'password'=> Hash::make('admin'), // Contraseña encriptada
             'user_number' => 464396, // Número de usuario único
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
         // Creación del usuario "editor"
         $editor = User::create([
-            'name' => 'editor', // Nombre del usuario
+            'name' => 'Ulises Sebastian García García', // Nombre del usuario
             'email' => 'ulsegaga03@gmail.com', // Email del usuario
             'password'=> Hash::make('editor'), // Contraseña encriptada
             'user_number' => 401420, // Número de usuario único

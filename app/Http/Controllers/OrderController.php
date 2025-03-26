@@ -70,7 +70,7 @@ class OrderController extends Controller
         // Obtener todas las órdenes para mostrarlas en el combo
 
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
-        $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
+        $cgAcademicAreas = CgAcademicArea::select('id', 'area_name', 'cg_dependency_id')->orderBy('area_name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
         //objetos para el formulario por dispositivos

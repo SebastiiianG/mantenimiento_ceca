@@ -39,7 +39,7 @@ class OrderRequest extends FormRequest
             'cell_number' => ['nullable', 'string', 'max:10'],
             'mail' => ['nullable', 'string', 'email','max:50'],
             'kperson_delivery' => ['required', 'integer', Rule::exists('cg_kind_people', 'id') ],
-            'cg_academic_area_id' => ['required', 'integer', Rule::exists('cg_academic_areas', 'id')],
+            'cg_academic_area_id' => ['nullable'],
             'cg_dependency_id' => ['required', 'integer', Rule::exists('cg_dependencies', 'id')],
             'ceca_received' => ['integer', Rule::exists('users', 'id')],
             'ceca_delivered' => ['nullable', 'integer', Rule::exists('users', 'id')],
@@ -70,7 +70,7 @@ class OrderRequest extends FormRequest
             'mail.max' => __('El correo electrónico no puede superar los 50 caracteres.'),
             'kperson_delivery.required' => __('El tipo de persona que entrega los equipos es obligatoria.'),
             'kperson_delivery.integer' => __('La persona que entrega los equipos debe ser un número válido.'),
-            'cg_dependency_id.required' => __('El área académica es obligatoria. En caso de ser externo elija la dependencia "Externo".'),
+            'cg_dependency_id.required' => __('La dependencia universitaria es obligatoria. En caso de ser externo elija la dependencia "Externo".'),
             'cg_academic_area_id.required' => __('El área académica es obligatoria. En caso de no tener, seleccione "Sin área académica".'),
             'ceca_received.integer' => __('Debe seleccionar el miembro del área de mantenimiento que recibió los equipos.'),
         ];
