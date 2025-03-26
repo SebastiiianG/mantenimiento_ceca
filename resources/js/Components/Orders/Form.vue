@@ -10,7 +10,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-    defineProps({
+import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
+
+ const props = defineProps({
         form: {
             type: Object,
             required: true
@@ -29,11 +31,11 @@ import TextInput from '@/Components/TextInput.vue';
             required: true
         },
         cgDependencies: {
-            type: Object,
+            type: Array,
             required: true
         },
         cgAcademicAreas: {
-            type: Object,
+            type: Array,
             required: true
         },
         cgKindPeople: {
@@ -46,8 +48,28 @@ import TextInput from '@/Components/TextInput.vue';
         }
     });
 
-    //La ruta que se sigue después de hacer submit en el form
-    defineEmits(['submit']);
+    // Hacer `form` reactivo
+    const state = reactive({
+        form: { ...props.form }
+    });
+
+    // Watch para manejar el cambio de área académica
+    watch(() => state.form.cg_academic_area_id, (newAcademicAreaId) => {
+        if (newAcademicAreaId && newAcademicAreaId !== 'none') {
+            const selectedArea = props.cgAcademicAreas.find(cgAcademicArea => cgAcademicArea.id === newAcademicAreaId);
+            if (selectedArea) {
+                state.form.cg_dependency_id = selectedArea.cg_dependency_id;
+            }
+        } else {
+            state.form.cg_dependency_id = ''; // Permite al usuario elegir manualmente una dependencia
+        }
+    });
+
+    // Exponer `form` para el template
+    const { form } = toRefs(state);
+
+    // Emit para eventos
+    const emit = defineEmits(['submit'])
 </script>
 
 <template>
@@ -122,9 +144,9 @@ import TextInput from '@/Components/TextInput.vue';
                 <InputError :message="$page.props.errors.cell_number" class="mt-2 bg-opacity-0"/>
             </div>
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="email" value="Correo Electrónico"/>
-                <TextInput id="email" v-model="form.email" type="text" autocomplete="email" class="mt-1 block w-full shadow-xl"/>
-                <InputError :message="$page.props.errors.email" class="mt-2 bg-opacity-0"/>
+                <InputLabel for="mail" value="Correo Electrónico"/>
+                <TextInput id="mail" v-model="form.mail" type="email" autocomplete="mail" class="mt-1 block w-full shadow-xl"/>
+                <InputError :message="$page.props.errors.mail" class="mt-2 bg-opacity-0"/>
             </div>
 
 
@@ -138,21 +160,26 @@ import TextInput from '@/Components/TextInput.vue';
             </div>
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="cg_dependency_id" id="cg_dependency_id" value="Dependencia"/>
-                <select name="cg_dependency_id" id="cg_dependency_id" v-model="form.cg_dependency_id" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
-                    <option v-for="cgDependency in cgDependencies" :value="cgDependency.id" class="whitespace-normal break-words">{{ cgDependency.dependency_name }}
-                    </option>
-                </select>
-                <InputError :message="$page.props.errors.cg_dependency_id" class="mt-2 bg-opacity-0"/>
-            </div>
-
-            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="cg_academic_area_id" id="cg_academic_area_id" value="Área Académica"/>
-                <select name="cg_academic_area_id" id="cg_academic_area_id" v-model="form.cg_academic_area_id" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH" >
-                    <option v-for="cgAcademicArea in cgAcademicAreas" :value="cgAcademicArea.id" class="whitespace-normal break-words">{{ cgAcademicArea.area_name }}
+                <select name="cg_academic_area_id" id="cg_academic_area_id" v-model="form.cg_academic_area_id" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
+                    <option value="none">Sin área académica</option>
+                    <option v-for="cgAcademicArea in cgAcademicAreas" :value="cgAcademicArea.id" class="whitespace-normal break-words">
+                        {{ cgAcademicArea.area_name }}
                     </option>
                 </select>
                 <InputError :message="$page.props.errors.cg_academic_area_id" class="mt-2 bg-opacity-0"/>
+            </div>
+
+            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+                <InputLabel for="cg_dependency_id" id="cg_dependency_id" value="Dependencia"/>
+                <select name="cg_dependency_id" id="cg_dependency_id" v-model="form.cg_dependency_id"
+                        :disabled="form.cg_academic_area_id !== 'none'"
+                        class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
+                    <option v-for="cgDependency in cgDependencies" :value="cgDependency.id" class="whitespace-normal break-words">
+                        {{ cgDependency.dependency_name }}
+                    </option>
+                </select>
+                <InputError :message="$page.props.errors.cg_dependency_id" class="mt-2 bg-opacity-0"/>
             </div>
 
 
