@@ -10,14 +10,13 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
+import { defineProps, defineEmits, watch, reactive, toRefs, onMounted } from 'vue';
 
  const props = defineProps({
         form: {
             type: Object,
             required: true
         },
-
         updating: {
             type: Boolean,
             required: false,
@@ -32,11 +31,11 @@ import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
             required: true
         },
         cgDependencies: {
-            type: Array,
+            type: Object,
             required: true
         },
         cgAcademicAreas: {
-            type: Array,
+            type: Object,
             required: true
         },
         cgKindPeople: {
@@ -49,32 +48,39 @@ import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
         }
     });
 
-    // Hacer `form` reactivo
+    // Mantener `form` reactivo
     const state = reactive({
         form: { ...props.form }
     });
 
-    // Watch para manejar el cambio de área académica
+    // Watch para cambios en el área académica
     watch(() => state.form.cg_academic_area_id, (newAcademicAreaId) => {
         if (newAcademicAreaId && newAcademicAreaId !== 'none') {
-            const selectedArea = props.cgAcademicAreas.find(cgAcademicArea => cgAcademicArea.id === newAcademicAreaId);
+            const selectedArea = props.cgAcademicAreas.find(
+                cgAcademicArea => cgAcademicArea.id === newAcademicAreaId
+            );
             if (selectedArea) {
                 state.form.cg_dependency_id = selectedArea.cg_dependency_id;
             }
         } else {
-            state.form.cg_dependency_id = ''; // Permite al usuario elegir manualmente una dependencia
+            state.form.cg_dependency_id = ''; // Permite elegir manualmente una dependencia
         }
     });
 
-    // Exponer `form` para el template
-    const { form } = toRefs(state);
+    // Emitir evento al enviar el formulario
+    const emit = defineEmits(['submitted']);
 
-    // Emit para eventos
-    const emit = defineEmits(['submit'])
-</script>
+    const handleSubmit = () => {
+        // Emitir el evento con los datos del formulario
+        emit('submitted', state.form);
+    };
+
+    // Exponer `form` para usar en el template
+    const { form } = toRefs(state);
+    </script>
 
 <template>
-    <FullPageForm @submitted="$emit('submit')">
+    <FullPageForm @submitted="handleSubmit">
         <template #title>
             <span v-html="
                 updating
@@ -162,7 +168,7 @@ import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="cg_academic_area_id" id="cg_academic_area_id" value="Área Académica"/>
-                <select name="cg_academic_area_id" id="cg_academic_area_id" v-model="form.cg_academic_area_id" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
+                <select name="cg_academic_area_id" id="cg_academic_area_id" v-model="state.form.cg_academic_area_id" class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option value="none">Sin área académica</option>
                     <option v-for="cgAcademicArea in cgAcademicAreas" :value="cgAcademicArea.id" class="whitespace-normal break-words">
                         {{ cgAcademicArea.area_name }}
@@ -173,7 +179,7 @@ import { defineProps, defineEmits, watch, reactive, toRefs } from 'vue';
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="cg_dependency_id" id="cg_dependency_id" value="Dependencia"/>
-                <select name="cg_dependency_id" id="cg_dependency_id" v-model="form.cg_dependency_id"
+                <select name="cg_dependency_id" id="cg_dependency_id" v-model="state.form.cg_dependency_id"
                         :disabled="form.cg_academic_area_id !== 'none'"
                         class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgDependency in cgDependencies" :value="cgDependency.id" class="whitespace-normal break-words">
