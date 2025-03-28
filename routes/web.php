@@ -13,9 +13,15 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderDeviceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UCommunityController;
+use App\Http\Controllers\ReportNotesController
+;
+
 
 //Ruta principal para la página web
 Route::get('/', [DashboardController::class, 'index']);
+
+Route::get('/orders/reportNotes/edit', [ReportNotesController::class, 'edit'])->name('orders.reportNotes.edit');
+Route::post('/orders/reportNotes/update', [ReportNotesController::class, 'update'])->name('orders.reportNotes.update');
 
 //Ruta sobre el dashboard, todos los usuarios necesitan estar autenticados
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
@@ -36,6 +42,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     //Eliminar la ruta de UCommunity después del testeo
     Route::resource('/UCommunity', UCommunityController::class);
 
+    // Rutas para las notas de los reportes
+    Route::get('/orders/reportNotes/edit', [ReportNotesController::class, 'edit'])->name('orders.reportNotes.edit');
+    Route::post('/orders/reportNotes/update', [ReportNotesController::class, 'update'])->name('orders.reportNotes.update');
 
 });
 

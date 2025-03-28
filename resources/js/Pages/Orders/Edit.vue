@@ -55,7 +55,11 @@ const form = useForm({
     cg_academic_area_id : props.order.cg_academic_area_id,
     ceca_received : props.order.ceca_received,
     ceca_delivered : props.order.ceca_delivered,
-})
+});
+
+const handleFormSubmit = (formData) => {
+    formData.put(route('orders.update', order.id));
+};
 </script>
 
 <template>
@@ -70,7 +74,7 @@ const form = useForm({
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
                 <div class="bg-cremaUAEH overflow-hidden">
                     <div class="p-6">
-                        <OrderForm :updating = "true" :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submit = "form.put(route('orders.update', order.id))" />
+                        <OrderForm :updating = "true" :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submitted="handleFormSubmit" />
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('read order devices')">
