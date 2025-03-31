@@ -9,10 +9,10 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import RadioButton from '../RadioButton.vue';
-import { ref } from 'vue';
+import { ref , watch} from 'vue';
 import FullPageForm from '@/Components/FullPageForm.vue';
 
-defineProps({
+const props = defineProps({
     form: {
         type: Object,
         required: true
@@ -42,10 +42,22 @@ defineProps({
         type: String,
         required: true,
     },
+    modelValue: {
+        type: Object,
+        required: true
+    },
 });
 
+const emit = defineEmits(['update:modelValue']);
+// Hacer `form` reactivo y sincronizarlo con `modelValue`
+const form = ref({ ...props.modelValue });
+
+watch(form, (newVal) => {
+    emit('update:modelValue', newVal);
+}, { deep: true });
+
 //La ruta que se sigue después de hacer submit en el form
-defineEmits(['submit']);
+//defineEmits(['submit']);
 
 </script>
 
@@ -85,7 +97,8 @@ defineEmits(['submit']);
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="cg_brand_id" value="Marca del dispositivo" />
-                <select name="cg_brand_id" id="cg_brands_id" v-model="form.cg_brand_id"
+                <select name="cg_brand_id" id="cg_brands_id" v-model="
+                form.cg_brand_id"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgBrand in cgBrands" :value="cgBrand.id" class="whitespace-normal break-words">
                         {{ cgBrand.brand_name }}
@@ -113,7 +126,7 @@ defineEmits(['submit']);
 
                 <div v-if="form.computer === 1" class="col-span-6 sm:col-span-6 mt-4">
                     <InputLabel for="password" value="Ingrese contraseña" />
-                    <TextInput id="password" type="password" autocomplete="password" class="mt-1 block w-full" />
+                    <TextInput id="password" v-model="form.password" type="password" autocomplete="password" class="mt-1 block w-full" />
 
                     <InputError class="mt-2 bg-opacity-0" />
                 </div>

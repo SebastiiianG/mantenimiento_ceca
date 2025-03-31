@@ -14,6 +14,7 @@ use \App\Models\CgBrand;
 use \App\Models\CgKindFailure;
 use \App\Models\OrderDevice;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -108,25 +109,49 @@ class OrderController extends Controller
      * @param App\Http\Requests\OrderRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderRequest $request)
-    {
-        /*Order::create($request->validated());
-        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');*/
-        // Agregamos la fecha de generación automáticamente
-        $data = $request->validated();
-        $data['date_generation'] = now()->format('Y-m-d');
+
+     public function store(OrderRequest $request)
+     {
+     //Log::info('Datos recibidos:', $request->all());
+     // Creamos la orden con la fecha incluida
+     return DB::transaction(function () use ($request) {
+
+
+         // Extraer los datos de la orden, excepto 'devices'
+         $orderData = $request->except('devices');
 
          // Si el valor de cg_academic_area_id es 'none', cambiarlo a null
-        if ($data['cg_academic_area_id'] === 'none') {
-            $data['cg_academic_area_id'] = null;
-        }
+         if ($orderData['cg_academic_area_id'] === 'none') {
+             $orderData['cg_academic_area_id'] = null;
+         }
+         $orderData['date_generation'] = now()->format('Y-m-d');
 
-        // Creamos la orden con la fecha incluida
-        Order::create($data);
+         // Crear la orden
+         $order = Order::create($orderData);
 
-        // Redireccionamos con mensaje de éxito
-        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
-        }
+         // Crear los dispositivos asociados y obtener la colección creada
+         $devicesData = $request->devices;
+         $orderDevices = $order->orderDevices()->createMany($devicesData);
+
+         // Iterar sobre cada dispositivo creado para guardar la computadora, si aplica
+         foreach ($orderDevices as $key => $orderDevice) {
+             // Revisar si el dispositivo es de tipo computer (por ejemplo, si el campo 'computer' es 1)
+             // y además se proporcionó una contraseña en los datos enviados para ese dispositivo.
+             if ($orderDevice->computer == 1 && !empty($devicesData[$key]['password'])) {
+                 // Crea el registro en la tabla 'computers' asociado a este dispositivo.
+                 // Puedes encriptar la contraseña, por ejemplo, usando bcrypt.
+                 $orderDevice->computers()->create([
+                     'password' => $devicesData[$key]['password'],
+                 ]);
+             }
+         }
+
+         // Cargar la relación de dispositivos (puedes usar 'orderDevices' o, si definiste alias, 'devices')
+         //return response()->json($order->load('orderDevices'), 201);
+         //Redireccionamos con mensaje de éxito
+         return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
+     });
+     }
 
     /**
      * Display the specified resource.

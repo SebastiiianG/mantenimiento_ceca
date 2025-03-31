@@ -52,6 +52,6 @@ class OrderDevice extends Model
 
 	public function computers()
 	{
-		return $this->hasMany(Computer::class);
+		return $this->hasOne(Computer::class);
 	}
 }

@@ -2,21 +2,12 @@
 import { useForm } from '@inertiajs/vue3';
 import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { ref } from 'vue';
-
-/* const props = defineProps({
-    cgKindObjects: Object,
-    cgBrands: Object,
-    cgKindFailures: Object,
-    users: Object,
-    newOrderNumber: String,
-}); */
-
+import { ref, computed } from 'vue';
 
 const props = defineProps({
-    newOrderNumber: {
-            type: String,
-            required: true,
+    modelValue: {
+        type: Array,
+        default: () => [],
     },
     cgKindObjects: {
         type: Object,
@@ -33,108 +24,87 @@ const props = defineProps({
     users: {
         type: Object,
         required: true,
-    }
+    },
 });
 
+const emit = defineEmits(['update:modelValue']);
 
-const counter = ref(0);
-const devices = ref([]);
-const openedDevices = ref({}); // Estado de apertura por dispositivo
+const devices = computed({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value),
+});
 
-//order_id:props.newOrderNumber,
+const openedDevices = ref([]);
+const counter = ref(devices.value.length || 0);
 
 const addDevice = () => {
-    counter.value++;
-    devices.value.push({
-        id: counter.value,
-        form: useForm({  // Crear un form independiente para cada dispositivo
-            model: '',
-            client_observations: '',
-            diagnostic: '',
-            ceca_observations: '',
-            status: '',
-            computer: '',
-            assigned: '0',
-            serial_number: '',
-            cg_brand_id: '',
-            order_id: '',
-            cg_kind_failure_id: '',
-            cg_kind_object_id: '',
-            ceca_repairs: ''
-        })
-    });
+    const newDevice = {
+        model: '',
+        client_observations: '',
+        diagnostic: '',
+        ceca_observations: '',
+        status: '',
+        computer: '',
+        assigned: '0',
+        serial_number: '',
+        cg_brand_id: '',
+        cg_kind_failure_id: '',
+        cg_kind_object_id: '',
+        ceca_repairs: '',
+        password: '',
+    };
+    //const password = props.password;
+
+    devices.value = [...devices.value, newDevice];
+    openedDevices.value.push(false); // Inicializa como cerrado
 };
 
-const removeDevice = (id) => {
-    devices.value = devices.value.filter(device => device.id !== id);
-    delete openedDevices.value[id]; // Asegurar que se cierre al eliminarlo
+const removeDevice = (index) => {
+    devices.value.splice(index, 1);
+    openedDevices.value.splice(index, 1);
 };
 
-const openDevice = (id) => {
-    openedDevices.value[id] = !openedDevices.value[id]; // Alternar estado del dispositivo
+const updateDevice = (index, newData) => {
+    devices.value = devices.value.map((device, i) =>
+        i === index ? { ...device, ...newData } : device
+    );
 };
-
-const saveAllDevices = () => {
-    if (devices.value.length === 0) {
-        alert("No hay dispositivos para guardar.");
-        return;
-    }
-
-    const allDevicesData = devices.value.map(device => device.form.data());
-
-    //console.log("Enviando datos a Laravel:", allDevicesData);
-
-    const form = useForm({
-        devices: allDevicesData
-    });
-
-    form.post(route('orderDevices.store'), {
-        preserveScroll: true,
-        onSuccess: () => console.log("Datos enviados exitosamente."),
-        onError: (errors) => console.log("Errores recibidos:", errors),
-    });
-};
-
-
-
-
 </script>
 
 <template>
-    <div class="sm:flex-auto px-2 py-3 sm:px-3 mt-10 ">
-        <h1 class="text-xl font-semibold text-gray-900">
-            Nueva orden de dispositivos {{ $page.props.newOrderNumber }}
-        </h1>
-        <p class="mt-2 text-sm text-gray-700">
-            Da de alta los dispositivos pertenecientes a esta orden
-        </p>
-        <div class="flex mt-6 justify-between">
-            <p>Total de dispositivos: {{ devices.length }}</p>
-            <PrimaryButton @click="addDevice">+</PrimaryButton>
-        </div>
-    </div>
-
-    <div class="mt-4">
-        <div v-for="device in devices" :key="device.id">
-            <div class="bg-naranjaUAEH w-full h-12 mt-4 flex items-center px-4 text-white rounded-lg shadow-lg justify-between cursor-pointer">
-                <button @click="openDevice(device.id)">Abrir</button>
-                <p>Dispositivo {{ device.id }}</p>
-                <p class="cursor-pointer text-white/80" @click="removeDevice(device.id)">Eliminar</p>
-            </div>
-
-            <div v-if="openedDevices[device.id]">
-                <OrderDevicesForm
-                    :form="device.form"
-                    :cgKindObjects="cgKindObjects"
-                    :cgBrands="cgBrands"
-                    :cgKindFailures="cgKindFailures"
-                    :users="users"
-                    :newOrderNumber="newOrderNumber"
-                    @submit="device.form.post(route('orderDevices.store'))"
-                />
+    <div> <!-- Elemento raíz único -->
+        <div class="sm:flex-auto px-2 py-3 sm:px-3 mt-10">
+            <h1 class="text-xl font-semibold text-gray-900">
+                Órdenes de dispositivos
+            </h1>
+            <div class="flex mt-6 justify-between">
+                <p>Total de dispositivos: {{ devices.length }}</p>
+                <PrimaryButton @click="addDevice">+</PrimaryButton>
             </div>
         </div>
-        <PrimaryButton @click="saveAllDevices" class="mt-4">Guardar todos</PrimaryButton>
 
+        <div class="mt-4">
+            <div v-for="(device, index) in devices" :key="device.id">
+                <div class="bg-amarilloUAEH w-full h-12 mt-4 flex items-center px-4 text-white rounded-lg shadow-lg justify-between cursor-pointer">
+                    <button @click="openedDevices[index] = !openedDevices[index]">
+                        {{ openedDevices[index] ? 'Cerrar' : 'Abrir' }}
+                    </button>
+
+                    <p>Dispositivo {{ index + 1 }}</p>
+                    <p class="cursor-pointer text-white/80" @click="removeDevice(index)">Eliminar</p>
+                </div>
+
+                <div v-if="openedDevices[index]">
+                    <OrderDevicesForm
+                        :modelValue="device"
+                        @update:modelValue="(newData) => updateDevice(index, newData)"
+                        :cg-kind-objects="cgKindObjects"
+                        :cg-brands="cgBrands"
+                        :cg-kind-failures="cgKindFailures"
+                        :users="users"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
