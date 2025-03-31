@@ -58,7 +58,7 @@ const form = useForm({
 });
 
 const handleFormSubmit = (formData) => {
-    formData.put(route('orders.update', order.id));
+    formData.put(route('orders.update', props.order.id));
 };
 </script>
 
