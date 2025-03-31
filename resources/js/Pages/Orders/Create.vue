@@ -9,6 +9,7 @@ import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
 import OrderDevicesCreate from '@/Pages/OrderDevices/Create.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 
 defineProps({
@@ -58,11 +59,22 @@ const form = useForm({
     cg_academic_area_id: 'none',
     cg_dependency_id: '',
     ceca_received: '',
+    //array para los dispositivos
+    devices: [],
 });
 
-const handleFormSubmit = (formData) => {
-    formData.post(route('orders.store'));
+const handleSubmit = () => {
+    console.log("Datos enviados:", form);
+    form.post(route('orders.store'), {
+        onSuccess: () => {
+            console.log("Orden guardada con éxito");
+        },
+        onError: (errors) => {
+            console.error("Errores en la respuesta:", errors);
+        }
+    });
 };
+
 </script>
 
 <template>
@@ -79,14 +91,19 @@ const handleFormSubmit = (formData) => {
                     <div class="p-6">
                         <!-- Mostrar el último order_number en el título dentro del formulario -->
                         <!--orders.store es la ruta para guardar el recursos -->
-                        <OrderForm :form="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users"     @submitted="handleFormSubmit"
-                        />
+                        <OrderForm :form="form" v-model="form" :newOrderNumber="newOrderNumber" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users"
+                        @submitted="handleSubmit"/>
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('create order devices')">
-                            <OrderDevicesCreate  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" :newOrderNumber="newOrderNumber"/>
+                            <OrderDevicesCreate v-model="form.devices" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" />
                         </div>
 
+                        <div class="flex justify-end mt-4">
+                            <PrimaryButton class="mt-4"  @click="handleSubmit">
+                            Guardar Orden y Dispositivos
+                            </PrimaryButton>
+                        </div>
                     </div>
                 </div>
             </div>

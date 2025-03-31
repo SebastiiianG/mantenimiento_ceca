@@ -28,6 +28,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            //reglas para la orden
             'date_generation' => ['date', 'before_or_equal:today'],
             'date_reception' => ['date'],
             'delivery_date' => ['nullable', 'date'],
@@ -43,6 +44,23 @@ class OrderRequest extends FormRequest
             'cg_dependency_id' => ['required', 'integer', Rule::exists('cg_dependencies', 'id')],
             'ceca_received' => ['integer', Rule::exists('users', 'id')],
             'ceca_delivered' => ['nullable', 'integer', Rule::exists('users', 'id')],
+
+            //reglas para los dispoisitivos
+            'devices' => 'required|array|min:1',
+            'devices.*.model' => 'required|string',
+            'devices.*.client_observations' => 'required|string',
+            'devices.*.diagnostic' => 'nullable|string',
+            'devices.*.ceca_observations' => 'nullable|string',
+            'devices.*.status' => 'required|string',
+            'devices.*.computer' => 'required|integer',
+            'devices.*.assigned' => 'required|string',
+            'devices.*.serial_number' => 'nullable|string',
+            'devices.*.cg_brand_id' => 'required|integer',
+            'devices.*.order_id' => 'nullable|string',
+            'devices.*.cg_kind_failure_id' => 'required|integer',
+            'devices.*.cg_kind_object_id' => 'required|integer',
+            'devices.*.ceca_repairs' => 'nullable|integer',
+            'devices.*.password' => 'nullable|string',
         ];
     }
 
@@ -73,6 +91,32 @@ class OrderRequest extends FormRequest
             'cg_dependency_id.required' => __('La dependencia universitaria es obligatoria. En caso de ser externo elija la dependencia "Externo".'),
             'cg_academic_area_id.required' => __('El área académica es obligatoria. En caso de no tener, seleccione "Sin área académica".'),
             'ceca_received.integer' => __('Debe seleccionar el miembro del área de mantenimiento que recibió los equipos.'),
+
+            //mensajes para dispositivo
+            'devices.min '=> __('Debes seleccionar al menos un dispositivo.'),
+            'devices.*.model.required'=> __('El modelo es requerido'),
+            'devices.*.model.string'=>'El modelo debe ser de tipo texto',
+            'devices.*.model.max'=>'El modelo no puede tener mas de 30 caracteres',
+            'devices.*.client_observations.required'=>'Las observaciones del cliente son requeridas',
+            'devices.*.client_observations.string'=>'Las observaciones del cliente deben ser un texto',
+            'devices.*.diagnostic.string'=>'El diagnostico debe ser texto',
+            'devices.*.ceca_observations.string'=>'Las observaciones de Ceca deben ser texto',
+            'devices.*.status.required'=>'El estado es requerido',
+            'devices.*.status.string'=>'El estado debe ser un string',
+            'devices.*.status.in'=>'El estado debe ser uno de los siguientes: Sin asignar, En proceso, Finalizado',
+            'devices.*.computer.required'=>'Campo requerido',
+            'devices.*.serial_number.max'=> 'El numero de serie no puede tener mas de 50 caracteres',
+            'devices.*.cg_brand_id.required'=>'El id de la marca es requerido',
+            'devices.*.cg_brand_id.integer'=>'El id de la marca debe ser un entero',
+            'devices.*.cg_brand_id.exists'=>'El id de la marca no existe',
+            'devices.*.cg_kind_failure_id.required'=>'El id del tipo de falla es requerido',
+            'devices.*.cg_kind_failure_id.integer'=>'El id del tipo de falla debe ser un número valido',
+            'devices.*.cg_kind_failure_id.exists'=>'El id del tipo de falla no existe',
+            'devices.*.cg_kind_object_id.required'=>'El id del tipo de objeto es requerido',
+            'devices.*.cg_kind_object_id.integer'=>'El id del tipo de objeto debe ser un número valido',
+            'devices.*.cg_kind_object_id.exists'=>'El id del tipo de objeto no existe',
+            'devices.*.ceca_repairs.integer'=>'El id del reparador de Ceca debe ser un número valido',
+            'devices.*.ceca_repairs.exists'=>'El id del reparador de Ceca no existe',
         ];
     }
 }
