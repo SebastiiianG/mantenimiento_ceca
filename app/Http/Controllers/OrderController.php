@@ -39,7 +39,7 @@ class OrderController extends Controller
                   });
         }
 
-        $orders = $query->orderBy('order_number', 'asc')->paginate(20)->withQueryString();
+        $orders = $query->orderBy('id', 'asc')->paginate(20)->withQueryString();
 
         return inertia('Orders/Index', [
             'orders' => $orders,
@@ -53,7 +53,7 @@ class OrderController extends Controller
     public function create()
     {
         // Recuperamos el último order_number generado
-        $lastOrderNumber = Order::orderByDesc('order_number')->value('order_number');
+        $lastOrderNumber = Order::orderByDesc('id')->value('order_number');
 
         if (!$lastOrderNumber) {
             $lastOrderNumber = 'AM-0'; // O cualquier valor inicial que desees
@@ -110,41 +110,48 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(OrderRequest $request)
-    {
-    \Log::info('Datos recibidos:', $request->all());
+     public function store(OrderRequest $request)
+     {
+     //Log::info('Datos recibidos:', $request->all());
+     // Creamos la orden con la fecha incluida
+     return DB::transaction(function () use ($request) {
 
-    return DB::transaction(function () use ($request) {
-        // Extraer los datos de la orden, excepto 'devices'
-        $orderData = $request->except('devices');
-        $orderData['date_generation'] = now()->format('Y-m-d');
 
-        // Crear la orden
-        $order = Order::create($orderData);
+         // Extraer los datos de la orden, excepto 'devices'
+         $orderData = $request->except('devices');
 
-        // Crear los dispositivos asociados y obtener la colección creada
-        $devicesData = $request->devices;
-        $orderDevices = $order->orderDevices()->createMany($devicesData);
+         // Si el valor de cg_academic_area_id es 'none', cambiarlo a null
+         if ($orderData['cg_academic_area_id'] === 'none') {
+             $orderData['cg_academic_area_id'] = null;
+         }
+         $orderData['date_generation'] = now()->format('Y-m-d');
 
-        // Iterar sobre cada dispositivo creado para guardar la computadora, si aplica
-        foreach ($orderDevices as $key => $orderDevice) {
-            // Revisar si el dispositivo es de tipo computer (por ejemplo, si el campo 'computer' es 1)
-            // y además se proporcionó una contraseña en los datos enviados para ese dispositivo.
-            if ($orderDevice->computer == 1 && !empty($devicesData[$key]['password'])) {
-                // Crea el registro en la tabla 'computers' asociado a este dispositivo.
-                // Puedes encriptar la contraseña, por ejemplo, usando bcrypt.
-                $orderDevice->computers()->create([
-                    'password' => $devicesData[$key]['password'],
-                ]);
-            }
-        }
+         // Crear la orden
+         $order = Order::create($orderData);
 
-        // Cargar la relación de dispositivos (puedes usar 'orderDevices' o, si definiste alias, 'devices')
-        //return response()->json($order->load('orderDevices'), 201);
-        //Redireccionamos con mensaje de éxito
-        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
-    });
-}
+         // Crear los dispositivos asociados y obtener la colección creada
+         $devicesData = $request->devices;
+         $orderDevices = $order->orderDevices()->createMany($devicesData);
+
+         // Iterar sobre cada dispositivo creado para guardar la computadora, si aplica
+         foreach ($orderDevices as $key => $orderDevice) {
+             // Revisar si el dispositivo es de tipo computer (por ejemplo, si el campo 'computer' es 1)
+             // y además se proporcionó una contraseña en los datos enviados para ese dispositivo.
+             if ($orderDevice->computer == 1 && !empty($devicesData[$key]['password'])) {
+                 // Crea el registro en la tabla 'computers' asociado a este dispositivo.
+                 // Puedes encriptar la contraseña, por ejemplo, usando bcrypt.
+                 $orderDevice->computers()->create([
+                     'password' => $devicesData[$key]['password'],
+                 ]);
+             }
+         }
+
+         // Cargar la relación de dispositivos (puedes usar 'orderDevices' o, si definiste alias, 'devices')
+         //return response()->json($order->load('orderDevices'), 201);
+         //Redireccionamos con mensaje de éxito
+         return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
+     });
+     }
 
     /**
      * Display the specified resource.
@@ -160,7 +167,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        dd($order);
+        //dd($order);
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
@@ -187,7 +194,16 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order)
     {
-        $order->update($request->validated());
+        $validatedData = $request->validated();
+
+        // Si el área académica es 'none', convertirlo a null
+        if ($validatedData['cg_academic_area_id'] === 'none') {
+            $validatedData['cg_academic_area_id'] = null;
+        }
+
+        // Actualizar la orden con los datos validados
+        $order->update($validatedData);
+
         return redirect()->route('orders.index')->with('success', 'Orden actualizada con éxito');
     }
 
@@ -198,5 +214,10 @@ class OrderController extends Controller
     {
         $order->delete();
         return redirect()->route('orders.index');
+    }
+
+
+    public function report(Order $order){
+
     }
 }
