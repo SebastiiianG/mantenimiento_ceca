@@ -13,10 +13,6 @@ import { ref , watch} from 'vue';
 import FullPageForm from '@/Components/FullPageForm.vue';
 
 const props = defineProps({
-    form: {
-        type: Object,
-        required: true
-    },
     updating : {
         type: Boolean,
         default: true,
@@ -37,10 +33,6 @@ const props = defineProps({
     users: {
         type: Object,
         required: true
-    },
-    newOrderNumber: {
-        type: String,
-        required: true,
     },
     modelValue: {
         type: Object,

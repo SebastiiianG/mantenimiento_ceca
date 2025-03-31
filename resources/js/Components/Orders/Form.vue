@@ -26,10 +26,6 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    order: {
-        type: Object,
-        required: true
-    },
     cgDependencies: {
         type: Object,
         required: true

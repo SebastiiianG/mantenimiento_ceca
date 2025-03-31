@@ -65,13 +65,13 @@ const form = useForm({
 
 const handleSubmit = () => {
     console.log("Datos enviados:", form);
-    form.post(route('orders.store'), {
+    form.post(route('orders.store'),{
         onSuccess: () => {
-            console.log("Orden guardada con éxito");
+            console.log("Se envio correctamente");
         },
         onError: (errors) => {
-            console.error("Errores en la respuesta:", errors);
-        }
+            console.log("Error al enviar", errors);
+        },
     });
 };
 

@@ -56,7 +56,7 @@ class OrderRequest extends FormRequest
             'devices.*.assigned' => 'required|string',
             'devices.*.serial_number' => 'nullable|string',
             'devices.*.cg_brand_id' => 'required|integer',
-            'devices.*.order_id' => 'nullable|string',
+            'devices.*.order_id' => 'integer',
             'devices.*.cg_kind_failure_id' => 'required|integer',
             'devices.*.cg_kind_object_id' => 'required|integer',
             'devices.*.ceca_repairs' => 'nullable|integer',
