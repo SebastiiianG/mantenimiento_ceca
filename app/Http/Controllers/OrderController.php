@@ -38,7 +38,7 @@ class OrderController extends Controller
                   });
         }
 
-        $orders = $query->orderBy('order_number', 'asc')->paginate(20)->withQueryString();
+        $orders = $query->orderBy('id', 'asc')->paginate(20)->withQueryString();
 
         return inertia('Orders/Index', [
             'orders' => $orders,
@@ -52,7 +52,7 @@ class OrderController extends Controller
     public function create()
     {
         // Recuperamos el último order_number generado
-        $lastOrderNumber = Order::orderByDesc('order_number')->value('order_number');
+        $lastOrderNumber = Order::orderByDesc('id')->value('order_number');
 
         if (!$lastOrderNumber) {
             $lastOrderNumber = 'AM-0'; // O cualquier valor inicial que desees
@@ -116,6 +116,11 @@ class OrderController extends Controller
         $data = $request->validated();
         $data['date_generation'] = now()->format('Y-m-d');
 
+         // Si el valor de cg_academic_area_id es 'none', cambiarlo a null
+        if ($data['cg_academic_area_id'] === 'none') {
+            $data['cg_academic_area_id'] = null;
+        }
+
         // Creamos la orden con la fecha incluida
         Order::create($data);
 
@@ -137,7 +142,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        dd($order);
+        //dd($order);
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
@@ -164,7 +169,16 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order)
     {
-        $order->update($request->validated());
+        $validatedData = $request->validated();
+
+        // Si el área académica es 'none', convertirlo a null
+        if ($validatedData['cg_academic_area_id'] === 'none') {
+            $validatedData['cg_academic_area_id'] = null;
+        }
+
+        // Actualizar la orden con los datos validados
+        $order->update($validatedData);
+
         return redirect()->route('orders.index')->with('success', 'Orden actualizada con éxito');
     }
 
@@ -175,5 +189,10 @@ class OrderController extends Controller
     {
         $order->delete();
         return redirect()->route('orders.index');
+    }
+
+
+    public function report(Order $order){
+
     }
 }
