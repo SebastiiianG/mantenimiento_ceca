@@ -10,6 +10,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
 import OrderDevicesCreate from '@/Pages/OrderDevices/Create.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import Swal from 'sweetalert2';
 
 
 defineProps({
@@ -66,11 +67,17 @@ const form = useForm({
 const handleSubmit = () => {
     console.log("Datos enviados:", form);
     form.post(route('orders.store'),{
-        onSuccess: () => {
-            console.log("Se envio correctamente");
-        },
         onError: (errors) => {
             console.log("Error al enviar", errors);
+            // Verificar si errors contiene la clave 'devices'
+            const errorMessage = errors.devices ? errors.devices : "No se pudo crear la orden";
+            Swal.fire({
+                title: 'Error',
+                text: errorMessage,
+                icon: 'error',
+                //confirmButtonColor: "#239b56",
+                confirmButtonText: 'Aceptar'
+            });
         },
     });
 };
@@ -96,7 +103,7 @@ const handleSubmit = () => {
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('create order devices')">
-                            <OrderDevicesCreate v-model="form.devices" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" />
+                            <OrderDevicesCreate v-model="form.devices" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" @submitted="handleSubmit" />
                         </div>
 
                         <div class="flex justify-end mt-4">

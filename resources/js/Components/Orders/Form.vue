@@ -136,13 +136,13 @@ const { form } = toRefs(state);
             </div>
 
             <div class="col-span-3 sm:col-span-3 bg-transparent bg-opacity-0">
-                <InputLabel for="phone_number" value="Número De Teléfono" />
+                <InputLabel for="phone_number" value="Número De Teléfono (opc)*" />
                 <TextInput id="phone_number" v-model="form.phone_number" type="text" autocomplete="phone_number"
                     class="mt-1 block w-full shadow-xl" />
                 <InputError :message="$page.props.errors.phone_number" class="mt-2" />
             </div>
             <div class="col-span-3 sm:col-span-3 bg-transparent bg-opacity-0">
-                <InputLabel for="ext" value="Extensión" />
+                <InputLabel for="ext" value="Extensión (opc)*" />
                 <TextInput id="ext" v-model="form.ext" type="text" autocomplete="ext"
                     class="mt-1 block w-full shadow-xl" />
                 <InputError :message="$page.props.errors.ext" class="mt-2" />
@@ -150,13 +150,13 @@ const { form } = toRefs(state);
 
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="cell_number" value="Número De Celular" />
+                <InputLabel for="cell_number" value="Número De Celular (opc)*" />
                 <TextInput id="cell_number" v-model="form.cell_number" type="text" autocomplete="cell_number"
                     class="mt-1 block w-full shadow-xl" />
                 <InputError :message="$page.props.errors.cell_number" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
-                <InputLabel for="mail" value="Correo Electrónico" />
+                <InputLabel for="mail" value="Correo Electrónico (opc)*" />
                 <TextInput id="mail" v-model="form.mail" type="email" autocomplete="mail"
                     class="mt-1 block w-full shadow-xl" />
                 <InputError :message="$page.props.errors.mail" class="mt-2 bg-opacity-0" />

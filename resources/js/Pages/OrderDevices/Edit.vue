@@ -5,18 +5,13 @@ export default {
 </script>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { computed, ref } from 'vue';
 import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 
 const props = defineProps({
-    devices : {
+    modelValue: {
         type: Object,
-        required: true,
-    },
-    newOrderNumber: {
-        type: String,
-        required: true,
+        default: () => []
     },
     cgKindObjects: {
         type: Object,
@@ -36,6 +31,33 @@ const props = defineProps({
     }
 });
 
+const emit = defineEmits(['update:modelValue']);
+
+const devices = computed({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value)
+});
+
+const openedDevices = ref([]);
+
+const toggleDevice = (id) => {
+    if (openedDevices.value.includes(id)) {
+        openedDevices.value = openedDevices.value.filter(deviceId => deviceId !== id);
+    } else {
+        openedDevices.value.push(id);
+    }
+};
+
+const removeDevice = (index) => {
+    devices.value.splice(index, 1);
+    openedDevices.value.splice(index, 1);
+};
+
+const updateDevice = (index, newData) => {
+    devices.value = devices.value.map((device, i) =>
+        i === index ? { ...device, ...newData } : device
+    );
+};
 </script>
 
 <template>
@@ -47,28 +69,30 @@ const props = defineProps({
             Se listan los dispositivos pertenecientes a esta orden
         </p>
         <div class="flex mt-6 justify-between text-sm text-gray-700">
-            <p>Total de dispositivos: </p>
-            <p>{{ props.devices }}</p>
+            <p>Total de dispositivos:
+                <span v-if="devices.length > 0">{{ devices.length }}
+                </span>
+                <span v-else>No hay dispositivos asociados a esta orden</span>
+            </p>
+
         </div>
 
         <div class="mt-4">
-            <div v-for="device in props.devices" :key="device.id">
+            <div v-for="(device, index) in devices" :key="device.id">
                 <div
-                    class="bg-naranjaUAEH w-full h-12 mt-4 flex items-center px-4 text-white rounded-lg shadow-lg justify-between cursor-pointer">
-                    <button @click="openDevice(device.id)">Abrir</button>
-                    <p>Dispositivo </p>
-                    <p class="cursor-pointer text-white/80" @click="removeDevice(device.id)">Eliminar</p>
+                    class="bg-amarilloUAEH w-full h-12 mt-4 flex items-center px-4 text-white rounded-lg shadow-lg justify-between cursor-pointer"
+                    @click="toggleDevice(device.id)">
+                    <button>{{ openedDevices.includes(device.id) ? 'Cerrar' : 'Abrir' }}</button>
+                    <p>Dispositivo {{ device.id }} </p>
+                    <p class="cursor-pointer text-white/80" @click.stop="removeDevice(index)">Eliminar</p>
                 </div>
 
-                <div v-if="openedDevices[device.id]">
-                    <OrderDevicesForm :form="device.form" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands"
-                        :cgKindFailures="cgKindFailures" :users="users" :newOrderNumber="newOrderNumber"
-                        @submit="device.form.post(route('orderDevices.update'))" />
+                <div v-if="openedDevices.includes(device.id)">
+                    <OrderDevicesForm :modelValue="device"  :index="index" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands"
+                    :cgKindFailures="cgKindFailures" :users="users"
+                    @update:modelValue="(newData) => updateDevice(index, newData)"/>
                 </div>
             </div>
-            <PrimaryButton @click="saveAllDevices" class="mt-4">Guardar todos</PrimaryButton>
-
         </div>
-
     </div>
 </template>

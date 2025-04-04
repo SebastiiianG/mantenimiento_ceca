@@ -9,12 +9,19 @@ import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
 import OrderDevicesEdit from '@/Pages/OrderDevices/Edit.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import Swal from 'sweetalert2';
 
 
 const props = defineProps({
+    //necesaria???
     order: {
         type: Object,
         required: true
+    },
+    newOrderNumber: {
+        type: String,
+        required: true,
     },
     cgDependencies: {
         type: Object,
@@ -32,7 +39,20 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    //atributos para el formulario de dispositivos
     devices: {
+        type: Object,
+        required: true,
+    },
+    cgKindObjects: {
+        type: Object,
+        required: true,
+    },
+    cgBrands: {
+        type: Object,
+        required: true,
+    },
+    cgKindFailures: {
         type: Object,
         required: true,
     },
@@ -55,11 +75,28 @@ const form = useForm({
     cg_academic_area_id : props.order.cg_academic_area_id,
     ceca_received : props.order.ceca_received,
     ceca_delivered : props.order.ceca_delivered,
+    devices: props.devices.order_devices,
 });
 
-const handleFormSubmit = (formData) => {
-    formData.put(route('orders.update', props.order.id));
+
+const handleSubmit = () => {
+    console.log("Datos enviados:", form);
+    form.put(route('orders.update', props.order.id), { // Usa PUT y pasa el ID de la orden
+        onSuccess: () => {
+            console.log("Se recibió correctamente");
+        },
+        onError: (errors) => {
+            Swal.fire ({
+                title: 'Error',
+                text: "No se pudo actualizar la orden" + errors,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+                });
+        },
+    });
 };
+
+
 </script>
 
 <template>
@@ -74,12 +111,18 @@ const handleFormSubmit = (formData) => {
             <div class="max-vw-7xl mx-auto sm:px:6 lg:px-8">
                 <div class="bg-cremaUAEH overflow-hidden">
                     <div class="p-6">
-                        <OrderForm :updating = "true" :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" @submitted="handleFormSubmit" />
+                        <OrderForm :updating = "true" :form="form" :cgDependencies="cgDependencies" :cgAcademicAreas="cgAcademicAreas" :cgKindPeople="cgKindPeople" :users="users" :newOrderNumber="newOrderNumber" @submitted="handleSubmit" />
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('read order devices')">
-                            <OrderDevicesEdit  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" :newOrderNumber="newOrderNumber"
+                            <OrderDevicesEdit v-model="form.devices"  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users"
                             :devices="devices"/>
+                        </div>
+
+                        <div class="flex justify-end mt-4">
+                            <PrimaryButton class="mt-4"  @click="handleSubmit">
+                            Guardar Orden y Dispositivos
+                            </PrimaryButton>
                         </div>
                     </div>
                 </div>

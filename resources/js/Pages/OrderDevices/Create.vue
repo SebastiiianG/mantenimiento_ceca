@@ -96,12 +96,14 @@ const updateDevice = (index, newData) => {
                 <div v-if="openedDevices[index]">
                     <OrderDevicesForm
                         :modelValue="device"
+                        :index="index"
                         @update:modelValue="(newData) => updateDevice(index, newData)"
                         :cg-kind-objects="cgKindObjects"
                         :cg-brands="cgBrands"
                         :cg-kind-failures="cgKindFailures"
                         :users="users"
                     />
+
                 </div>
             </div>
         </div>
