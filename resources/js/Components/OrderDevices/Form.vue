@@ -9,11 +9,11 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import RadioButton from '../RadioButton.vue';
-import { ref , watch} from 'vue';
+import { ref, watch } from 'vue';
 import FullPageForm from '@/Components/FullPageForm.vue';
 
 const props = defineProps({
-    updating : {
+    updating: {
         type: Boolean,
         default: true,
         required: false
@@ -36,6 +36,10 @@ const props = defineProps({
     },
     modelValue: {
         type: Object,
+        required: true
+    },
+    index: {
+        type: Number,
         required: true
     },
 });
@@ -66,7 +70,8 @@ watch(form, (newVal) => {
                     <option value="En proceso" :style="{ color: 'orange' }">En proceso</option>
                     <option value="Finalizado" :style="{ color: 'green' }">Finalizado</option>
                 </select>
-                <InputError :message="$page.props.errors.status" class="mt-2 bg-opacity-0 " />
+                <InputError :message="$page.props.errors[`devices.${index}.status`]" class="mt-2 bg-opacity-0" />
+
             </div>
             <div class="col-span-6 sm:col-span-6">
 
@@ -78,31 +83,31 @@ watch(form, (newVal) => {
                         {{ cgKindObject.object }}
                     </option>
                 </select>
-                <InputError :message="$page.props.errors.cg_kind_object" class="mt-2 bg-opacity-0" />
+                <InputError :message="$page.props.errors[`devices.${index}.cg_kind_object_id`]"
+                    class="mt-2 bg-opacity-0" />
 
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="model" value="Modelo del dispositivo" />
                 <TextInput id="model" v-model="form.model" type="text" autocomplete="model" class="mt-1 block w-full" />
-
-                <InputError :message="$page.props.errors.model" class="mt-2 bg-opacity-0" />
+                <InputError :message="$page.props.errors[`devices.${index}.model`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="cg_brand_id" value="Marca del dispositivo" />
-                <select name="cg_brand_id" id="cg_brands_id" v-model="
-                form.cg_brand_id"
+                <select name="cg_brand_id" id="cg_brands_id" v-model="form.cg_brand_id"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgBrand in cgBrands" :value="cgBrand.id" class="whitespace-normal break-words">
                         {{ cgBrand.brand_name }}
                     </option>
                 </select>
-                <InputError :message="$page.props.errors.cg_brand_id" class="mt-2 bg-opacity-0" />
+
+                <InputError :message="$page.props.errors[`devices.${index}.cg_brand_id`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="serial_number" value="Número de serie del dispositivo" />
+                <InputLabel for="serial_number" value="Número de serie del dispositivo (opc*)" />
                 <TextInput id="serial_number" v-model="form.serial_number" type="text" autocomplete="serial_number"
                     class="mt-1 block w-full" />
-                <InputError :message="$page.props.errors.serial_number" class="mt-2 bg-opacity-0" />
+                <InputError :message="$page.props.errors[`devices.${index}.serial_number`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="computer" value="¿El dispositivo tiene contraseña?" />
@@ -115,13 +120,14 @@ watch(form, (newVal) => {
                     </RadioButton>
                     <InputLabel for="false" value="No" />
                 </div>
-
+                <InputError :message="$page.props.errors[`devices.${index}.computer`]" class="mt-2 bg-opacity-0" />
                 <div v-if="form.computer === 1" class="col-span-6 sm:col-span-6 mt-4">
                     <InputLabel for="password" value="Ingrese contraseña" />
-                    <TextInput id="password" v-model="form.password" type="password" autocomplete="password" class="mt-1 block w-full" />
-
-                    <InputError class="mt-2 bg-opacity-0" />
+                    <TextInput id="password" v-model="form.password" type="password" autocomplete="password"
+                        class="mt-1 block w-full" />
+                    <InputError :message="$page.props.errors[`devices.${index}.password`]" class="mt-2 bg-opacity-0" />
                 </div>
+
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="cg_kind_failure_id" value="Tipo de falla" />
@@ -132,27 +138,35 @@ watch(form, (newVal) => {
                         {{ cgKindFailure.failure }}
                     </option>
                 </select>
-                <InputError :message="$page.props.errors.cg_kind_failure_id" class="mt-2 bg-opacity-0" />
+                <InputError :message="$page.props.errors[`devices.${index}.cg_kind_failure_id`]"
+                    class="mt-2 bg-opacity-0" />
+
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="client_observations" value="Observaciones del cliente" />
                 <TextInput id="client_observations" v-model="form.client_observations" type="text"
                     autocomplete="client_observations" class="mt-1 block w-full" />
-                <InputError :message="$page.props.errors.client_observations" class="mt-2 bg-opacity-0" />
+                <InputError :message="$page.props.errors[`devices.${index}.client_observations`]"
+                    class="mt-2 bg-opacity-0" />
             </div>
 
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="diagnostic" value="Diagnóstico" />
+                <InputLabel for="diagnostic" value="Diagnóstico (opc)*" />
                 <TextInput id="diagnostic" v-model="form.diagnostic" type="text" autocomplete="diagnostic"
                     class="mt-1 block w-full" />
+
                 <InputError :message="$page.props.errors.diagnostic" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="ceca_observations" value="Observaciones del centro" />
+                <InputLabel for="ceca_observations" value="Observaciones del centro (opc)*" />
                 <TextInput id="ceca_observations" v-model="form.ceca_observations" type="text"
                     autocomplete="ceca_observations" class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors.ceca_observations" class="mt-2 bg-opacity-0" />
             </div>
+            <!-- <div class="col-span-6 sm:col-span-6">
+                <InputLabel for="asign_password" value="Contraseña para asignar" />
+                <TextInput id="asign_password" type="text" autocomplete="asign_password" class="mt-1 block w-full" />
+            </div> -->
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="ceca_repairs" value="Tecnico que realiza la reparación" />
                 <select name="ceca_repairs" id="ceca_repairs" v-model="form.ceca_repairs"

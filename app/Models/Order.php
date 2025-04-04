@@ -58,6 +58,8 @@ class Order extends Model
 
 	public function orderDevices()
 	{
-		return $this->hasMany(OrderDevice::class);
+        //llave foranea , llave primaria
+		return $this->hasMany(OrderDevice::class,'order_id');
+
 	}
 }
