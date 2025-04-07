@@ -5,12 +5,13 @@
 </script>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import OrderForm from '@/Components/Orders/Form.vue';
 import OrderDevicesEdit from '@/Pages/OrderDevices/Edit.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Swal from 'sweetalert2';
+import { computed, watchEffect } from 'vue';
 
 
 const props = defineProps({
@@ -88,7 +89,7 @@ const handleSubmit = () => {
         onError: (errors) => {
             Swal.fire ({
                 title: 'Error',
-                text: "No se pudo actualizar la orden" + errors,
+                text: "No se logro actualizar la orden" + errors,
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
                 });
@@ -96,6 +97,23 @@ const handleSubmit = () => {
     });
 };
 
+const page = usePage();
+const succesMessage = computed(() => page.props.flash?.error);
+
+// Se utiliza `watchEffect` para observar cambios reactivos. Esto se ejecutará cada vez que cambie el valor de `succesMessage`.
+watchEffect(() => {
+    if (succesMessage.value) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: succesMessage.value,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#14803c',
+        }).then(() => {
+            page.props.flash.success = null;
+        });
+    }
+});
 
 </script>
 

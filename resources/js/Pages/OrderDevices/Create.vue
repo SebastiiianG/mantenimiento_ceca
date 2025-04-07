@@ -51,9 +51,8 @@ const addDevice = () => {
         cg_kind_object_id: '',
         ceca_repairs: '',
         password: '',
+        asign_password: '',
     };
-    //const password = props.password;
-
     devices.value = [...devices.value, newDevice];
     openedDevices.value.push(false); // Inicializa como cerrado
 };
@@ -103,7 +102,6 @@ const updateDevice = (index, newData) => {
                         :cg-kind-failures="cgKindFailures"
                         :users="users"
                     />
-
                 </div>
             </div>
         </div>
