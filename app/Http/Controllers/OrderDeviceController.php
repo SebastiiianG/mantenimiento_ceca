@@ -34,17 +34,7 @@ class OrderDeviceController extends Controller
 
     public function store(OrderDeviceRequest $request)
     {
-        $devices = $request->input('devices'); // Obtener los dispositivos enviados
 
-        if (!is_array($devices) || empty($devices)) {
-            return response()->json(['error' => 'No se recibieron dispositivos válidos'], 400);
-        }
-
-        foreach ($devices as $deviceData) {
-            OrderDevice::create($deviceData);
-        }
-
-        return response()->json(['message' => 'Todos los dispositivos guardados correctamente']);
     }
 
 
@@ -61,11 +51,7 @@ class OrderDeviceController extends Controller
      */
     public function edit(string $orderId)
     {
-        // Buscar dispositivos con el order_id específico
-        $devices = OrderDevice::where('order_id', $orderId)->get();
-
-        // Retornar la vista y pasar los dispositivos
-        return view('OrderDevices.Edit', compact('devices'));
+        //
     }
 
     /**

@@ -1,5 +1,4 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
 import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ref, computed } from 'vue';
@@ -97,12 +96,14 @@ const updateDevice = (index, newData) => {
                 <div v-if="openedDevices[index]">
                     <OrderDevicesForm
                         :modelValue="device"
+                        :index="index"
                         @update:modelValue="(newData) => updateDevice(index, newData)"
                         :cg-kind-objects="cgKindObjects"
                         :cg-brands="cgBrands"
                         :cg-kind-failures="cgKindFailures"
                         :users="users"
                     />
+
                 </div>
             </div>
         </div>
