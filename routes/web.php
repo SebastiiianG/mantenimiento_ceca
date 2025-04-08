@@ -46,6 +46,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/orders/reportNotes/edit', [ReportNotesController::class, 'edit'])->name('orders.reportNotes.edit');
     Route::post('/orders/reportNotes/update', [ReportNotesController::class, 'update'])->name('orders.reportNotes.update');
 
+
+    //Ruta para el reporte
+    Route::get('/orders/{order}/report', [OrderController::class, 'report'])->name('orders.report');
+
 });
 
 

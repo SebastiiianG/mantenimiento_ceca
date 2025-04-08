@@ -82,6 +82,9 @@ const formatDate = (dateString) => {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
 };
 
+const downloadPDF = (orderId) =>{
+        window.open(`/orders/${orderId}/report`, '_blank');
+}
 
 </script>
 
@@ -184,7 +187,7 @@ const formatDate = (dateString) => {
                                             v-if="$page.props.user.permissions.includes('delete orders')">
                                             <Trash />
                                         </button>
-                                        <button class="p-2 rounded-lg transition transform hover:scale-125">
+                                        <button @click="downloadPDF(order.id)" class="p-2 rounded-lg transition transform hover:scale-125">
                                             <PDF />
                                         </button>
                                     </div>
