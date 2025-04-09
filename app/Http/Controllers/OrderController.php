@@ -281,15 +281,22 @@ class OrderController extends Controller
             : json_encode(['notes' => '']);
         $notes = json_decode($notesData, true)['notes'] ?? '';
 
+       // Cargar la orden con las relaciones (eager loading)
+        $loadedOrder = Order::with([
+            'orderDevices.cgKindObject',
+            'orderDevices.cgBrand',
+            'orderDevices.cgKindFailure'
+        ])->find($order->id);
+
         // Habilitar recursos remotos para cargar CSS de Bootstrap desde el CDN
         $pdf = Pdf::setOptions(['isRemoteEnabled' => true])
-        ->loadView('orders.report', [
-            'order'   => $order,
-            'devices' => $order->orderDevices,
-            'notes'   => $notes,
-        ]);
+            ->loadView('orders.report', [
+                'order'   => $loadedOrder,
+                'devices' => $loadedOrder->orderDevices,
+                'notes'   => $notes,
+            ]);
 
-        return $pdf->stream('orden_mantenimiento_' . $order->order_number . '.pdf');
+        return $pdf->stream('orden_mantenimiento_' . $loadedOrder->order_number . '.pdf');
 
 
     }
