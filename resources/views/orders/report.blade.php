@@ -10,6 +10,7 @@
                 margin: 0;
                 /* Reservar espacio para el footer */
                 padding-bottom: 30px;
+                color: #222222
             }
             /* Contenedor general para todo el PDF */
             .pdf-container {
@@ -44,33 +45,43 @@
                 height: 20px;
                 text-align: center;
                 font-size: 10px;
-                color: #000000;
+                color: #222222;
             }
             /* Utilizar counter() para mostrar la numeración */
             .footer:after {
                 display: block;
                 content: "Página " counter(page);
             }
+
+            .table.table-bordered {
+                font-size: 10px;
+            }
+            /* Reforzar los bordes de la tabla */
+            .table.table-bordered th,
+            .table.table-bordered td {
+                border: 1px solid #222222 !important;
+            }
     </style>
 
     </head>
     <body>
         <div class="pdf-container">
+            <div class="footer">&nbsp;</div>
             <!-- Encabezado usando tabla: -->
             <table class="header-table">
                 <tr>
-                    <!-- Celda 1: Logo de UAEH (ocupa aproximadamente 25% del ancho) -->
+                    <!--Logo UAEH-->
                     <td style="width:20%; text-align:left; vertical-align: top;">
                         <img src="{{ asset('storage/uaehLogo.png') }}" alt="Logo UAEH" style="width:150px;">
                     </td>
-                    <!-- Celda 2: Título (ocupa aproximadamente 50% del ancho) -->
+                    <!--Titulos-->
                     <td style="width:55%; text-align:center; vertical-align: bottom;">
-                        <p class="mb-0" style="margin-top: 20px;">UNIVERSIDAD AUTÓNOMA DEL ESTADO DE HIDALGO</p>
-                        <p class="mb-0">CENTRO DE CÓMPUTO ACADÉMICO</p>
-                        <p class="mb-0">AV. UNIVERSIDAD S/N COL. SANTIAGO JALTEPEC</p>
-                        <p class="mb-0">ÁREA DE MANTENIMIENTO DE EQUIPO DE CÓMPUTO</p>
+                        <span style="display:block; margin-top:20px; font-size:20px;"><strong>UNIVERSIDAD AUTÓNOMA DEL ESTADO DE HIDALGO</strong></span>
+                        <span style="display:block; font-size:20px;"><strong>CENTRO DE CÓMPUTO ACADÉMICO</strong></span>
+                        <span style="display:block; font-size:12px;">AV. UNIVERSIDAD S/N COL. SANTIAGO JALTEPEC</span>
+                        <span style="display:block; font-size:15px;">ÁREA DE MANTENIMIENTO DE EQUIPO DE CÓMPUTO</span>
                     </td>
-                    <!-- Celda 3: Logo de Ceca (ocupa aproximadamente 25% del ancho) -->
+                    <!--Logo CECA-->
                     <td style="width:20%; text-align:right; vertical-align: top;">
                         <img src="{{ asset('storage/cecaLogo.png') }}" alt="Logo Ceca" style="width:130px;">
                     </td>
@@ -94,7 +105,7 @@
 
             <!-- Detalle de dispositivos -->
             <strong class="">Dispositivos Asociados</strong>
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="text-align:center; padding: 0px; margin-top: 10px;">
                 <thead>
                     <tr>
                         <th>Equipo</th>
@@ -107,63 +118,15 @@
                 <tbody>
                     @foreach ($devices as $device)
                         <tr>
-                            <td>{{ $device->cgKindObject ? device->cgKindObject->object : 'Sin tipo de dispositivo' }}</td>
+                            <td>{{ $order->order_number . ' / ' . $loop->iteration . ' ' . ($device->cgKindObject ? $device->cgKindObject->object : 'Sin tipo de dispositivo') }}</td>
                             <td>{{ $device->cgBrand ? $device->cgBrand->brand_name : 'Sin marca' }}</td>
                             <td>{{ $device->model }}</td>
+                            <td>{{ $device->serial_number }}</td>
                             <td>{{ $device->cgKindFailure ? $device->cgKindFailure->failure : 'Sin tipo de falla' }}</td>
-
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
-            <h1>hola</h1>
 
             <hr>
 
@@ -174,10 +137,10 @@
                         Área de Mtto. de Eq. de Cómp.
                     </td>
                     <td style="width:33%; text-align:center">
-                        Administración
+                        Conformidad
                     </td>
                     <td style="width:33%; text-align:center">
-                        Conformidad
+                        Firma de recepción
                     </td>
                 </tr>
                 <!-- Segunda fila para la firma -->
@@ -186,32 +149,13 @@
                         <div style="border-top: 1.5px solid #000; margin: 30px auto 0; width:70%;">Sistema de mantenimiento</div>
                     </td>
                     <td style="width:33%; text-align:center;">
-                        <div style="border-top: 1.5px solid #000; margin: 30px auto 0; width:70%;">&nbsp;</div>
-                    </td>
-                    <td style="width:33%; text-align:center;">
                         <div style="border-top: 1.5px solid #000; margin: 30px auto 0; width:70%;">{{ $order->client_delivered }}</div>
-                    </td>
-                </tr>
-                <td style="width:33%; text-align:center;">
-                </td>
-                <td style="width:33%; text-align:center; padding-top: 20px;">
-                    Firma de recepción
-                </td>
-                <td style="width:33%; text-align:center">
-                </td>
-                <tr>
-
-                <tr>
-                    <td style="width:33%; text-align:center;">
-                        <div style="margin: 30px auto 0; width:70%;"></div>
                     </td>
                     <td style="width:33%; text-align:center;">
                         <div style="border-top: 1.5px solid #000; margin: 30px auto 0; width:70%; text-align: left">Recibe:</div>
                     </td>
-                    <td style="width:33%; text-align:center;">
-                        <div style="margin: 30px auto 0; width:70%;"></div>
-                    </td>
                 </tr>
+
 
             </table>
 

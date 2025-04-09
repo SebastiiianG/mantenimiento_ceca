@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('ceca_observations')->nullable()->max(500);
             $table->string('status', 15);
             $table->boolean('computer')->default(false);
-            $table->boolean('assigned')->default(false);
             $table->string('serial_number', 50)->nullable();
 
             // Definir las claves foráneas e índices
