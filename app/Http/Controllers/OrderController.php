@@ -35,7 +35,7 @@ class OrderController extends Controller
                 ->orWhere('date_reception', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('client_delivered', 'LIKE', '%' . $request->search . '%')
                 ->orWhereHas('cgDependency', function ($q) use ($request) {
-                      $q->where('dependency_name', 'LIKE', '%' . $request->search . '%');
+                    $q->where('dependency_name', 'LIKE', '%' . $request->search . '%');
                   });
         }
 
@@ -279,10 +279,30 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->delete();
-        return redirect()->route('orders.index');
-    }
+        try {
+            DB::transaction(function () use ($order) {
+                // Obtener los dispositivos asociados a la orden
+                $devices = $order->orderDevices;
 
+                foreach ($devices as $device) {
+                    // Si tiene una computadora relacionada, eliminarla
+                    if ($device->computer) {
+                        $device->computers()->delete();
+                    }
+
+                    // Eliminar el dispositivo
+                    $device->delete();
+                }
+
+                // Finalmente eliminar la orden
+                $order->delete();
+            });
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('orders.index')->with('success', 'La orden ha sido eliminada con éxito');
+    }
 
     public function report(Order $order){
 

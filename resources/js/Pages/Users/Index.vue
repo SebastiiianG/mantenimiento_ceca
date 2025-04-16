@@ -46,10 +46,6 @@ watch(searchQuery, (newSearch) => {
 
 
 const deleteUser = (user) => {
-    /* if (confirm(`¿Estás seguro de que deseas eliminar el usuario "${user.name}"?`)) {
-        router.delete(route('users.destroy', user.id))
-    } */
-
     Swal.fire({
             title: "¿Estas seguro?",
             text: "Se eliminara el usuario  '" + user.name + "'",
