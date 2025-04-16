@@ -9,7 +9,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import RadioButton from '../RadioButton.vue';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import FullPageForm from '@/Components/FullPageForm.vue';
 
 const props = defineProps({
@@ -43,6 +43,8 @@ const props = defineProps({
         required: true
     },
 });
+
+const checkedPassword = 'Contraseña1';
 
 const emit = defineEmits(['update:modelValue']);
 // Hacer `form` reactivo y sincronizarlo con `modelValue`
@@ -104,7 +106,7 @@ watch(form, (newVal) => {
                 <InputError :message="$page.props.errors[`devices.${index}.cg_brand_id`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="serial_number" value="Número de serie del dispositivo (opc*)" />
+                <InputLabel for="serial_number" value="Número de serie del dispositivo (opc)*" />
                 <TextInput id="serial_number" v-model="form.serial_number" type="text" autocomplete="serial_number"
                     class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors[`devices.${index}.serial_number`]" class="mt-2 bg-opacity-0" />
@@ -125,7 +127,8 @@ watch(form, (newVal) => {
                     <InputLabel for="password" value="Ingrese contraseña" />
                     <TextInput id="password" v-model="form.password" type="password" autocomplete="password"
                         class="mt-1 block w-full" />
-                    <InputError :message="$page.props.errors[`devices.${index}.password`]" class="mt-2 bg-opacity-0" />
+                    <!-- Si el campo password esta vacio , se muestra el error -->
+                    <!-- <span v-if="!form.password" class="text-red-500 text-sm">El campo contraseña es obligatorio</span> -->
                 </div>
 
             </div>
@@ -163,11 +166,13 @@ watch(form, (newVal) => {
                     autocomplete="ceca_observations" class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors.ceca_observations" class="mt-2 bg-opacity-0" />
             </div>
-            <!-- <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="asign_password" value="Contraseña para asignar" />
-                <TextInput id="asign_password" type="text" autocomplete="asign_password" class="mt-1 block w-full" />
-            </div> -->
+            <!--CONTRASEÑA PARA TECNICO-->
             <div class="col-span-6 sm:col-span-6">
+                <InputLabel for="asign_password" value="Ingrese contraseña si desea asignar a un tecnico" />
+                <TextInput id="asign_password" type="password" autocomplete="asign_password" class="mt-1 block w-full" v-model="form.asign_password" />
+            </div>
+
+            <div v-if="form.asign_password === checkedPassword" class="col-span-6 sm:col-span-6">
                 <InputLabel for="ceca_repairs" value="Tecnico que realiza la reparación" />
                 <select name="ceca_repairs" id="ceca_repairs" v-model="form.ceca_repairs"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">

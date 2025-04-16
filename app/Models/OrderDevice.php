@@ -25,27 +25,29 @@ class OrderDevice extends Model
         'ceca_repairs',
     ];
 
+    public function cgBrands()
+	{
+		return $this->belongsTo(CgBrand::class, 'cg_brand_id');
+	}
 
 	public function order()
 	{
 		return $this->belongsTo(Order::class);
 	}
 
-	public function cgKindObject() {
-        return $this->belongsTo(CgKindObject::class, 'cg_kind_object_id');
-    }
-
-    public function cgBrand() {
-        return $this->belongsTo(CgBrand::class, 'cg_brand_id');
-    }
-
-    public function cgKindFailure() {
-        return $this->belongsTo(CgKindFailure::class, 'cg_kind_failure_id');
-    }
-
-	public function cecaRepair()
+	public function cgKindFailures()
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(CgKindFailure::class, 'cg_kind_failure_id');
+	}
+
+	public function cgKindObjects()
+	{
+        return $this->belongsTo(CgKindObject::class, 'cg_kind_object_id');
+	}
+
+	public function cecaRepairs()
+	{
+		return $this->belongsTo(User::class, 'ceca_repairs');
 	}
 
 	public function computers()

@@ -66,12 +66,6 @@ const deleteOrder = (order) => {
         }).then((result) => {
         if (result.isConfirmed) {
             router.delete(route('orders.destroy', order.id))
-            Swal.fire({
-                title: "Eliminado",
-                text: "La orden ha sido eliminada con éxito",
-                icon: "success",
-                confirmButtonColor: "#14803c",
-            });
         }
     });
 };

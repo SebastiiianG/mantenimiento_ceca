@@ -26,7 +26,7 @@ Route::post('/orders/reportNotes/update', [ReportNotesController::class, 'update
 //Ruta sobre el dashboard, todos los usuarios necesitan estar autenticados
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     //Rutas de autenticación
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [OrderDeviceController::class, 'index'])->name('dashboard');
     //CRUD de un elemento, ahorra generar varias rutas, solo se genera un resource
     Route::resource('/cgDependencies', CgDependencyController::class);
     Route::resource('/cgAcademicAreas', CgAcademicAreaController::class);
