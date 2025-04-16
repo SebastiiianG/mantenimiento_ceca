@@ -15,6 +15,8 @@ use \App\Models\CgKindFailure;
 use \App\Models\OrderDevice;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -305,6 +307,31 @@ class OrderController extends Controller
     }
 
     public function report(Order $order){
+
+        //dd(config('dompdf.options.enable_php'));
+        // Obtener el contenido del archivo JSON de notas
+        $notesData = Storage::disk('local')->exists('report_notes.json')
+            ? Storage::disk('local')->get('report_notes.json')
+            : json_encode(['notes' => '']);
+        $notes = json_decode($notesData, true)['notes'] ?? '';
+
+       // Cargar la orden con las relaciones (eager loading)
+        $loadedOrder = Order::with([
+            'orderDevices.cgKindObject',
+            'orderDevices.cgBrand',
+            'orderDevices.cgKindFailure'
+        ])->find($order->id);
+
+        // Habilitar recursos remotos para cargar CSS de Bootstrap desde el CDN
+        $pdf = Pdf::setOptions(['isRemoteEnabled' => true])
+            ->loadView('orders.report', [
+                'order'   => $loadedOrder,
+                'devices' => $loadedOrder->orderDevices,
+                'notes'   => $notes,
+            ]);
+
+        return $pdf->stream('orden_mantenimiento_' . $loadedOrder->order_number . '.pdf');
+
 
     }
 }

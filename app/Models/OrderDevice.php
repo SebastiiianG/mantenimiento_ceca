@@ -30,7 +30,7 @@ class OrderDevice extends Model
 		return $this->belongsTo(CgBrand::class, 'cg_brand_id');
 	}
 
-	public function orders()
+	public function order()
 	{
 		return $this->belongsTo(Order::class);
 	}
@@ -45,9 +45,9 @@ class OrderDevice extends Model
         return $this->belongsTo(CgKindObject::class, 'cg_kind_object_id');
 	}
 
-	public function cecaRepairs()
+	public function cecaRepair()
 	{
-		return $this->belongsTo(User::class, 'ceca_repairs');   
+		return $this->belongsTo(User::class, 'ceca_repairs');
 	}
 
 	public function computers()
