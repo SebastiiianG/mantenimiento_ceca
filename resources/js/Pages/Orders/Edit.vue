@@ -87,12 +87,13 @@ const handleSubmit = () => {
             console.log("Se recibió correctamente");
         },
         onError: (errors) => {
-            Swal.fire ({
+            const firstError = Object.values(errors)[0]; // primer mensaje de error disponible
+            Swal.fire({
                 title: 'Error',
-                text: "No se logro actualizar la orden" + errors,
+                text: firstError || 'No se logró actualizar la orden.',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
-                });
+            });
         },
     });
 };
