@@ -40,13 +40,13 @@ const props = defineProps({
     },
     index: {
         type: Number,
-        required: true
     },
 });
 
 const checkedPassword = 'Contraseña1';
 
 const emit = defineEmits(['update:modelValue']);
+//const emit = defineEmits(['update:modelValue']);
 // Hacer `form` reactivo y sincronizarlo con `modelValue`
 const form = ref({ ...props.modelValue });
 
