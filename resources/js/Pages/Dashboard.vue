@@ -54,7 +54,7 @@ watchEffect(() => {
 <template>
     <AppLayout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight text-white">
+            <h2 class="font-semibold text-xl leading-tight text-white">
                 Tablero
             </h2>
         </template>
