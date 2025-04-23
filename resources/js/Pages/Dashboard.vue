@@ -64,9 +64,9 @@ watchEffect(() => {
                 <div class="px-4 sm:px-4 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-xl font-semibold text-gray-900">Tus ultimas ordenes</h1>
+                            <h1 class="text-xl font-semibold text-gray-900">Tus últimas órdenes de servicio</h1>
                             <p class="mt-2 text-sm text-gray-700 ">
-                                Listado de las ordenes de dispositivos más recientes que tienes asignadas.
+                                Listado de las órdenes de dispositivos más recientes que tienes asignadas.
                             </p>
                         </div>
                     </div>

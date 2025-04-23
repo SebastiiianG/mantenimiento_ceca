@@ -34,7 +34,7 @@ function handleImageError() {
                     <div class="flex lg:justify-center lg:col-start-2 ">
                         <img src="../Components/icon/cecaLogo.png" alt="Logo CECA">
                     </div>
-                    <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
+                    <nav v-if="canLogin" class="fixed top-0 right-0 z-50 m-4">
                         <Link v-if="$page.props.auth.user" :href="route('dashboard')"
                             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                         Dashboard
@@ -42,7 +42,7 @@ function handleImageError() {
                         <template v-else>
                             <Link :href="route('login')"
                                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                            Log in
+                            Iniciar Sesión
                             </Link>
                         </template>
                     </nav>
