@@ -28,7 +28,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         //Funciones del modelo order
         $query = Order::with(['cgDependency']);
         // Aplicar búsqueda solo si se proporciona un valor
@@ -318,9 +318,9 @@ class OrderController extends Controller
 
        // Cargar la orden con las relaciones (eager loading)
         $loadedOrder = Order::with([
-            'orderDevices.cgKindObject',
-            'orderDevices.cgBrand',
-            'orderDevices.cgKindFailure'
+            'orderDevices.cgKindObjects',
+            'orderDevices.cgBrands',
+            'orderDevices.cgKindFailures'
         ])->find($order->id);
 
         // Habilitar recursos remotos para cargar CSS de Bootstrap desde el CDN
