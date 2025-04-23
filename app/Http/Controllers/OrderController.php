@@ -28,6 +28,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        
         //Funciones del modelo order
         $query = Order::with(['cgDependency']);
         // Aplicar búsqueda solo si se proporciona un valor
@@ -296,7 +297,7 @@ class OrderController extends Controller
                     $device->delete();
                 }
 
-                // Finalmente eliminar la orden
+                //Eliminar la orden
                 $order->delete();
             });
         } catch (\Exception $e) {

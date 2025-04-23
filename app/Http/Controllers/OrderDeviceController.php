@@ -7,6 +7,9 @@ use \App\Http\Requests\OrderDeviceRequest;
 use \App\Models\CgKindObject;
 use \App\Models\OrderDevice;
 use \App\Models\Order;
+use \App\Models\User;
+use \App\Models\CgBrand;
+use \App\Models\CgKindFailure;
 
 class OrderDeviceController extends Controller
 {
@@ -16,9 +19,9 @@ class OrderDeviceController extends Controller
     public function index(Request $request)
     {
         // Obtenemos el id del usuario autenticado
-        //$userId = $request->user()->id;
-        //$query = OrderDevice::where('ceca_repairs', $userId);
-        $query = OrderDevice::query();
+        $userId = $request->user()->id;
+        $query = OrderDevice::where('ceca_repairs', $userId);
+        //$query = OrderDevice::query();
         //obtener la contraseña de los dispositivos
 
         if ($request->filled('search')) {
@@ -73,41 +76,78 @@ class OrderDeviceController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-{
-    // Carga el OrderDevice con su relación computer y otras necesarias
-    $order_device = OrderDevice::with([
-        'cgKindObjects',
-        'cgKindFailures',
-        'cgBrands',
-        'cecaRepairs',
-        'computers'
-    ])->findOrFail($id);
+    {
+        // Carga el OrderDevice con su relación computer y otras necesarias
+        $order_device = OrderDevice::with([
+            'cgKindObjects',
+            'cgKindFailures',
+            'cgBrands',
+            'cecaRepairs',
+            'computers'
+        ])->findOrFail($id);
 
-    // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
-    if ($order_device->computers && $order_device->computers->password) {
-        $order_device->password = $order_device->computers->password;
-    } else {
-        $order_device->password = null;
+        // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
+        if ($order_device->computers && $order_device->computers->password) {
+            $order_device->password = $order_device->computers->password;
+        } else {
+            $order_device->password = null;
+        }
+
+        return inertia('OrderDevices/Show', [
+            'order_device' => $order_device,
+        ]);
     }
-
-    return inertia('OrderDevices/Show', [
-        'order_device' => $order_device,
-    ]);
-}
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $orderId)
+    public function edit(string $id)
     {
-        //
+        // Carga el OrderDevice con su relación computer y otras necesarias
+        $order_device = OrderDevice::with([
+            'cgKindObjects',
+            'cgKindFailures',
+            'cgBrands',
+            'computers'
+        ])->findOrFail($id);
+
+        // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
+        if ($order_device->computers && $order_device->computers->password) {
+            $order_device->password = $order_device->computers->password;
+        } else {
+            $order_device->password = null;
+        }
+
+        $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
+        $cgKindObjects = CgKindObject::orderBy('object', 'asc')->get();
+        $cgBrands = CgBrand::orderBy('brand_name', 'asc')->get();
+        $cgKindFailures = CgKindFailure::orderBy('failure', 'asc')->get();
+
+        //dd($order_device);
+        return inertia('OrderDevices/EditOne', [
+            'order_device' => $order_device,
+            'users' => $users, // Obtener usuarios ordenados
+            'cgKindObjects' => $cgKindObjects, // Pasar tipo de objetos al formulario
+            'cgBrands' => $cgBrands, // Pasar marcas al formulario
+            'cgKindFailures' => $cgKindFailures, // Pasar tipo de falla
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(OrderDeviceRequest $request, $id)
     {
-        //
+        \Log::debug('Datos recibidos:', $request->all());
+        //$orderDevice->update($request->validated());
+
+        //return inertia('Dashboard');
+        // Redireccionar con mensaje de éxito
+        //return redirect()->route('Dashboard')->with('success', 'Dispositivo actualizado correctamente');
+        $validated = $request->validated();
+        $order_device = OrderDevice::findOrFail($id);
+        $order_device->update($validated);
+        return redirect()->route('dashboard')->with('success', 'Dispositivo actualizado correctamente');
+
     }
 
     /**
