@@ -44,6 +44,10 @@ class OrderController extends Controller
 
         $orders = $query->orderBy('id', 'asc')->paginate(20)->withQueryString();
 
+        $orders = $query->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
+        ->paginate(20)
+        ->withQueryString();
+
         return inertia('Orders/Index', [
             'orders' => $orders,
             'search' => $request->search // Para que Vue recuerde la búsqueda actual
