@@ -11,11 +11,11 @@ import TextInput from '@/Components/TextInput.vue';
 import RadioButton from '../RadioButton.vue';
 import { ref, watch, computed } from 'vue';
 import FullPageForm from '@/Components/FullPageForm.vue';
+import Checkbox from '../Checkbox.vue';
 
 const props = defineProps({
     updating: {
         type: Boolean,
-        default: true,
         required: false
     },
     cgKindObjects: {
@@ -46,7 +46,7 @@ const props = defineProps({
 const checkedPassword = 'Contraseña1';
 
 const emit = defineEmits(['update:modelValue']);
-//const emit = defineEmits(['update:modelValue']);
+
 // Hacer `form` reactivo y sincronizarlo con `modelValue`
 const form = ref({ ...props.modelValue });
 
@@ -64,16 +64,20 @@ watch(form, (newVal) => {
     <FullPageForm @submitted="$emit('submit')">
 
         <template #form>
-            <div class="col-span-6 sm:col-span-6">
+
+            <div class="col-span-6 sm:col-span-6" v-if="updating == true">
+                <!-- <InputLabel for="status" value="Estado del dispositivo" />
+                <div class="flex items-center space-x-4 mt-2">
+                    <Checkbox id="status" name="status" value="Finalizado" v-model="form.status"/>
+                    <InputLabel for="status" value="Marcar como finalizado" />
+                </div> -->
                 <InputLabel for="status" value="Estado del dispositivo" />
                 <select name="status" id="status" v-model="form.status"
                     class="bg-blancoDropdown mt-1 block w-full p-2 text-sm border-gray-300 rounded-lg shadow-md focus:border-naranjaUAEH focus:ring-naranjaUAEH">
-                    <option value="Sin asignar" :style="{ color: 'red' }">Sin asignar</option>
-                    <option value="En proceso" :style="{ color: 'orange' }">En proceso</option>
+                    <option value="En proceso" :style="{ color: 'orange'}">En proceso</option>
                     <option value="Finalizado" :style="{ color: 'green' }">Finalizado</option>
                 </select>
                 <InputError :message="$page.props.errors[`devices.${index}.status`]" class="mt-2 bg-opacity-0" />
-
             </div>
             <div class="col-span-6 sm:col-span-6">
 

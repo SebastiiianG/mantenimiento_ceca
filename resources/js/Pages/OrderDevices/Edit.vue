@@ -105,7 +105,7 @@ const updateDevice = (index, newData) => {
 
                 <div v-if="openedDevices.includes(device.id)">
                     <OrderDevicesForm :modelValue="device"  :index="index" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands"
-                    :cgKindFailures="cgKindFailures" :users="users"
+                    :cgKindFailures="cgKindFailures" :users="users" :updating = "true"
                     @update:modelValue="(newData) => updateDevice(index, newData)"/>
                 </div>
             </div>
