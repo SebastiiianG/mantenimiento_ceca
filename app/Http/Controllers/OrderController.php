@@ -143,6 +143,23 @@ class OrderController extends Controller
 
                 // Iterar sobre cada dispositivo creado para guardar la computadora, si aplica
                 foreach ($orderDevices as $key => $orderDevice) {
+                    // Establecer el estado según si ceca_repairs es diferente de null
+                    if ( $orderDevice->ceca_repairs !== null ){
+                        $orderDevice->status = 'En proceso';
+                    }
+                    $orderDevice->save();
+
+                    if($orderDevice->status === 'Sin asignar' &&  $orderDevice->status !== 'Finalizado'){
+                            $order->status = 'Sin asignar';
+                            $order->save();
+                        } else if ($orderDevice->status === 'En proceso') {
+                            $order->status = 'En proceso';
+                            $order->save();
+                        } else {
+                            $order->status = 'Finalizado';
+                            $order->save();
+                        }
+
                     // Revisar si tiene contraseña
                     if ($orderDevice->computer == 1 && empty($devicesData[$key]['password'])) {
                         throw new \Exception('Proporcione la contraseña para el dispositivo '.$key+1);
@@ -264,6 +281,26 @@ class OrderController extends Controller
                                 ['password' => $deviceData['password']] // Datos a actualizar o crear
                             );
                         }
+
+                        if ( $orderDevice->ceca_repairs !== null && $orderDevice->status !== 'Finalizado'){
+                            $orderDevice->status = 'En proceso';
+                        }
+                        $orderDevice->save();
+
+                        if($orderDevice->status === 'Sin asignar'){
+                            //dd('SA',$orderDevice->id);
+                            $order->status = 'Sin asignar';
+                            $order->save();
+                        } else if ($orderDevice->status === 'En proceso') {
+                            //dd('EP', $orderDevice->id);
+                            $order->status = 'En proceso';
+                            $order->save();
+                        } else {
+                            //dd('F', $orderDevice->id);
+                            $order->status = 'Finalizado';
+                            $order->save();
+                        }
+
                     }
                 }
             });

@@ -92,7 +92,7 @@ const { form } = toRefs(state);
 
         <template #form>
 
-            <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
+            <!-- <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="status" value="Estado" />
                 <select id="statusOrder" v-model="form.status"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
@@ -101,7 +101,7 @@ const { form } = toRefs(state);
                     <option value="Finalizado" :style="{ color: 'green' }">Finalizado</option>
                 </select>
                 <InputError :message="$page.props.errors.status" class="mt-2 bg-opacity-0" />
-            </div>
+            </div> -->
 
             <div class="col-span-6 sm:col-span-6 bg-transparent bg-opacity-0">
                 <InputLabel for="client_delivered" value="Cliente Que Entrega" />

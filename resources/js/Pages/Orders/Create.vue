@@ -51,7 +51,7 @@ defineProps({
 
 const form = useForm({
     date_reception: '',
-    status: '',
+    status: 'Sin asignar',
     client_delivered: '',
     phone_number: '',
     ext: '',

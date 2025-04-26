@@ -137,14 +137,14 @@ class OrderDeviceController extends Controller
      */
     public function update(OrderDeviceRequest $request, $id)
     {
-        \Log::debug('Datos recibidos:', $request->all());
-        //$orderDevice->update($request->validated());
-
-        //return inertia('Dashboard');
-        // Redireccionar con mensaje de éxito
-        //return redirect()->route('Dashboard')->with('success', 'Dispositivo actualizado correctamente');
+        /* \Log::debug('Datos recibidos:', $request->all()); */
         $validated = $request->validated();
         $order_device = OrderDevice::findOrFail($id);
+/*         $nulo = $order_device->ceca_repairs;
+        dd($nulo); */
+        if ( $order_device->ceca_repairs == null &&  $orderDevice->status !== 'Finalizado'){
+            $order_device->status = 'Sin asignar';
+        }
         $order_device->update($validated);
         return redirect()->route('dashboard')->with('success', 'Dispositivo actualizado correctamente');
 
