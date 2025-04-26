@@ -40,9 +40,9 @@ class OrderDeviceController extends Controller
         }
 
         $order_devices = $query->with('cgKindObjects', 'cgKindFailures', 'cgBrands', 'cecaRepairs')
-            ->orderBy('status', 'desc')
-            ->paginate(20)
-            ->withQueryString();
+        ->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
+        ->paginate(20)
+        ->withQueryString();
 
         return inertia('Dashboard', [
             'order_devices' => $order_devices,
@@ -137,7 +137,9 @@ class OrderDeviceController extends Controller
      */
     public function update(OrderDeviceRequest $request, $id)
     {
-        /* \Log::debug('Datos recibidos:', $request->all()); */
+        //\Log::debug('Datos recibidos:', $request->all());
+        //$orderDevice->update($request->validated());
+
         $validated = $request->validated();
         $order_device = OrderDevice::findOrFail($id);
 /*         $nulo = $order_device->ceca_repairs;

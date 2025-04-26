@@ -16,7 +16,6 @@ class OrderDevice extends Model
         'ceca_observations',
         'status',
         'computer',
-        'assigned',
         'serial_number',
         'cg_brand_id',
         'order_id',

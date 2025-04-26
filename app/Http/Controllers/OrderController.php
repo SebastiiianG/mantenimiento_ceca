@@ -44,6 +44,10 @@ class OrderController extends Controller
 
         $orders = $query->orderBy('id', 'asc')->paginate(20)->withQueryString();
 
+        $orders = $query->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
+        ->paginate(20)
+        ->withQueryString();
+
         return inertia('Orders/Index', [
             'orders' => $orders,
             'search' => $request->search // Para que Vue recuerde la búsqueda actual
@@ -259,6 +263,19 @@ class OrderController extends Controller
                 // Si el área académica es 'none', convertirlo a null
                 if ($validatedData['cg_academic_area_id'] === 'none') {
                     $validatedData['cg_academic_area_id'] = null;
+                }
+
+                $deletedIds = $request->input('deleted_device_ids', []);
+                if (!empty($deletedIds)) {
+                    foreach ($deletedIds as $deviceId) {
+                        $device = OrderDevice::find($deviceId);
+                        if ($device) {
+                            if ($device->computer) {
+                                $device->computers()->delete();
+                            }
+                            $device->delete();
+                        }
+                    }
                 }
 
                 // Actualizar la orden con los datos validados

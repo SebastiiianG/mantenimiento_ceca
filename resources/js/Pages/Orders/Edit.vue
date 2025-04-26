@@ -77,6 +77,7 @@ const form = useForm({
     ceca_received : props.order.ceca_received,
     ceca_delivered : props.order.ceca_delivered,
     devices: props.devices.order_devices,
+    deleted_device_ids: []
 });
 
 
@@ -134,8 +135,7 @@ watchEffect(() => {
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('read order devices')">
-                            <OrderDevicesEdit v-model="form.devices"  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users"
-                            :devices="devices"/>
+                            <OrderDevicesEdit v-model="form"  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users"/>
                         </div>
 
                         <div class="flex justify-end mt-4">
