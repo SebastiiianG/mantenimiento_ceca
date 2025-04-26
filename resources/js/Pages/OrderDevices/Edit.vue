@@ -11,7 +11,7 @@ import OrderDevicesForm from '@/Components/OrderDevices/Form.vue';
 const props = defineProps({
     modelValue: {
         type: Object,
-        default: () => []
+        required: true,
     },
     cgKindObjects: {
         type: Object,
@@ -34,9 +34,16 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const devices = computed({
-    get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value)
+    get: () => props.modelValue.devices,
+    set: (value) => {
+        emit('update:modelValue', {
+            ...props.modelValue,
+            devices: value,
+        });
+    }
 });
+
+const form = devices;
 
 const openedDevices = ref([]);
 
@@ -49,6 +56,15 @@ const toggleDevice = (id) => {
 };
 
 const removeDevice = (index) => {
+    const removedDevice = devices.value[index];
+
+    if (removedDevice?.id) {
+        if (!props.modelValue.deleted_device_ids) {
+            props.modelValue.deleted_device_ids = [];
+        }
+        props.modelValue.deleted_device_ids.push(removedDevice.id);
+    }
+
     devices.value.splice(index, 1);
     openedDevices.value.splice(index, 1);
 };
@@ -83,7 +99,7 @@ const updateDevice = (index, newData) => {
                     class="bg-amarilloUAEH w-full h-12 mt-4 flex items-center px-4 text-white rounded-lg shadow-lg justify-between cursor-pointer"
                     @click="toggleDevice(device.id)">
                     <button>{{ openedDevices.includes(device.id) ? 'Cerrar' : 'Abrir' }}</button>
-                    <p>Dispositivo {{ device.id }} </p>
+                    <p>Dispositivo {{ index + 1 }} </p>
                     <p class="cursor-pointer text-white/80" @click.stop="removeDevice(index)">Eliminar</p>
                 </div>
 

@@ -248,6 +248,19 @@ class OrderController extends Controller
                     $validatedData['cg_academic_area_id'] = null;
                 }
 
+                $deletedIds = $request->input('deleted_device_ids', []);
+                if (!empty($deletedIds)) {
+                    foreach ($deletedIds as $deviceId) {
+                        $device = OrderDevice::find($deviceId);
+                        if ($device) {
+                            if ($device->computer) {
+                                $device->computers()->delete();
+                            }
+                            $device->delete();
+                        }
+                    }
+                }
+
                 // Actualizar la orden con los datos validados
                 $order->update($validatedData);
 
