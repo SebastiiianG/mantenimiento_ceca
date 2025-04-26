@@ -42,8 +42,6 @@ class OrderController extends Controller
                   });
         }
 
-        $orders = $query->orderBy('id', 'asc')->paginate(20)->withQueryString();
-
         $orders = $query->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
         ->paginate(20)
         ->withQueryString();
