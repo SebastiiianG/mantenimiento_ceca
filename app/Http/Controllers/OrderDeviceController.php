@@ -20,9 +20,12 @@ class OrderDeviceController extends Controller
     {
         // Obtenemos el id del usuario autenticado
         $userId = $request->user()->id;
-        $query = OrderDevice::where('ceca_repairs', $userId);
-        //$query = OrderDevice::query();
-        //obtener la contraseña de los dispositivos
+        if ($userId == '1'){
+            //Obten todos los dispositivos
+            $query = OrderDevice::query();
+        } else {
+            $query = OrderDevice::where('ceca_repairs', $userId);
+        }
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -57,7 +60,6 @@ class OrderDeviceController extends Controller
     public function create()
     {
         //
-        return inertia('OrderDevices/Create');
     }
 
     /**
@@ -68,7 +70,7 @@ class OrderDeviceController extends Controller
 
     public function store(OrderDeviceRequest $request)
     {
-
+        //
     }
 
 
@@ -137,19 +139,40 @@ class OrderDeviceController extends Controller
      */
     public function update(OrderDeviceRequest $request, $id)
     {
-        //\Log::debug('Datos recibidos:', $request->all());
-        //$orderDevice->update($request->validated());
+    $validated = $request->validated();
+    $order_device = OrderDevice::findOrFail($id);
 
-        $validated = $request->validated();
-        $order_device = OrderDevice::findOrFail($id);
-/*         $nulo = $order_device->ceca_repairs;
-        dd($nulo); */
-        if ( $order_device->ceca_repairs == null &&  $orderDevice->status !== 'Finalizado'){
-            $order_device->status = 'Sin asignar';
+    // Primero actualizar con los datos del formulario
+    $order_device->update($validated);
+
+    // Corregir el status según ceca_repairs
+    if ($order_device->ceca_repairs === null) {
+        $order_device->status = 'Sin asignar';
+    } elseif ($order_device->ceca_repairs !== null && $order_device->status !== 'Finalizado') {
+        $order_device->status = 'En proceso';
+    }
+
+    $order_device->save();
+    //dd($order_device);
+
+    // Actualizar la orden
+    $order = $order_device->order;
+
+    if ($order) {
+        $devices = $order->orderDevices;
+
+        if ($devices->contains('status', 'Sin asignar')) {
+            $order->status = 'Sin asignar';
+        } elseif ($devices->contains('status', 'En proceso')) {
+            $order->status = 'En proceso';
+        } else {
+            $order->status = 'Finalizado';
         }
-        $order_device->update($validated);
-        return redirect()->route('dashboard')->with('success', 'Dispositivo actualizado correctamente');
 
+        $order->save();
+    }
+
+    return redirect()->route('dashboard')->with('success', 'Dispositivo actualizado correctamente');
     }
 
     /**
