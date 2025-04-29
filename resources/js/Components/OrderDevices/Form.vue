@@ -42,20 +42,27 @@ const props = defineProps({
         type: Number,
     },
 });
-
 const checkedPassword = 'Contraseña1';
 
 const emit = defineEmits(['update:modelValue']);
 
 // Hacer `form` reactivo y sincronizarlo con `modelValue`
-const form = ref({ ...props.modelValue });
-
+//const form = ref({ ...props.modelValue });
+/*
 watch(form, (newVal) => {
     emit('update:modelValue', newVal);
-}, { deep: true });
+}, { deep: true }); */
 
-//La ruta que se sigue después de hacer submit en el form
-//defineEmits(['submit']);
+
+// Usar directamente modelValue con computed
+const form = computed({
+    get() {
+        return props.modelValue
+    },
+    set(value) {
+        emit('update:modelValue', value)
+    }
+})
 
 </script>
 
@@ -64,21 +71,23 @@ watch(form, (newVal) => {
     <FullPageForm @submitted="$emit('submit')">
 
         <template #form>
+                <div class="col-span-6 sm:col-span-6" v-if="updating == true">
+                    <div class="flex items-center space-x-4 mt-2">
+                        <Checkbox
+                            :id="'status-' + index"
+                            :name="'status-' + index"
+                            :checked="form.status === 'Finalizado'"
+                            @change="(e) => form.status = e.target.checked ? 'Finalizado' : 'En proceso'"
+                        />
 
-            <div class="col-span-6 sm:col-span-6" v-if="updating == true">
-                <!-- <InputLabel for="status" value="Estado del dispositivo" />
-                <div class="flex items-center space-x-4 mt-2">
-                    <Checkbox id="status" name="status" value="Finalizado" v-model="form.status"/>
-                    <InputLabel for="status" value="Marcar como finalizado" />
-                </div> -->
-                <InputLabel for="status" value="Estado del dispositivo" />
-                <select name="status" id="status" v-model="form.status"
-                    class="bg-blancoDropdown mt-1 block w-full p-2 text-sm border-gray-300 rounded-lg shadow-md focus:border-naranjaUAEH focus:ring-naranjaUAEH">
-                    <option value="En proceso" :style="{ color: 'orange'}">En proceso</option>
-                    <option value="Finalizado" :style="{ color: 'green' }">Finalizado</option>
-                </select>
-                <InputError :message="$page.props.errors[`devices.${index}.status`]" class="mt-2 bg-opacity-0" />
-            </div>
+                        <span v-if="form.status === 'Finalizado'">
+                            <InputLabel :for="'status-' + index" value="Finalizado" />
+                        </span>
+                        <span v-else>
+                            <InputLabel :for="'status-' + index" value="Marcar como finalizado" />
+                        </span>
+                    </div>
+                </div>
             <div class="col-span-6 sm:col-span-6">
 
                 <InputLabel for="cg_kind_object_id" value="Tipo de dispositivo " />
@@ -173,7 +182,7 @@ watch(form, (newVal) => {
             <!--CONTRASEÑA PARA TECNICO-->
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="asign_password" value="Ingrese contraseña si desea asignar a un tecnico" />
-                <TextInput id="asign_password" type="password" autocomplete="asign_password" class="mt-1 block w-full" v-model="form.asign_password" />
+                <TextInput id="asign_password" type="text" autocomplete="asign_password" class="mt-1 block w-full" v-model="form.asign_password" />
             </div>
 
             <div v-if="form.asign_password === checkedPassword" class="col-span-6 sm:col-span-6">

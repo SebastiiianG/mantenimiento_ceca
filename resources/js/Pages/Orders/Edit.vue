@@ -64,7 +64,7 @@ const form = useForm({
     date_generation : props.order.date_generation,
     date_reception : props.order.date_reception,
     delivery_date : props.order.delivery_date,
-    status : props.order.status,
+    status : 'Sin asignar',
     client_delivered : props.order.client_delivered,
     client_received : props.order.client_received,
     phone_number : props.order.phone_number,

@@ -214,16 +214,16 @@ const open = ref(false);
             <div
                 class="bg-rojoOscuroUAEH border-b border-rojoOscuroUAEH py-4 px-6 size-16 w-full flex items-center justify-between">
                 <!-- TODO: que este alineado a la derecha -->
-                <div class="flex justify-end ml-auto">
+                <div class="flex justify-end ml-auto relative z-50">
                     <Dropdown align="right" width="48">
                         <template #trigger>
-                            <button v-if="$page.props.jetstream.managesProfilePhotos"
+                           <!--  <button v-if="$page.props.jetstream.managesProfilePhotos"
                                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                 <img class="size-8 rounded-full object-cover"
                                     :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
-                            </button>
+                            </button> -->
 
-                            <span v-else class="inline-flex rounded-md">
+                            <span class="inline-flex rounded-md">
                                 <button type="button"
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                     {{ $page.props.auth.user.name }}
@@ -247,9 +247,9 @@ const open = ref(false);
                                 Perfil
                             </DropdownLink>
 
-                            <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                            <!-- <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                                 API Tokens
-                            </DropdownLink>
+                            </DropdownLink> -->
 
                             <div class="border-t border-gray-200" />
 

@@ -85,7 +85,7 @@ watchEffect(() => {
                         </div>
                     </div>
                     <!--TABLA-->
-                    <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <div class="mt-8 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="min-w-full divide-y divide-gray">
                             <thead class="bg-rojoMedioUAEH">
                                 <tr>
@@ -118,7 +118,7 @@ watchEffect(() => {
                             <tbody class="divide-y divide-gray-200 bg-white">
                                 <tr v-for="order in order_devices.data" :key="order.id">
                                     <td class="py-4 px-4 text-center text-gray-900">
-                                        AM-{{ order.order_id }}
+                                        {{ order.id }}
                                     </td>
                                     <td class="py-4 px-4 text-center text-gray-900">
                                         {{ order.cg_kind_objects.object }}

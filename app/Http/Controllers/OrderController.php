@@ -39,7 +39,7 @@ class OrderController extends Controller
                 ->orWhere('client_delivered', 'LIKE', '%' . $request->search . '%')
                 ->orWhereHas('cgDependency', function ($q) use ($request) {
                     $q->where('dependency_name', 'LIKE', '%' . $request->search . '%');
-                  });
+                });
         }
 
         $orders = $query->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
@@ -117,68 +117,60 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
-     //Log::info('Datos recibidos:', $request->all());
-     // Creamos la orden con la fecha incluida
         try {
             DB::transaction(function () use ($request) {
-                // Extraer los datos de la orden, excepto 'devices'
+                //Datos de la orden
                 $orderData = $request->except('devices');
 
-                // Si el valor de cg_academic_area_id es 'none', cambiarlo a null
                 if ($orderData['cg_academic_area_id'] === 'none') {
                     $orderData['cg_academic_area_id'] = null;
                 }
                 $orderData['date_generation'] = now()->format('Y-m-d');
-
-                // Crear la orden
+                //Crear orden
                 $order = Order::create($orderData);
-
-                // Crear los dispositivos asociados y obtener la colección creada
+                //Obtener dispositivos
                 $devicesData = $request->devices;
-                /* Si esta vacio el array de devices */
-                /* Log::info('Datos recibidos:', $devicesData);
-                if (empty($devicesData)) {
-                    throw new \Exception('No se han proporcionado dispositivos para la orden');
-                }
- */
                 $orderDevices = $order->orderDevices()->createMany($devicesData);
 
-                // Iterar sobre cada dispositivo creado para guardar la computadora, si aplica
+                $statuses = []; // Guardar los estados de los dispositivos
+
                 foreach ($orderDevices as $key => $orderDevice) {
-                    // Establecer el estado según si ceca_repairs es diferente de null
-                    if ( $orderDevice->ceca_repairs !== null ){
+                    if ($orderDevice->ceca_repairs === null){
+                        $orderDevice->status = 'Sin asignar';
+                    } elseif ($orderDevice->ceca_repairs !== null && $orderDevice->status !== 'Finalizado'){
                         $orderDevice->status = 'En proceso';
+                    } else{
+                        $orderDevice->status = 'Finalizado';
                     }
                     $orderDevice->save();
 
-                    if($orderDevice->status === 'Sin asignar' &&  $orderDevice->status !== 'Finalizado'){
-                            $order->status = 'Sin asignar';
-                            $order->save();
-                        } else if ($orderDevice->status === 'En proceso') {
-                            $order->status = 'En proceso';
-                            $order->save();
-                        } else {
-                            $order->status = 'Finalizado';
-                            $order->save();
-                        }
+                     // Guardar el estado actual
+                    $statuses[] = $orderDevice->status;
 
-                    // Revisar si tiene contraseña
+                     // Validar contraseña si es computadora
                     if ($orderDevice->computer == 1 && empty($devicesData[$key]['password'])) {
-                        throw new \Exception('Proporcione la contraseña para el dispositivo '.$key+1);
-                    }
-                    elseif ($orderDevice->computer == 1 && !empty($devicesData[$key]['password'])) {
-                         // Crea el registro en la tabla 'computers' asociado a este dispositivo.
+                        throw new \Exception('Proporcione la contraseña para el dispositivo '.($key+1));
+                    } elseif ($orderDevice->computer == 1 && !empty($devicesData[$key]['password'])) {
                         $orderDevice->computers()->create([
                             'password' => $devicesData[$key]['password'],
                         ]);
                     }
                 }
+
+                 //Decidir estado de la orden
+                if (in_array('Sin asignar', $statuses)) {
+                    $order->status = 'Sin asignar';
+                } elseif (in_array('En proceso', $statuses)) {
+                    $order->status = 'En proceso';
+                } else {
+                    $order->status = 'Finalizado';
+                }
+                $order->save();
             });
         } catch (\Exception $e) {
-            // Si hay un error, se mostrará el mensaje de error
             return redirect()->back()->with('error', $e->getMessage());
         }
-        // Si todo sale bien, se redirige a la página de inicio
+
         return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento creada con éxito');
     }
 
@@ -253,80 +245,90 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(OrderRequest $request, Order $order)
-    {
-        try {
-            DB::transaction(function () use ($request, $order) {
-                $validatedData = $request->except('devices');
+{
 
-                // Si el área académica es 'none', convertirlo a null
-                if ($validatedData['cg_academic_area_id'] === 'none') {
-                    $validatedData['cg_academic_area_id'] = null;
-                }
+    try {
+        DB::transaction(function () use ($request, $order) {
+            $validatedData = $request->except('devices');
+            //unset($validatedData['status']);
 
-                $deletedIds = $request->input('deleted_device_ids', []);
-                if (!empty($deletedIds)) {
-                    foreach ($deletedIds as $deviceId) {
-                        $device = OrderDevice::find($deviceId);
-                        if ($device) {
-                            if ($device->computer) {
-                                $device->computers()->delete();
-                            }
-                            $device->delete();
+            // Si el área académica es 'none', convertirlo a null
+            if ($validatedData['cg_academic_area_id'] === 'none') {
+                $validatedData['cg_academic_area_id'] = null;
+            }
+
+            $deletedIds = $request->input('deleted_device_ids', []);
+            if (!empty($deletedIds)) {
+                foreach ($deletedIds as $deviceId) {
+                    $device = OrderDevice::find($deviceId);
+                    if ($device) {
+                        if ($device->computer) {
+                            $device->computers()->delete();
                         }
+                        $device->delete();
                     }
                 }
+            }
 
-                // Actualizar la orden con los datos validados
-                $order->update($validatedData);
+            // Actualizar la orden con los datos validados
+            $order->update($validatedData);
 
-                // Obtener los dispositivos enviados en la solicitud
-                $devicesData = $request->devices;
+            // Obtener los dispositivos enviados en la solicitud
+            $devicesData = $request->devices;
 
-                // Iterar sobre los dispositivos recibidos y actualizarlos
-                foreach ($devicesData as $deviceData) {
-                    $orderDevice = $order->orderDevices()->find($deviceData['id']);
+            //dd($devicesData);
 
-                    if ($orderDevice) {
-                        $orderDevice->update($deviceData);
+            // Array para guardar los estados de los dispositivos
+            $statuses = [];
 
-                        // Si el dispositivo es una computadora y tiene contraseña, actualizar o crear el registro en 'computers'
-                        if ($orderDevice->computer == 1 && !empty($deviceData['password'])) {
-                            $orderDevice->computers()->updateOrCreate(
-                                ['order_device_id' => $orderDevice->id], // Condición para actualizar
-                                ['password' => $deviceData['password']] // Datos a actualizar o crear
-                            );
-                        }
+            // Iterar sobre los dispositivos recibidos y actualizarlos
+            foreach ($devicesData as $deviceData) {
+                $orderDevice = $order->orderDevices()->find($deviceData['id']);
 
-                        if ( $orderDevice->ceca_repairs !== null && $orderDevice->status !== 'Finalizado'){
-                            $orderDevice->status = 'En proceso';
-                        }
-                        $orderDevice->save();
+                if ($orderDevice) {
+                    $orderDevice->update($deviceData);
 
-                        if($orderDevice->status === 'Sin asignar'){
-                            //dd('SA',$orderDevice->id);
-                            $order->status = 'Sin asignar';
-                            $order->save();
-                        } else if ($orderDevice->status === 'En proceso') {
-                            //dd('EP', $orderDevice->id);
-                            $order->status = 'En proceso';
-                            $order->save();
-                        } else {
-                            //dd('F', $orderDevice->id);
-                            $order->status = 'Finalizado';
-                            $order->save();
-                        }
-
+                    // Si el dispositivo es una computadora y tiene contraseña, actualizar o crear el registro en 'computers'
+                    if ($orderDevice->computer == 1 && !empty($deviceData['password'])) {
+                        $orderDevice->computers()->updateOrCreate(
+                            ['order_device_id' => $orderDevice->id], // Condición para actualizar
+                            ['password' => $deviceData['password']] // Datos a actualizar o crear
+                        );
                     }
-                }
-            });
-        } catch (\Exception $e) {
-            // Si hay algún error, redireccionar con mensaje de error
-            return redirect()->back()->with('error', $e->getMessage());
 
-        }
-        // Si todo sale bien, redireccionar a la página de detalles de la orden
-        return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento actualizada con éxito');
+                    // Establecer el estado del dispositivo según si ceca_repairs es diferente de null
+                    if ($orderDevice->ceca_repairs == null){
+                        $orderDevice->status = 'Sin asignar';
+                    } elseif ($orderDevice->ceca_repairs !== null && $orderDevice->status !== 'Finalizado') {
+                        $orderDevice->status = 'En proceso';
+                    }
+                    $orderDevice->save();
+
+                    // Guardar el estado del dispositivo para luego decidir el estado de la orden
+                    $statuses[] = $orderDevice->status;
+                }
+            }
+
+            // Después de recorrer todos los dispositivos, decidir el estado de la orden
+            if (in_array('Sin asignar', $statuses)) {
+                $order->status = 'Sin asignar';
+            } elseif (in_array('En proceso', $statuses)) {
+                $order->status = 'En proceso';
+            } else {
+                $order->status = 'Finalizado';
+            }
+
+            $order->save();
+        });
+    } catch (\Exception $e) {
+        // Si hay algún error, redireccionar con mensaje de error
+        return redirect()->back()->with('error', $e->getMessage());
     }
+
+    // Si todo sale bien, redireccionar a la página de detalles de la orden
+    return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento actualizada con éxito');
+}
+
 
 
     /**
