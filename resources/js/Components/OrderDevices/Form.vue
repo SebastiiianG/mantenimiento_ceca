@@ -41,8 +41,11 @@ const props = defineProps({
     index: {
         type: Number,
     },
+    assign_password: {
+        type: String,
+        required: true
+    }
 });
-const checkedPassword = 'Contraseña1';
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -184,8 +187,7 @@ const form = computed({
                 <InputLabel for="asign_password" value="Ingrese contraseña si desea asignar a un tecnico" />
                 <TextInput id="asign_password" type="text" autocomplete="asign_password" class="mt-1 block w-full" v-model="form.asign_password" />
             </div>
-
-            <div v-if="form.asign_password === checkedPassword" class="col-span-6 sm:col-span-6">
+            <div v-if="form.asign_password === assign_password" class="col-span-6 sm:col-span-6">
                 <InputLabel for="ceca_repairs" value="Tecnico que realiza la reparación" />
                 <select name="ceca_repairs" id="ceca_repairs" v-model="form.ceca_repairs"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
