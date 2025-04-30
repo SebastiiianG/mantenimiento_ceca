@@ -12,8 +12,9 @@ import InputLabel from '../InputLabel.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 import TextInput from '../TextInput.vue';
 import RadioButton from '../RadioButton.vue';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
     form: {
         type: Object,
         required: true,
@@ -33,8 +34,11 @@ defineProps({
     }
 });
 
+const isMainAdmin = computed(() => String(props.form.user_number) === '5373');
+
 /* Comunicacion vertical ascendente */
 defineEmits(['submit'])
+
 
 </script>
 
@@ -55,14 +59,17 @@ defineEmits(['submit'])
         <template #form>
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="roles" value="Rol" />
-
-                <select class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH"
-
-                id="roles" v-model="form.role">
-                    <option class="hover:bg-naranjaUAEH" value="admin">Administrador</option>
+                <select
+                    id="roles"
+                    v-model="form.role"
+                    :disabled="isMainAdmin"
+                    class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH"
+                >
+                    <option value="admin">Administrador</option>
                     <option value="editor">Editor</option>
                 </select>
-
+                <!-- Hidden input para asegurarnos que se envía -->
+                <input v-if="isMainAdmin" type="hidden" name="role" :value="form.role" />
             </div>
 
             <div class="col-span-8 sm:col-span-8">
@@ -90,11 +97,17 @@ defineEmits(['submit'])
                 <InputError :message="$page.props.errors.password" class="mt-2" />
             </div>
 
-
-
             <div class="col-span-8 sm:col-span-8">
                 <InputLabel for="user_number" value="Número De Empleado" />
-                <TextInput id="user_number" type="number" v-model="form.user_number" autocomplete="user_number" class="mt-1 w-full" required  />
+                <TextInput
+                    id="user_number"
+                    type="number"
+                    v-model="form.user_number"
+                    autocomplete="user_number"
+                    class="mt-1 w-full"
+                    required
+                    :readonly="isMainAdmin"
+                />
                 <InputError :message="$page.props.errors.user_number" class="mt-2" />
             </div>
 
