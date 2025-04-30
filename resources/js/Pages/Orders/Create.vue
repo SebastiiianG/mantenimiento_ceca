@@ -46,6 +46,10 @@ defineProps({
     cgKindFailures : {
         type: Object,
         required: true,
+    },
+    assign_password: {
+        type: String,
+        required: true
     }
 });
 
@@ -121,7 +125,7 @@ watchEffect(() => {
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('create order devices')">
-                            <OrderDevicesCreate v-model="form.devices" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" @submitted="handleSubmit" />
+                            <OrderDevicesCreate v-model="form.devices" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" @submitted="handleSubmit" :assign_password="assign_password" />
                         </div>
 
                         <div class="flex justify-end mt-4">
