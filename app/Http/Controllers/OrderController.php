@@ -59,8 +59,6 @@ class OrderController extends Controller
     {
         // Recuperamos el último order_number generado
         $lastOrderNumber = Order::orderByDesc('id')->value('order_number');
-        //Recuperar la contraseña para asignar tecnico
-        $assign_password = env('ASSIGN_PASSWORD');
 
         if (!$lastOrderNumber) {
             $lastOrderNumber = 'AM-0'; // O cualquier valor inicial que desees
@@ -95,7 +93,6 @@ class OrderController extends Controller
             'cgKindObjects' => $cgKindObjects, // Pasar tipo de objetos al formulario
             'cgBrands' => $cgBrands, // Pasar marcas al formulario
             'cgKindFailures' => $cgKindFailures, // Pasar tipo de fall
-            'assign_password' => $assign_password,
         ]);
     }
 
@@ -191,7 +188,6 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $assign_password = env('ASSIGN_PASSWORD');
         //dd($order);
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
@@ -239,7 +235,6 @@ class OrderController extends Controller
             'cgBrands' => $cgBrands, // Pasar marcas al formulario
             'cgKindFailures' => $cgKindFailures, // Pasar tipo de falla
             'devices' => $devices, // Obtener dispositivos con el order_id específico
-            'assign_password' => $assign_password,
         ]);
     }
 

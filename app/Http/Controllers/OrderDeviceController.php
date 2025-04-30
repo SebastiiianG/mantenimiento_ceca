@@ -112,8 +112,6 @@ class OrderDeviceController extends Controller
             'computers'
         ])->findOrFail($id);
 
-        $assign_password = env('ASSIGN_PASSWORD');
-
         // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
         if ($order_device->computers && $order_device->computers->password) {
             $order_device->password = $order_device->computers->password;
@@ -133,7 +131,6 @@ class OrderDeviceController extends Controller
             'cgKindObjects' => $cgKindObjects, // Pasar tipo de objetos al formulario
             'cgBrands' => $cgBrands, // Pasar marcas al formulario
             'cgKindFailures' => $cgKindFailures, // Pasar tipo de falla
-            'assign_password' => $assign_password,
         ]);
     }
 

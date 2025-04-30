@@ -57,10 +57,6 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    assign_password: {
-        type: String,
-        required: true
-    }
 });
 
 const form = useForm({
@@ -139,7 +135,7 @@ watchEffect(() => {
 
                         <!-- Crear un nuevo dispositivo -->
                         <div v-if="$page.props.user.permissions.includes('read order devices')">
-                            <OrderDevicesEdit v-model="form"  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users" :assign_password="assign_password"/>
+                            <OrderDevicesEdit v-model="form"  :cgKindObjects="cgKindObjects" :cgBrands="cgBrands" :cgKindFailures="cgKindFailures" :users="users"/>
                         </div>
 
                         <div class="flex justify-end mt-4">

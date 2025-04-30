@@ -24,10 +24,6 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    assign_password: {
-        type: String,
-        required: true
-    }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -108,7 +104,7 @@ const updateDevice = (index, newData) => {
                         :cg-kind-objects="cgKindObjects"
                         :cg-brands="cgBrands"
                         :cg-kind-failures="cgKindFailures"
-                        :users="users" :assign_password="assign_password"
+                        :users="users"
                     />
                 </div>
             </div>
