@@ -42,7 +42,7 @@ class OrderDeviceController extends Controller
             });
         }
 
-        $order_devices = $query->with('cgKindObjects', 'cgKindFailures', 'cgBrands', 'cecaRepairs')
+        $order_devices = $query->with('order', 'cgKindObjects', 'cgKindFailures', 'cgBrands', 'cecaRepairs')
         ->orderByRaw("FIELD(status, 'Sin asignar', 'En proceso', 'Finalizado')")
         ->paginate(20)
         ->withQueryString();

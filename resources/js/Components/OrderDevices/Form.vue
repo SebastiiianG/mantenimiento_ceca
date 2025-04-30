@@ -90,7 +90,7 @@ const form = computed({
                 </div>
             <div class="col-span-6 sm:col-span-6">
 
-                <InputLabel for="cg_kind_object_id" value="Tipo de dispositivo " />
+                <InputLabel for="cg_kind_object_id" value="Tipo De Dispositivo " />
                 <select name="cg_kind_object_id" id="cg_kind_object_id" v-model="form.cg_kind_object_id"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgKindObject in cgKindObjects" :value="cgKindObject.id"
@@ -103,12 +103,12 @@ const form = computed({
 
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="model" value="Modelo del dispositivo" />
+                <InputLabel for="model" value="Modelo Del Dispositivo" />
                 <TextInput id="model" v-model="form.model" type="text" autocomplete="model" class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors[`devices.${index}.model`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="cg_brand_id" value="Marca del dispositivo" />
+                <InputLabel for="cg_brand_id" value="Marca Del Dispositivo" />
                 <select name="cg_brand_id" id="cg_brands_id" v-model="form.cg_brand_id"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgBrand in cgBrands" :value="cgBrand.id" class="whitespace-normal break-words">
@@ -119,7 +119,7 @@ const form = computed({
                 <InputError :message="$page.props.errors[`devices.${index}.cg_brand_id`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="serial_number" value="Número de serie del dispositivo (opc)*" />
+                <InputLabel for="serial_number" value="Número De Serie Del Dispositivo (opc)*" />
                 <TextInput id="serial_number" v-model="form.serial_number" type="text" autocomplete="serial_number"
                     class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors[`devices.${index}.serial_number`]" class="mt-2 bg-opacity-0" />
@@ -137,7 +137,7 @@ const form = computed({
                 </div>
                 <InputError :message="$page.props.errors[`devices.${index}.computer`]" class="mt-2 bg-opacity-0" />
                 <div v-if="form.computer === 1" class="col-span-6 sm:col-span-6 mt-4">
-                    <InputLabel for="password" value="Ingrese contraseña" />
+                    <InputLabel for="password" value="Ingrese Contraseña" />
                     <TextInput id="password" v-model="form.password" type="password" autocomplete="password"
                         class="mt-1 block w-full" />
                     <!-- Si el campo password esta vacio , se muestra el error -->
@@ -146,7 +146,7 @@ const form = computed({
 
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="cg_kind_failure_id" value="Tipo de falla" />
+                <InputLabel for="cg_kind_failure_id" value="Tipo De Falla" />
                 <select name="cg_kind_failure_id" id="cg_kind_failure_id" v-model="form.cg_kind_failure_id"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="cgKindFailure in cgKindFailures" :value="cgKindFailure.id"
@@ -159,7 +159,7 @@ const form = computed({
 
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="client_observations" value="Observaciones del cliente" />
+                <InputLabel for="client_observations" value="Observaciones Del Cliente" />
                 <TextInput id="client_observations" v-model="form.client_observations" type="text"
                     autocomplete="client_observations" class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors[`devices.${index}.client_observations`]"
@@ -174,19 +174,19 @@ const form = computed({
                 <InputError :message="$page.props.errors.diagnostic" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="ceca_observations" value="Observaciones del centro (opc)*" />
+                <InputLabel for="ceca_observations" value="Observaciones Del Centro (opc)*" />
                 <TextInput id="ceca_observations" v-model="form.ceca_observations" type="text"
                     autocomplete="ceca_observations" class="mt-1 block w-full" />
                 <InputError :message="$page.props.errors.ceca_observations" class="mt-2 bg-opacity-0" />
             </div>
             <!--CONTRASEÑA PARA TECNICO-->
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="asign_password" value="Ingrese contraseña si desea asignar a un tecnico" />
+                <InputLabel for="asign_password" value="Ingrese Contraseña Si Desea Asignar Un Técnico" />
                 <TextInput id="asign_password" type="text" autocomplete="asign_password" class="mt-1 block w-full" v-model="form.asign_password" />
             </div>
 
             <div v-if="form.asign_password === checkedPassword" class="col-span-6 sm:col-span-6">
-                <InputLabel for="ceca_repairs" value="Tecnico que realiza la reparación" />
+                <InputLabel for="ceca_repairs" value="Técnico Que Realiza La Reparación" />
                 <select name="ceca_repairs" id="ceca_repairs" v-model="form.ceca_repairs"
                     class="bg-blancoDropdown mt-1 block w-full p-2 border-gray-300 rounded-lg shadow-md text-sm focus:border-naranjaUAEH focus:ring-naranjaUAEH">
                     <option v-for="user in users" :key="user.id" :value="user.id" class="whitespace-normal break-words">
