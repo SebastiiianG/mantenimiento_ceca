@@ -28,6 +28,10 @@ const props = defineProps({
     users: {
         type: Object,
         required: true,
+    },
+    assign_password: {
+        type: String,
+        required: true
     }
 });
 
@@ -106,7 +110,7 @@ const updateDevice = (index, newData) => {
                 <div v-if="openedDevices.includes(device.id)">
                     <OrderDevicesForm :modelValue="device"  :index="index" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands"
                     :cgKindFailures="cgKindFailures" :users="users" :updating = "true"
-                    @update:modelValue="(newData) => updateDevice(index, newData)"/>
+                    @update:modelValue="(newData) => updateDevice(index, newData)" :assign_password="assign_password"/>
                 </div>
             </div>
         </div>
