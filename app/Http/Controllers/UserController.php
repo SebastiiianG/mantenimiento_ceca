@@ -114,7 +114,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->user_number == 5373) {
+            return redirect()->route('users.index')->with('error', 'No se puede eliminar al administrador principal.');
+        }
+
         $user->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
     }
 }

@@ -157,7 +157,7 @@ const deleteUser = (user) => {
                                         Editar</Link>
 
                                         <button @click.prevent="$event=>deleteUser(user)" class="text-rojoUAEH hover:underline mx-2"
-                                            v-if="$page.props.user.permissions.includes('delete users')">
+                                            v-if="$page.props.user.permissions.includes('delete users') && user.user_number !== 5373">
                                             Eliminar
                                         </button>
                                     </td>
