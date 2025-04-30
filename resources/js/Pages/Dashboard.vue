@@ -116,9 +116,9 @@ watchEffect(() => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="order in order_devices.data" :key="order.id">
+                                <tr v-for="(order, index) in order_devices.data" :key="order.id">
                                     <td class="py-4 px-4 text-center text-gray-900">
-                                        {{ order.id }}
+                                        {{ order.order?.order_number + ' / ' + (index + 1) }}
                                     </td>
                                     <td class="py-4 px-4 text-center text-gray-900">
                                         {{ order.cg_kind_objects.object }}
