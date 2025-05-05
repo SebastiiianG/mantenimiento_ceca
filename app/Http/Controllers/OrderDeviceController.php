@@ -104,6 +104,7 @@ class OrderDeviceController extends Controller
      */
     public function edit(string $id)
     {
+        $assign_password = env('ASSIGN_PASSWORD');
         // Carga el OrderDevice con su relación computer y otras necesarias
         $order_device = OrderDevice::with([
             'cgKindObjects',
@@ -131,6 +132,7 @@ class OrderDeviceController extends Controller
             'cgKindObjects' => $cgKindObjects, // Pasar tipo de objetos al formulario
             'cgBrands' => $cgBrands, // Pasar marcas al formulario
             'cgKindFailures' => $cgKindFailures, // Pasar tipo de falla
+            'assign_password' => $assign_password,
         ]);
     }
 
