@@ -26,6 +26,10 @@ const props = defineProps({
         type: Array,
         required: true
     },
+    assign_password: {
+        type: String,
+        required: true
+    }
 });
 
 //Creamos el form de Inertia
@@ -79,7 +83,7 @@ function handleSubmit() {
             <div class="bg-cremaUAEH p-6 overflow-hidden">
                 <!-- PASAMOS el proxy y escuchamos 'submit' -->
                 <OrderDevicesForm v-model="formProxy" :index="0" :cgKindObjects="cgKindObjects" :cgBrands="cgBrands"
-                    :cgKindFailures="cgKindFailures" :users="users" :updating="true" @submit="handleSubmit" />
+                    :cgKindFailures="cgKindFailures" :users="users" :updating="true" @submit="handleSubmit" :assign_password="assign_password" />
 
                 <div class="flex justify-end mt-4">
                     <PrimaryButton @click="handleSubmit">
