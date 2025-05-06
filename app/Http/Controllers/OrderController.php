@@ -383,12 +383,18 @@ class OrderController extends Controller
             'orderDevices.cgKindFailures'
         ])->find($order->id);
 
+          // Convertir imágenes a base64
+        $uaeh_logo = 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('images/uaehLogo.png')));
+        $ceca_logo = 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('images/cecaLogo.png')));
+
         // Habilitar recursos remotos para cargar CSS de Bootstrap desde el CDN
         $pdf = Pdf::setOptions(['isRemoteEnabled' => true])
             ->loadView('orders.report', [
                 'order'   => $loadedOrder,
                 'devices' => $loadedOrder->orderDevices,
                 'notes'   => $notes,
+                'uaeh_logo'  => $uaeh_logo,
+                'ceca_logo'  => $ceca_logo,
             ]);
 
         return $pdf->stream('orden_mantenimiento_' . $loadedOrder->order_number . '.pdf');

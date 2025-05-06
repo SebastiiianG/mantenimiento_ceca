@@ -80,8 +80,8 @@ const { form } = toRefs(state);
         <template #title>
             <span
                 v-html="updating
-                        ? `Gestionar Orden De Mantenimiento: <span style='color: #6600A1; font-weight: bold;'>${form.order_number}</span>`
-                        : `Nueva Orden De Mantenimiento: <span style='color: #6600A1; font-weight: bold;'>${newOrderNumber}</span>`">
+                        ? `Gestionar Orden De Mantenimiento: <span style='color: #B91116; font-weight: bold;'>${form.order_number}</span>`
+                        : `Nueva Orden De Mantenimiento: <span style='color: #B91116; font-weight: bold;'>${newOrderNumber}</span>`">
             </span>
 
         </template>

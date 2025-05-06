@@ -72,7 +72,7 @@
                 <tr>
                     <!--Logo UAEH-->
                     <td style="width:20%; text-align:left; vertical-align: top;">
-                        <img src="{{ asset('storage/uaehLogo.png') }}" alt="Logo UAEH" style="width:150px;">
+                        <img src="{{ $uaeh_logo }}" style="width:150px;" alt="Logo UAEH">
                     </td>
                     <!--Titulos-->
                     <td style="width:55%; text-align:center; vertical-align: bottom;">
@@ -83,7 +83,7 @@
                     </td>
                     <!--Logo CECA-->
                     <td style="width:20%; text-align:right; vertical-align: top;">
-                        <img src="{{ asset('storage/cecaLogo.png') }}" alt="Logo Ceca" style="width:130px;">
+                        <img src="{{ $ceca_logo }}" style="width:130px;" alt="Logo CECA">
                     </td>
                 </tr>
             </table>
@@ -121,7 +121,7 @@
                             <td>{{ $order->order_number . ' / ' . $loop->iteration . ' ' . ($device->cgKindObject ? $device->cgKindObject->object : 'Sin tipo de dispositivo') }}</td>
                             <td>{{ $device->cgBrand ? $device->cgBrand->brand_name : 'Sin marca' }}</td>
                             <td>{{ $device->model }}</td>
-                            <td>{{ $device->serial_number }}</td>
+                            <td>{{ empty($device->serial_number) ? 'S/N' : $device->serial_number }}</td>
                             <td>{{ $device->cgKindFailure ? $device->cgKindFailure->failure : 'Sin tipo de falla' }}</td>
                         </tr>
                     @endforeach
