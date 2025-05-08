@@ -16,6 +16,16 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Creación del usuario "admin"
+        // Creación del usuario "admin"
+        $superuser = User::create([
+            'name' => 'Superusuario Administración CECA', // Nombre del usuario
+            'email' => 'editar@uaeh.edu.mx', // Email del usuario
+            'password'=> Hash::make('superusuario'), // Contraseña encriptada
+            'user_number' => 1111, // Número de usuario único
+            'status' => true // Estado del usuario
+        ]);
+        $superuser->assignRole('superuser'); // Asignación del rol "admin" al usuario creado
+
         $admin = User::create([
             'name' => 'María Guadalupe Badillo Domínguez', // Nombre del usuario
             'email' => 'badillom@uaeh.edu.mx', // Email del usuario

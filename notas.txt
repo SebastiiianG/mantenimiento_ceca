@@ -1,0 +1,15 @@
+Ejecutar en el sig orden las migraciones en caso de ruptura de la DB, así como los seeders
+
+php artisan migrate --path=database/migrations/0001_01_01_000000_create_users_table.php
+php artisan migrate --path=database/migrations/2025_01_14_191151_create_cg_dependencies_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202352_create_cg_academic_areas_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202440_create_cg_brands_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202514_create_cg_kind_failures_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202535_create_cg_kind_objects_table.php
+ php artisan migrate --path=database/migrations/2025_01_13_202547_create_cg_kind_people_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202655_create_orders_table.php
+php artisan migrate --path=database/migrations/2025_01_14_193241_create_order_devices_table.php
+php artisan migrate;
+
+
+php artisan db:seed;
