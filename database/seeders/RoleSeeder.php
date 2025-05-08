@@ -16,6 +16,7 @@ class RoleSeeder extends Seeder
     {
         $role_admin = Role::create(['name' => 'admin']);
         $role_editor = Role::create(['name' => 'editor']);
+        $role_superuser = Role::create(['name' => 'superuser']);
 
         $permission_create_role = Permission::create(['name' => 'create roles']);
         $permission_read_role = Permission::create(['name' => 'read roles']);
@@ -72,6 +73,69 @@ class RoleSeeder extends Seeder
         $permission_update_computer = Permission::create(['name' => 'update computers']);
         $permission_delete_computer = Permission::create(['name' => 'delete computers']);
 
+        $permission_create_admin = Permission::create(['name' => 'create admin']);
+        $permission_read_admin = Permission::create(['name' => 'read admin']);
+        $permission_update_admin = Permission::create(['name' => 'update admin']);
+        $permission_delete_admin = Permission::create(['name' => 'delete admin']);
+
+        $permission_create_excel = Permission::create(['name' => 'create excel']);
+
+
+
+        $permissions_superuser = [
+            $permission_create_role,
+            $permission_read_role,
+            $permission_update_role,
+            $permission_delete_role,
+            $permission_create_academic_area,
+            $permission_read_academic_area,
+            $permission_update_academic_area,
+            $permission_delete_academic_area,
+            $permission_create_brand,
+            $permission_read_brand,
+            $permission_update_brand,
+            $permission_delete_brand,
+            $permission_create_dependency,
+            $permission_read_dependency,
+            $permission_update_dependency,
+            $permission_delete_dependency,
+            $permission_create_failure,
+            $permission_read_failure,
+            $permission_update_failure,
+            $permission_delete_failure,
+            $permission_create_object,
+            $permission_read_object,
+            $permission_update_object,
+            $permission_delete_object,
+            $permission_create_person,
+            $permission_read_person,
+            $permission_update_person,
+            $permission_delete_person,
+            $permission_create_user,
+            $permission_read_user,
+            $permission_update_user,
+            $permission_delete_user,
+            $permission_create_order_device,
+            $permission_read_order_device,
+            $permission_update_order_device,
+            $permission_delete_order_device,
+            $permission_create_order,
+            $permission_read_order,
+            $permission_update_order,
+            $permission_delete_order,
+            $permission_create_computer,
+            $permission_read_computer,
+            $permission_update_computer,
+            $permission_delete_computer,
+            $permission_create_admin,
+            $permission_read_admin,
+            $permission_update_admin,
+            $permission_delete_admin,
+            $permission_create_excel
+
+
+        ];
+
         $permissions_admin = [
             $permission_create_role,
             $permission_read_role,
@@ -116,7 +180,8 @@ class RoleSeeder extends Seeder
             $permission_create_computer,
             $permission_read_computer,
             $permission_update_computer,
-            $permission_delete_computer
+            $permission_delete_computer,
+            $permission_create_excel
         ];
 
         $permissions_editor = [
@@ -158,6 +223,7 @@ class RoleSeeder extends Seeder
             $permission_delete_computer
         ];
 
+        $role_superuser->syncPermissions($permissions_superuser);
         $role_admin->syncPermissions($permissions_admin);
         $role_editor->syncPermissions($permissions_editor);
 

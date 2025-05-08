@@ -15,39 +15,43 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $query = User::query();
-        // Aplicar búsqueda solo si se proporciona un valor
-        if ($request->filled('search')) {
-            $search = strtolower($request->search); // Convertimos la búsqueda a minúsculas para evitar problemas de mayúsculas/minúsculas.
+{
+    $query = User::query();
 
-            $query->where(function ($q) use ($search) {
-                // Filtra los usuarios cuyo nombre o número de empleado coincidan con la búsqueda
-                $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('user_number', 'LIKE', '%' . $search . '%');
+    // Verificar si el usuario autenticado tiene el permiso 'read admin'
+    $currentUser = $request->user();
+    $canSeeSuperUser = $currentUser->can('read admin');
 
-                // Si el usuario busca "Activo", filtramos solo los usuarios con status = 1
-                if ($search === 'activo') {
-                    $q->orWhere('status', 1);
-                }
-                // Si el usuario busca "Inactivo", filtramos solo los usuarios con status = 0
-                elseif ($search === 'inactivo') {
-                    $q->orWhere('status', 0);
-                }
-            });
-        }
-
-
-        $users = $query->orderBy('status', 'desc') // Primero los usuarios activos (1), luego los inactivos (0)
-               ->orderBy('name', 'asc') // Luego ordena por nombre
-               ->paginate(10)
-               ->withQueryString();
-
-        return inertia('Users/Index',[
-            'users' => $users,
-            'search' => $request->search
-        ]);
+    if (!$canSeeSuperUser) {
+        $query->where('user_number', '!=', 1111);
     }
+
+    // Aplicar búsqueda
+    if ($request->filled('search')) {
+        $search = strtolower($request->search);
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%' . $search . '%')
+              ->orWhere('user_number', 'LIKE', '%' . $search . '%');
+
+            if ($search === 'activo') {
+                $q->orWhere('status', 1);
+            } elseif ($search === 'inactivo') {
+                $q->orWhere('status', 0);
+            }
+        });
+    }
+
+    $users = $query->orderBy('status', 'desc')
+                   ->orderBy('name', 'asc')
+                   ->paginate(10)
+                   ->withQueryString();
+
+    return inertia('Users/Index', [
+        'users' => $users,
+        'search' => $request->search
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
