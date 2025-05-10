@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\OrdenesExportExcel;
 
 
 
@@ -398,7 +399,18 @@ class OrderController extends Controller
             ]);
 
         return $pdf->stream('orden_mantenimiento_' . $loadedOrder->order_number . '.pdf');
+    }
 
-
+    public function exportExcel(Request $request)
+    {
+        //dd("here", $status, $start_date, $end_date);
+        try {
+            return Excel::download(
+                new OrdenesExportExcel($request->status, $request->start_date, $request->end_date),
+                'ReporteOrdenes.xlsx'
+            );
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }
