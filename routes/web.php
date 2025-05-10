@@ -13,7 +13,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderDeviceController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UCommunityController;
-use App\Http\Controllers\ReportNotesController
+use App\Http\Controllers\ReportNotesController;
+use App\Http\Controllers\ReportExcelController
+
 ;
 
 
@@ -49,6 +51,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     //Ruta para el reporte
     Route::get('/orders/{order}/report', [OrderController::class, 'report'])->name('orders.report');
+
+    Route::post('/orders/reportNotes/update', [ReportNotesController::class, 'update'])->name('orders.reportNotes.update');
+
+
+    Route::get('/reportExcel', [ReportExcelController::class, 'create'])->name('orders.createExcel');
+    //Ruta para crear un reporte excel
+    Route::get('/exportar-ordenes', [OrderController::class, 'exportExcel'])->name('orders.reportExcel');
 
 });
 
