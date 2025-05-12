@@ -19,12 +19,13 @@ class OrderDeviceController extends Controller
     public function index(Request $request)
     {
         // Obtenemos el id del usuario autenticado
-        $userId = $request->user()->id;
-        if ($userId == '1'){
+        $user = $request->user();
+
+        if ($user->hasRole('admin') || $user->hasRole('superuser')){
             //Obten todos los dispositivos
             $query = OrderDevice::query();
         } else {
-            $query = OrderDevice::where('ceca_repairs', $userId);
+            $query = OrderDevice::where('ceca_repairs', $user->id);
         }
 
         if ($request->filled('search')) {
@@ -88,7 +89,7 @@ class OrderDeviceController extends Controller
             'computers'
         ])->findOrFail($id);
 
-        // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
+        // Si existe la relación y tiene contraseña, se agrega como propiedad adicional
         if ($order_device->computers && $order_device->computers->password) {
             $order_device->password = $order_device->computers->password;
         } else {
@@ -105,7 +106,7 @@ class OrderDeviceController extends Controller
     public function edit(string $id)
     {
         $assign_password = env('ASSIGN_PASSWORD');
-        // Carga el OrderDevice con su relación computer y otras necesarias
+        // Cargar el OrderDevice con su relación computer y otras necesarias
         $order_device = OrderDevice::with([
             'cgKindObjects',
             'cgKindFailures',
@@ -113,7 +114,7 @@ class OrderDeviceController extends Controller
             'computers'
         ])->findOrFail($id);
 
-        // Si existe la relación y tiene contraseña, agrégala como propiedad adicional
+        // Si existe la relación y tiene contraseña, agregar como propiedad adicional
         if ($order_device->computers && $order_device->computers->password) {
             $order_device->password = $order_device->computers->password;
         } else {
@@ -155,7 +156,6 @@ class OrderDeviceController extends Controller
     }
 
     $order_device->save();
-    //dd($order_device);
 
     // Actualizar la orden
     $order = $order_device->order;

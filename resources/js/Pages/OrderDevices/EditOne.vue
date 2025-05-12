@@ -1,3 +1,4 @@
+<!-- Editar un solo dispositivo  -->
 <script setup>
 import { computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
@@ -52,7 +53,7 @@ const form = useForm({
 //Computed proxy para v-model
 const formProxy = computed({
     get() {
-        // Le pasamos todo el objeto form; Form.vue clona shallow internamente
+        // Le pasamos todo el objeto form
         return form;
     },
     set(newData) {

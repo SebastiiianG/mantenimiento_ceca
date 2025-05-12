@@ -2,6 +2,8 @@
 export default {
     name: 'OrderDevicesEdit'
 }
+
+/* Editar multiples dispositivos, ya que se manejan como un array */
 </script>
 
 <script setup>
