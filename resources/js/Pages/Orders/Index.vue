@@ -108,9 +108,8 @@ const downloadPDF = (orderId) =>{
                                 </Link>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-12 ">
-                                <!-- CAMBIAR PERMISOS -->
-                                <Link v-if="$page.props.user.permissions.includes('create orders')" class="inline-flex items-center px-4 py-2 bg-amarilloUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-naranjaUAEH focus:bg-gray-700 active:bg-grisOscuroUAEH focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('orders.createExcel')">
-                                    Gestionar Reporte Excel
+                                <Link v-if="$page.props.user.permissions.includes('create excel')" class="inline-flex items-center px-4 py-2 bg-amarilloUAEH rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-naranjaUAEH focus:bg-gray-700 active:bg-grisOscuroUAEH focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150" :href="route('orders.createExcel')">
+                                    Generar Reporte Excel
                                 </Link>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-12 ">
