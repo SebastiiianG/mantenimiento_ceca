@@ -70,15 +70,7 @@ class OrderController extends Controller
         // Generar el nuevo número de orden
         $newOrderNumber = $this->generateOrderNumber($lastOrderNumber);
 
-        //Las cuatro líneas de abajo verifican que se esté pasando correctamente la variable
-        // Registrar en el log el último número de orden y el nuevo número de orden generado
-        /*Log::info('Números de orden:', [
-            'last_order_number' => $lastOrderNumber,
-            'new_order_number' => $newOrderNumber
-        ]);
-        dd($newOrderNumber);*/
         // Obtener todas las órdenes para mostrarlas en el combo
-
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::select('id', 'area_name', 'cg_dependency_id')->orderBy('area_name', 'asc')->get();
         $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
@@ -204,16 +196,11 @@ class OrderController extends Controller
         $cgBrands = CgBrand::orderBy('brand_name', 'asc')->get();
         $cgKindFailures = CgKindFailure::orderBy('failure', 'asc')->get();
 
-        // Buscar dispositivos con el order_id específico
-        //$devices = OrderDevice::where('order_id', $order)->get();
-
-        //$devices = Order::with('orderDevices:$order')->get();
-
         //obtener el id del array order
         $id = $order->id;
         // Obtener la orden con sus dispositivos relacionados
         $devices = Order::with('orderDevices')->findOrFail($id);
-        //dd($devices);
+
         //Encontrar la contraseña del dispositivo
         foreach ($devices->orderDevices as $device) {
             if ( $device->computers()->exists() && $device->computers->password != null) {
@@ -283,8 +270,6 @@ class OrderController extends Controller
             // Obtener los dispositivos enviados en la solicitud
             $devicesData = $request->devices;
 
-            //dd($devicesData);
-
             // Array para guardar los estados de los dispositivos
             $statuses = [];
 
@@ -328,11 +313,8 @@ class OrderController extends Controller
             $order->save();
         });
     } catch (\Exception $e) {
-        // Si hay algún error, redireccionar con mensaje de error
         return redirect()->back()->with('error', $e->getMessage());
     }
-
-    // Si todo sale bien, redireccionar a la página de detalles de la orden
     return redirect()->route('orders.index')->with('success', 'Orden de mantenimiento actualizada con éxito');
 }
 
@@ -369,8 +351,6 @@ class OrderController extends Controller
     }
 
     public function report(Order $order){
-
-        //dd(config('dompdf.options.enable_php'));
         // Obtener el contenido del archivo JSON de notas
         $notesData = Storage::disk('local')->exists('report_notes.json')
             ? Storage::disk('local')->get('report_notes.json')
@@ -403,7 +383,6 @@ class OrderController extends Controller
 
     public function exportExcel(Request $request)
     {
-        //dd("here", $status, $start_date, $end_date);
         try {
             return Excel::download(
                 new OrdenesExportExcel($request->status, $request->start_date, $request->end_date),

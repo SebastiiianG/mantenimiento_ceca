@@ -49,14 +49,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-// Hacer `form` reactivo y sincronizarlo con `modelValue`
-//const form = ref({ ...props.modelValue });
-/*
-watch(form, (newVal) => {
-    emit('update:modelValue', newVal);
-}, { deep: true }); */
-
-
 // Usar directamente modelValue con computed
 const form = computed({
     get() {
