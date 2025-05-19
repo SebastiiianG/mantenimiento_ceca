@@ -73,7 +73,7 @@ class OrderController extends Controller
         // Obtener todas las órdenes para mostrarlas en el combo
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::select('id', 'area_name', 'cg_dependency_id')->orderBy('area_name', 'asc')->get();
-        $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
+        $users = User::where('user_number', '!=', 1111) ->orderBy('name', 'asc') ->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
         //objetos para el formulario por dispositivos
         $cgKindObjects = CgKindObject::orderBy('object', 'asc')->get();
@@ -189,7 +189,7 @@ class OrderController extends Controller
         //dd($order);
         $cgDependencies = CgDependency::orderBy('dependency_name', 'asc')->get(); // Obtener dependencias
         $cgAcademicAreas = CgAcademicArea::orderBy('area_name', 'asc')->get(); // Obtener áreas académicas ordenadas
-        $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
+        $users = User::where('user_number', '!=', 1111) ->orderBy('name', 'asc') ->get(); // Obtener usuarios ordenados
         $cgKindPeople = CgKindPerson::orderBy('kind_person', 'asc')->get();
         //objetos para el formulario por dispositivos
         $cgKindObjects = CgKindObject::orderBy('object', 'asc')->get();
@@ -368,7 +368,6 @@ class OrderController extends Controller
         $uaeh_logo = 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('images/uaehLogo.png')));
         $ceca_logo = 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('images/cecaLogo.png')));
 
-        // Habilitar recursos remotos para cargar CSS de Bootstrap desde el CDN
         $pdf = Pdf::setOptions(['isRemoteEnabled' => true])
             ->loadView('orders.report', [
                 'order'   => $loadedOrder,
@@ -384,9 +383,17 @@ class OrderController extends Controller
     public function exportExcel(Request $request)
     {
         try {
+            $status = $request -> status;
+            $start_date = $request -> start_date;
+            $end_date = $request -> end_date;
+            $name_file = "ordenes_mantenimiento_{$start_date}_{$end_date}.xlsx";
             return Excel::download(
-                new OrdenesExportExcel($request->status, $request->start_date, $request->end_date),
-                'ReporteOrdenes.xlsx'
+                new OrdenesExportExcel(
+                    $status,
+                    $start_date,
+                    $end_date
+                ),
+                $name_file
             );
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

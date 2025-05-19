@@ -25,12 +25,6 @@ class OrdenesExportExcel implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
 {
-    \Log::info('Filtros recibidos', [
-        'status' => $this->status,
-        'start_date' => $this->start_date,
-        'end_date' => $this->end_date,
-    ]);
-
     $orders = Order::whereIn('status', $this->status)
         ->whereBetween('date_reception', [$this->start_date, $this->end_date])
         ->with('orderDevices.cgBrands',
@@ -57,7 +51,7 @@ class OrdenesExportExcel implements FromCollection, WithHeadings, ShouldAutoSize
                 'device_name'      => $device->cgKindFailures ? $device->cgKindFailures->failure : 'N/A',
                 'device_brand'     => $device-> cgBrands ? $device->cgBrands->brand_name : 'N/A',
                 'device_model'     => $device->model,
-                'device_ceca_repairs' => $device->cecaRepairs ? $device->cecaRepairs->name : 'N/A',
+                'device_ceca_repairs' => $device->cecaRepairs ? $device->cecaRepairs->name : 'S/A',
 
             ];
         });

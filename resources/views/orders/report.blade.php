@@ -118,11 +118,11 @@
                 <tbody>
                     @foreach ($devices as $device)
                         <tr>
-                            <td>{{ $order->order_number . ' / ' . $loop->iteration . ' ' . ($device->cgKindObject ? $device->cgKindObject->object : 'Sin tipo de dispositivo') }}</td>
-                            <td>{{ $device->cgBrand ? $device->cgBrand->brand_name : 'Sin marca' }}</td>
+                            <td>{{ $order->order_number . ' / ' . $loop->iteration . ' ' . ($device->cgKindObjects ? $device->cgKindObjects->object : 'Sin tipo de dispositivo') }}</td>
+                            <td>{{ $device->cgBrands ? $device->cgBrands->brand_name : 'Sin marca' }}</td>
                             <td>{{ $device->model }}</td>
                             <td>{{ empty($device->serial_number) ? 'S/N' : $device->serial_number }}</td>
-                            <td>{{ $device->cgKindFailure ? $device->cgKindFailure->failure : 'Sin tipo de falla' }}</td>
+                            <td>{{ $device->cgKindFailures ? $device->cgKindFailures->failure : 'Sin tipo de falla' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
