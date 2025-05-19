@@ -1,4 +1,63 @@
-Ejecutar en el sig orden las migraciones en caso de ruptura de la DB, así como los seeders
+#Ejecutar en el sig orden las migraciones en caso de ruptura de la DB, así como los seeders
+
+#En dado caso de querer generar algún otro usuario mediante backend, consulta el archivo RoleSeeder y UserSeeder
+#SIN EMBARGO, ESTE USUARIO NO SE DEBE CREAR EN DICHOS SEEDERS YA QUE AL CORRER DE NUEVO EL DB SEED, se duplicarían los registros ya existentes en la BD.
+#Es necesario crear otra clase.
+
+
+
+Tutorial para crear un nuevo USUARIO
+1.- Crear una nueva clase con el sig comando php artisan make:seeder Nombre_Del_Seeder
+
+2.- Editar el archivo generado, el cual tendrá una función como la siguiente
+class Nombre_Del_Seeder extends Seeder
+{
+    public function run(): void
+    {
+        // Crear permisos personalizados si no existen
+        $permissions = [
+            'read orders',
+            'create orders',
+            'read users',
+        ];
+
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
+
+        // Crear el nuevo rol si no existe
+        $customRole = Role::firstOrCreate(['name' => 'docu_editor']);
+
+        // Asignar los permisos al rol
+        $customRole->syncPermissions($permissions);
+
+        // Crear el usuario si no existe
+        $user = User::firstOrCreate(
+            ['email' => 'documentacion@uaeh.edu.mx'],
+            [
+                'name' => 'Usuario Documentación',
+                'password' => 'contraseña',
+                'user_number' => 9999,
+                'status' => true,
+            ]
+        );
+
+        // Asignar el rol al usuario
+        $user->assignRole($customRole);
+    }
+}
+
+
+
+Paso 3.- Correr el seeder de forma independiente
+php artisan db:seed --class=Nombre_Del_Seeder
+
+
+
+
+
+
+#Este es el orden en el que se deben de ejecutar las migraciones
 
 php artisan migrate --path=database/migrations/0001_01_01_000000_create_users_table.php
 php artisan migrate --path=database/migrations/2025_01_14_191151_create_cg_dependencies_table.php
@@ -6,10 +65,17 @@ php artisan migrate --path=database/migrations/2025_01_13_202352_create_cg_acade
 php artisan migrate --path=database/migrations/2025_01_13_202440_create_cg_brands_table.php
 php artisan migrate --path=database/migrations/2025_01_13_202514_create_cg_kind_failures_table.php
 php artisan migrate --path=database/migrations/2025_01_13_202535_create_cg_kind_objects_table.php
- php artisan migrate --path=database/migrations/2025_01_13_202547_create_cg_kind_people_table.php
+php artisan migrate --path=database/migrations/2025_01_13_202547_create_cg_kind_people_table.php
 php artisan migrate --path=database/migrations/2025_01_13_202655_create_orders_table.php
 php artisan migrate --path=database/migrations/2025_01_14_193241_create_order_devices_table.php
 php artisan migrate;
 
 
+
+#Este comando sirve para rellenar la BD con los seeders dados de alta dentro del database_seeder, solo debe contener
+#aquellos seeders necesarios para el funcionamiento, no para el testeo.
+
 php artisan db:seed;
+
+
+
