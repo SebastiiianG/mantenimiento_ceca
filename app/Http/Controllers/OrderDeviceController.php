@@ -121,7 +121,7 @@ class OrderDeviceController extends Controller
             $order_device->password = null;
         }
 
-        $users = User::orderBy('name', 'asc')->get(); // Obtener usuarios ordenados
+        $users = User::where('user_number', '!=', 1111) ->orderBy('name', 'asc') ->get(); // Obtener usuarios ordenados
         $cgKindObjects = CgKindObject::orderBy('object', 'asc')->get();
         $cgBrands = CgBrand::orderBy('brand_name', 'asc')->get();
         $cgKindFailures = CgKindFailure::orderBy('failure', 'asc')->get();

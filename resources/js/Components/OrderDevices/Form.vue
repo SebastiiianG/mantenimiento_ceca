@@ -95,7 +95,6 @@ const form = computed({
                 </select>
                 <InputError :message="$page.props.errors[`devices.${index}.cg_kind_object_id`]"
                     class="mt-2 bg-opacity-0" />
-
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="model" value="Modelo Del Dispositivo" />
@@ -120,6 +119,14 @@ const form = computed({
                 <InputError :message="$page.props.errors[`devices.${index}.serial_number`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
+                <InputLabel for="diagnostic" value="Número de inventario (opc)*" />
+                <TextInput id="diagnostic" v-model="form.diagnostic" type="text" autocomplete="diagnostic"
+                    class="mt-1 block w-full" />
+
+                <InputError :message="$page.props.errors.diagnostic" class="mt-2 bg-opacity-0" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="computer" value="¿El dispositivo tiene contraseña?" />
                 <div class="flex items-center space-x-4 mt-2">
                     <RadioButton id="true" name="computer" :value=1 v-model="form.computer">
@@ -133,12 +140,11 @@ const form = computed({
                 <InputError :message="$page.props.errors[`devices.${index}.computer`]" class="mt-2 bg-opacity-0" />
                 <div v-if="form.computer === 1" class="col-span-6 sm:col-span-6 mt-4">
                     <InputLabel for="password" value="Ingrese Contraseña" />
-                    <TextInput id="password" v-model="form.password" type="password" autocomplete="password"
+                    <TextInput id="password" v-model="form.password" type="text" autocomplete="password"
                         class="mt-1 block w-full" />
                     <!-- Si el campo password esta vacio , se muestra el error -->
                     <!-- <span v-if="!form.password" class="text-red-500 text-sm">El campo contraseña es obligatorio</span> -->
                 </div>
-
             </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="cg_kind_failure_id" value="Tipo De Falla" />
@@ -161,13 +167,6 @@ const form = computed({
                     class="mt-2 bg-opacity-0" />
             </div>
 
-            <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="diagnostic" value="Diagnóstico (opc)*" />
-                <TextInput id="diagnostic" v-model="form.diagnostic" type="text" autocomplete="diagnostic"
-                    class="mt-1 block w-full" />
-
-                <InputError :message="$page.props.errors.diagnostic" class="mt-2 bg-opacity-0" />
-            </div>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="ceca_observations" value="Observaciones Del Centro (opc)*" />
                 <TextInput id="ceca_observations" v-model="form.ceca_observations" type="text"
