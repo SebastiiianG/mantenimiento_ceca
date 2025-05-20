@@ -120,7 +120,7 @@ const deleteCgAcademicArea = (cgAcademicArea) => {
 
 
                     <!-- Tabla -->
-                    <div class="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <div class="mt-8 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-rojoMedioUAEH">
                                 <tr>
