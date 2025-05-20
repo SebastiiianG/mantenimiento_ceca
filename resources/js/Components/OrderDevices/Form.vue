@@ -119,7 +119,7 @@ const form = computed({
                 <InputError :message="$page.props.errors[`devices.${index}.serial_number`]" class="mt-2 bg-opacity-0" />
             </div>
             <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="diagnostic" value="Número de inventario (opc)*" />
+                <InputLabel for="diagnostic" value="Número De Inventario Del Dispositivo (opc)*" />
                 <TextInput id="diagnostic" v-model="form.diagnostic" type="text" autocomplete="diagnostic"
                     class="mt-1 block w-full" />
 
