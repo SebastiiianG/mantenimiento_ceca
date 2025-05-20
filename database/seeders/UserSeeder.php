@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
         ]);
         $superuser->assignRole('superuser'); // Asignación del rol "admin" al usuario creado
 
+
         $admin = User::create([
             'name' => 'María Guadalupe Badillo Domínguez', // Nombre del usuario
             'email' => 'badillom@uaeh.edu.mx', // Email del usuario
@@ -51,6 +52,15 @@ class UserSeeder extends Seeder
             'email' => 'gaby__am@hotmail.com', // Email del usuario
             'password'=> Hash::make('editor'), // Contraseña encriptada
             'user_number' => 3848, // Número de usuario único
+            'status' => true // Estado del usuario
+        ]);
+        $editor->assignRole('editor'); // Asignación del rol "editor" al usuario creado
+
+        $editor = User::create([
+            'name' => 'Davy Roberto Garrido Olivera', // Nombre del usuario
+            'email' => 'davy@uaeh.edu.mx', // Email del usuario
+            'password'=> Hash::make('editor'), // Contraseña encriptada
+            'user_number' => 8021, // Número de usuario único
             'status' => true // Estado del usuario
         ]);
         $editor->assignRole('editor'); // Asignación del rol "editor" al usuario creado
